@@ -6,8 +6,6 @@
 \usepackage[ansinew]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
 
-\graphicspath{ {Imagenes/} }
-
 \usepackage{natbib}
 
 \bibpunct{(}{)}{;}{a}{,}{,}
@@ -40,12 +38,28 @@
 		Usamos la siguiente configuraci\'on:
 		\begin{table}[h]
 			\begin{center}
-				\begin{tabular}{ c | c | c | c | c | c | c}
+				\begin{tabular}{ c | c | c | c | c | c | c }
 					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
 					100 & 0.1 & 512 & ReLu & Categorical Crossentropy & SGD & None
 				\end{tabular}
-				\caption{Hyperparameters for Experiment 1 with Architecture 1}
+				\caption{Hyperparameters for Experiment 1 with Architecture 1.}
 				\label{tab:exp1-1}
 			\end{center}
 		\end{table}
+		
+		Y obtenemos los siguientes resultados:
+		\begin{table}[h]
+			\begin{center}
+				\begin{tabular}{ c | c | c | c | c | c |}
+					\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+					\textbf{Mean} & 79.38 & 77.94 & 15.61 & 1.44 & 14\\ \hline
+					\textbf{Std} & 0.05 & 0.14 & 0.05 & 0.19 & 0 \\ \hline
+				\end{tabular}
+			\end{center}
+		\end{table}
+		
+		Tener un \textit{bias} alto y una \textit{variance} baja significa que hay margen de mejora antes de llegar al overfitting y hay varias posibilidades para conseguir una mejor \textit{accuracy}: a\~nadir m\'as capas o neuronas, entrenar con m\'as epochs, ...
+		
+		\subsection{Experimento 2}
+			Tras el experimento anterior, decidimos entrenar el modelo durante m\'as epochs para reducir el \textit{bias}.
 \end{document}
