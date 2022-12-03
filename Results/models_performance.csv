@@ -1,1 +1,6 @@
-,model_name,epochs,learning_rate,batch_size,activation,loss,optimizer,regularization,train_error,validation_error,bias,variance,training_time
+,model_name,epochs,learning_rate,batch_size,activation,loss,optimizer,regularization,train_accuracy,validation_accuracy,bias,variance,training_time
+0,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.39,77.92,15.61,1.47,14
+1,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.3,78.04,15.7,1.26,14
+2,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.44,77.73,15.56,1.71,14
+3,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.36,78.1,15.64,1.26,14
+4,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.44,77.92,15.56,1.52,14

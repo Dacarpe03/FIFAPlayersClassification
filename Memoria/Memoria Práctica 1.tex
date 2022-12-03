@@ -1,0 +1,51 @@
+%\documentclass[a4paper,11pt]{article}
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphics,graphicx}
+\usepackage{amsmath,amssymb,graphics,graphicx}
+\usepackage[ansinew]{inputenc}
+\usepackage[usenames,dvipsnames]{color}
+
+\graphicspath{ {Imagenes/} }
+
+\usepackage{natbib}
+
+\bibpunct{(}{)}{;}{a}{,}{,}
+
+\textheight 24cm \textwidth 17cm \topmargin-2cm
+%% \evensidemargin   -0.25cm
+\oddsidemargin-0.2cm
+%\pagestyle{empty}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\title{Pr\'actica 1: FIFA Players Classification}
+
+\author{{Daniel Carmona Pedrajas}}
+
+\date{}
+\maketitle
+
+%\title{}
+
+%\address{}
+
+\section{Arquitectura 1: Shallow Neural Network}
+	Comenzamos los experimentos usando la siguiente arquitectura:
+	\begin{enumerate}
+		\item Capa densa con 512 neuronas.
+	\end{enumerate}
+	\subsection{Experimento 1}
+		Usamos la siguiente configuraci\'on:
+		\begin{table}[h]
+			\begin{center}
+				\begin{tabular}{ c | c | c | c | c | c | c}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					100 & 0.1 & 512 & ReLu & Categorical Crossentropy & SGD & None
+				\end{tabular}
+				\caption{Hyperparameters for Experiment 1 with Architecture 1}
+				\label{tab:exp1-1}
+			\end{center}
+		\end{table}
+\end{document}
