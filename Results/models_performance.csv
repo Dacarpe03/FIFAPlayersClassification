@@ -1,0 +1,4 @@
+,model_name,epochs,learning_rate,batch_size,activation,loss,optimizer,regularization,train_error,validation_error,bias,variance,training_time
+0,D512_D256_D64_D32,100,0.1,512,relu,categorical_crossentropy,SGD,,18.1,18.8,13.1,0.7,21
+1,D512_D256_D64_D32,100,0.1,512,relu,categorical_crossentropy,SGD,,18.1,18.8,13.1,0.7,21
+2,D512_D256_D64_D32,100,0.1,512,relu,categorical_crossentropy,SGD,,17.1,21.0,12.1,3.9,22
