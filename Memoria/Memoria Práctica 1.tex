@@ -31,14 +31,14 @@
 %\address{}
 
 	\section{Arquitectura 1: One Layer Neural Network}
-		Comenzamos los experimentos usando la siguiente arquitectura:
+		La primera arquitectura que usaremos es tan simple como:
 		\begin{enumerate}
 			\item Capa densa con 512 neuronas.
 		\end{enumerate}
-		\subsection{Experimento 1}
+		\subsection{Experimento 1: Configuraci\'on base arbitraria}
 		\label{s-a1-e1}
 			Usamos la siguiente configuraci\'on:
-			\begin{table}[h]
+			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
@@ -50,7 +50,7 @@
 			\end{table}
 		
 			Y entrenamos 5 veces para obtener los siguientes resultados:
-			\begin{table}[h]
+			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{ c | c | c | c | c | c |}
 						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
@@ -62,16 +62,16 @@
 				\end{center}
 			\end{table}
 		
-			Tener un \textit{bias} alto y una \textit{variance} baja significa que hay margen de mejora antes de llegar al overfitting y hay varias posibilidades para conseguir una mejor \textit{accuracy}: a\~nadir m\'as capas o neuronas, entrenar con m\'as epochs, ...
+			Tener un \textit{bias} alto y una \textit{variance} baja significa que hay margen de mejora antes de llegar al \textit{overfitting} y hay varias posibilidades para conseguir una mejor \textit{accuracy}: a\~nadir m\'as neuronas, entrenar con m\'as \textit{epochs}, ...
 		
-		\subsection{Experimento 2}
+		\subsection{Experimento 2: Aumentamos \textit{epochs}}
 		\label{s-a1-e2}
-			Tras el experimento anterior, decidimos entrenar el modelo durante m\'as epochs para reducir el \textit{bias} usando la misma configuraci\'on.\\
-			\begin{table}[h]
+			Tras el experimento anterior, nos decantamos por entrenar el modelo durante m\'as \textit{epochs} para reducir el \textit{bias} usando la misma configuraci\'on.\\
+			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-						1000 & 0.1 & 512 & ReLU & Categorical Crossentropy & SGD & None
+						\textbf{1000} & 0.1 & 512 & ReLU & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 1}
 					\label{tab:hip-a1-e2}
@@ -98,23 +98,23 @@
 					\label{tr-a1-e2}
 				\end{center}
 			\end{figure}
-			Como se ve en la figura \ref{tr-a1-e2}, a partir del epoch 400 no hay una mejora en \textit{accuracy} para el conjunto de validaci\'on aunque s\'i para el conjunto de entrenamiento lo que nos indica que un n\'umero de epochs tan elevado como el que hemos usado en este experimento con esta arquitectura conduce a un overfitting del modelo, aunque por el momento no es excesivo como nos indica la \textit{variance}.
+			En la figura \ref{tr-a1-e2} vemos que a partir del epoch 400 no hay una mejora en \textit{accuracy} para el conjunto de validaci\'on aunque s\'i para el conjunto de entrenamiento lo que nos indica que un n\'umero de \textit{epochs} tan elevado como el que hemos usado en este experimento con esta arquitectura y configuraci\'on conduce a un \textit{overfitting} del modelo, aunque por el momento no es excesivo como nos indica la \textit{variance}.
 			
-		\subsection{Experimento 3}
+		\subsection{Experimento 3: Cambiamos a \textit{tanh} y reducimos \textit{epochs}}
 		\label{s-a1-e3}
-			Para este experimento decidimos reducir las epochs ya que como hemos visto en el experimento anterior, no hay una mejora significativa en validaci\'on con m\'as epochs.\\
+			Para este experimento decidimos reducir las \textit{epochs} ya que como hemos visto en el experimento anterior, no hay una mejora significativa en validaci\'on con m\'as epochs.\\
 			Adem\'as de esto, cambiaremos la funci\'on de activaci\'on a \textit{tanh}. Hasta el momento hemos usado \textit{ReLU} pero no hay raz\'on para usarla para esta arquitectura porque resuelve el problema del \textit{vanishing gradient} que se da en arquitecturas profundas.\\
 			La configuraci\'on que usamos para el experimento 3 es:
-			\begin{table}[h]
-			\begin{center}
-				\begin{tabular}{| c | c | c | c | c | c | c |}
-					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-					400 & 0.1 & 512 & tanh & Categorical Crossentropy & SGD & None
-				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 1}
-				\label{tab:hip-a1-e3}
-			\end{center}
-		\end{table}
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						\textbf{400} & 0.1 & 512 & \textbf{tanh} & Categorical Crossentropy & SGD & None
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 1}
+					\label{tab:hip-a1-e3}
+				\end{center}
+			\end{table}
 			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
 			\begin{table}[!h]
@@ -129,16 +129,72 @@
 				\end{center}
 			\end{table}
 			
-			Con esta configuraci\'on el modelo ha vuelto a aumentar el \textit{bias} y obtenemos unos resultados pr\'acticamente id\'enticos al experimento uno con la funci\'on de activaci\'on \textit{ReLU} aunque con m\'as epochs. Parece que con la funci\'on \textit{tanh}, el modelo se queda atrapado en m\'inimos globales como podemos apreciar en la figura \ref{tr-a1-e2} y necesita m\'as epochs para escapar de ellos.\\
+			Con esta configuraci\'on el modelo ha vuelto a aumentar el \textit{bias} y obtenemos unos resultados pr\'acticamente id\'enticos al experimento uno con la funci\'on de activaci\'on \textit{ReLU} aunque con m\'as epochs. Parece que con la funci\'on \textit{tanh}, el modelo se queda atrapado en m\'inimos globales como podemos apreciar en la figura \ref{tr-a1-e3} y necesita m\'as epochs para escapar de ellos.\\
+			
 			\begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a1-e3.png}		
 					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 1}	
-					\label{tr-a1-e2}
+					\label{tr-a1-e3}
 				\end{center}
 			\end{figure}
+			
 			Tambi\'en observamos que no ha habido overfitting hasta la epoch 400, al contrario de lo que hab\'iamos supuesto al inicio de este experimento.
 			
-		\subsection{Experimento 4}
+		\subsection{Experimento 4: Aumentamos epochs}
+			El objetivo de este experimento es comprobar cu\'antas \textit{epochs} podemos realizar antes de que el modelo comience a dirigirse hacia un \textit{overfitting} por lo que la configuraci\'on es la misma que en la ejecuci\'on anterior, excepto que volvemos a incrementar las epochs a 1000:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						\textbf{1000} & 0.1 & 512 & tanh & Categorical Crossentropy & SGD & None
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 1}
+					\label{tab:hip-a1-e4}
+				\end{center}
+			\end{table}
 			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 81.17 & 80.23 & 13.82 & 0.94 & 189\\ \hline
+						\textbf{Std} & 0.14 & 0.62 & 0.14 & 0.53 & 2.3 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 4 de la Arquitectura 1}
+					\label{tab:res-a1-e4}
+				\end{center}
+			\end{table}
+			
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a1-e4.png}		
+					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 1}	
+					\label{tr-a1-e4}
+				\end{center}
+			\end{figure}
+			
+			Aunque hemos doblado las \textit{epochs} con respecto al experimento 3, la mejora ha sido de apenas un 2\% en \textit{accuracy}. Por otra parte, como se muestra en la figura \ref{tr-a1-e4}, el modelo no ha llegado al punto de \textit{overfitting} aun habiendo usado un n\'umero tan alto de epochs.\\
+			Esto quiere decir que todav\'ia hay margen de mejora si seguimos entrenando con m\'as epochs aunque llevar\'ia mucho tiempo porque el aprendizaje es lento.\\
+			
+		\subsection{Experimento 5: Reducimos batch size}
+			Como se necesitar\'ia aumentar exponencialmente el n\'umero de \textit{epochs} para conseguir una mejora en el \textit{accuracy}, decidimos reducir el \textit{batch size} y comprobar si de esta forma el modelo consigue mejores resultados.
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						1000 & 0.1 & \textbf{128} & tanh & Categorical Crossentropy & SGD & None
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 1}
+					\label{tab:hip-a1-e5}
+				\end{center}
+			\end{table}
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a1-e4.png}		
+					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 1}	
+					\label{tr-a1-e5}
+				\end{center}
+			\end{figure}
 \end{document}
