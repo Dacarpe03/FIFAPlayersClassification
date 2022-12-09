@@ -4,3 +4,8 @@
 2,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.44,77.73,15.56,1.71,14
 3,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.36,78.1,15.64,1.26,14
 4,D512,100,0.1,512,relu,categorical_crossentropy,SGD,,79.44,77.92,15.56,1.52,14
+5,D512,1000,0.1,512,relu,categorical_crossentropy,SGD,,84.07,81.45,10.93,2.62,186
+6,D512,1000,0.1,512,relu,categorical_crossentropy,SGD,,84.03,81.7,10.97,2.33,211
+7,D512,1000,0.1,512,relu,categorical_crossentropy,SGD,,84.0,81.33,11.0,2.67,200
+8,D512,1000,0.1,512,relu,categorical_crossentropy,SGD,,83.99,81.76,11.01,2.23,199
+9,D512,1000,0.1,512,relu,categorical_crossentropy,SGD,,84.05,81.51,10.95,2.54,199
