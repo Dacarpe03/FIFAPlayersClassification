@@ -19,3 +19,8 @@
 17,D512,1000,0.1,512,tanh,categorical_crossentropy,SGD,,81.05,80.52,13.95,0.53,190
 18,D512,1000,0.1,512,tanh,categorical_crossentropy,SGD,,81.16,80.21,13.84,0.95,189
 19,D512,1000,0.1,512,tanh,categorical_crossentropy,SGD,,81.03,79.22,13.97,1.81,192
+20,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,83.07,81.08,11.93,1.99,523
+21,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,83.09,80.83,11.91,2.26,481
+22,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.61,80.58,12.39,2.03,546
+23,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.96,80.52,12.04,2.44,503
+24,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.88,81.2,12.12,1.68,533

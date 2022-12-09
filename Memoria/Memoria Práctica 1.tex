@@ -141,7 +141,8 @@
 			
 			Tambi\'en observamos que no ha habido overfitting hasta la epoch 400, al contrario de lo que hab\'iamos supuesto al inicio de este experimento.
 			
-		\subsection{Experimento 4: Aumentamos epochs}
+		\subsection{Experimento 4: Aumentamos \textit{epochs}}
+		\label{s-a1-e4}
 			El objetivo de este experimento es comprobar cu\'antas \textit{epochs} podemos realizar antes de que el modelo comience a dirigirse hacia un \textit{overfitting} por lo que la configuraci\'on es la misma que en la ejecuci\'on anterior, excepto que volvemos a incrementar las epochs a 1000:
 			\begin{table}[!h]
 				\begin{center}
@@ -178,7 +179,8 @@
 			Aunque hemos doblado las \textit{epochs} con respecto al experimento 3, la mejora ha sido de apenas un 2\% en \textit{accuracy}. Por otra parte, como se muestra en la figura \ref{tr-a1-e4}, el modelo no ha llegado al punto de \textit{overfitting} aun habiendo usado un n\'umero tan alto de epochs.\\
 			Esto quiere decir que todav\'ia hay margen de mejora si seguimos entrenando con m\'as epochs aunque llevar\'ia mucho tiempo porque el aprendizaje es lento.\\
 			
-		\subsection{Experimento 5: Reducimos batch size}
+		\subsection{Experimento 5: Reducimos \textit{batch size}}
+		\label{s-a1-e5}
 			Como se necesitar\'ia aumentar exponencialmente el n\'umero de \textit{epochs} para conseguir una mejora en el \textit{accuracy}, decidimos reducir el \textit{batch size} y comprobar si de esta forma el modelo consigue mejores resultados.
 			\begin{table}[!h]
 				\begin{center}
@@ -190,11 +192,33 @@
 					\label{tab:hip-a1-e5}
 				\end{center}
 			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:\\
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 82.92 & 80.84 & 12.07 & 2.08 & 517.2\\ \hline
+						\textbf{Std} & 0.19 & 0.29 & 0.19 & 0.28 & 25.61 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 4 de la Arquitectura 1}
+					\label{tab:res-a1-e5}
+				\end{center}
+			\end{table}
+			Como vemos en la tabla \ref{tab:res-a1-e5} no conseguimos mejorar de forma significativa el \textit{accuracy}. Aumentar el \textit{batch size} ha incrementado exponencialmente el tiempo de entrenamiento por lo que no merece la pena reducir el \textit{batch size} en este caso. Lo que hemos conseguido reduciendo el \textit{batch size} ha sido que el modelo escape r\'apidamente del primer m\'inimo local con el que se topa como vemos en la figura \ref{tr-a1-e5} as\'i que concluimos que con esta t\'ecnica podemos obtener un resultado aceptable en poco tiempo.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a1-e4.png}		
+					\includegraphics[scale=0.5]{tr-a1-e5.png}		
 					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 1}	
 					\label{tr-a1-e5}
 				\end{center}
 			\end{figure}
+			
+		\subsection{Conclusiones de la Arquitectura 1}
+			\begin{itemize}
+				\item \textit{ReLU} llega a un estado de \textit{overfitting} con menos \textit{epochs} que \textit{tanh}
+				\item \textit{tanh} tiene un proceso de aprendizaje m\'as lento que \textit{ReLU}
+				\item Reducir el \textit{batch size} implica llegar a un \'optimo de forma m\'as r\'apida con \textit{tanh}.
+			\end{itemize}
+	\section{Arquitectura 2:}
 \end{document}
