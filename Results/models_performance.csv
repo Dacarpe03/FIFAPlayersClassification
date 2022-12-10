@@ -24,3 +24,8 @@
 22,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.61,80.58,12.39,2.03,546
 23,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.96,80.52,12.04,2.44,503
 24,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.88,81.2,12.12,1.68,533
+25,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.82,74.69,-4.82,25.13,580
+26,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.91,75.06,-4.91,24.85,586
+27,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.94,74.69,-4.94,25.25,574
+28,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.92,75.25,-4.92,24.67,577
+29,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.88,75.19,-4.88,24.69,577

@@ -230,4 +230,56 @@
 			\item Capa densa de 64 neuronas
 			\item Capa densa de 32 neuronas
 		\end{enumerate}
+		
+		\subsection{Experimento 1: Comparaci\'on con arquitectura 1}
+		\label{s-a2-e1}
+			En este experimento utilizaremos la misma configuraci\'on que en el experimento anterior:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						1000 & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & None
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 2}
+					\label{tab:hip-a2-e1}
+				\end{center}
+			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 99.89 & 74.97 & -4.89 & 24.91 & 578\\ \hline
+						\textbf{Std} & 0.04 & 0.26 & 0.04 & 0.26 & 4.54 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 1 de la Arquitectura 2}
+					\label{tab:res-a2-e1}
+				\end{center}
+			\end{table}
+			
+			Hemos obtenido un modelo con un \textit{overfitting} muy alto, tan alto que ha cometido menos error que un humano y por eso el \textit{bias} es negativo. Podemos ver el \textit{overfitting} reflejado en el \textit{variance} de un 25\% de la tabla \ref{tab:res-a2-e1} y la evoluci\'on del \textit{validation categorical accuracy} en la figura \ref{tr-a2-e1} que empeora a lo largo del entrenamiento.
+			
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a2-e1.png}		
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 2}	
+					\label{tr-a2-e1}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 2: Reducimos \textit{epochs} y utilizamos regularizaci\'on}
+			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-a2-e2}
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & l2 0.001
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 2}
+					\label{tab:hip-a2-e2}
+				\end{center}
+			\end{table}
+		
 \end{document}
