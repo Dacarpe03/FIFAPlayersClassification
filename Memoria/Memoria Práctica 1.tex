@@ -269,17 +269,51 @@
 				\end{center}
 			\end{figure}
 			
+			\newpage
+			
+			
 		\subsection{Experimento 2: Reducimos \textit{epochs} y utilizamos regularizaci\'on}
-			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-a2-e2}
+		
+			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-a2-e2}.
 			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
 						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & l2 0.001
 					\end{tabular}
-					\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 2}
+					\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 2}
 					\label{tab:hip-a2-e2}
 				\end{center}
 			\end{table}
-		
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 81.19 & 79.91 & 13.8 & 1.28 & 249\\ \hline
+						\textbf{Std} & 0.2 & 0.95 & 0.2 & 0.92 & 3.29 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 2 de la Arquitectura 2}
+					\label{tab:res-a2-e2}
+				\end{center}
+			\end{table}
+			
+			Como se observa en la tabla \ref{tab:res-a2-e2}, hemos conseguido reducir el \textit{variance} un 24\% simplemente usando regularizaci\'on, ahora bien, en cuanto a \textit{accuracy} seguimos sin conseguir una mejora significativa.
+			
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a2-e2.png}		
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 2}	
+					\label{tr-a2-e2}
+				\end{center}
+			\end{figure}
+			
+			En la figura \ref{tr-a2-e2} se aprecia ruido en las m\'etricas del conjunto de validaci\'on, esto es una consecuencia de la regularizaci\'on, sin ella ese ruido se descontrolar\'ia y llegar\'iamos al \textit{overfitting} como en el experimento anterior.
+			
+		\subsection{Experimento 3: Cambiamos el optimizador}
+			En este experimento vamos a comprobar si con un optimizador distinto podemos obtener mejor \textit{accuracy} sin llegar al \textit{overfitting}, para ello utilizaremos ADAM. La configuraci\'on es la siguiente:
+			
+			
 \end{document}
