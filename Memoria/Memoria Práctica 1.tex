@@ -222,7 +222,7 @@
 			\end{itemize}
 			
 	\section{Arquitectura 2: Deep Feed Forward Neural Network}
-		Hemos visto que con la arquitectura anterior obtenemos un \textit{accuracy} m\'aximo de un 84\% a partir de donde el aprendizaje es lento y llegamos a un overfitting con las t\'ecnicas utilizadas. Es por esto que decidimos usar una Deep Feed Forward Neural Network para conseguir reducir el \textit{bias} del modelo.\\
+		Hemos visto que con la arquitectura anterior obtenemos un \textit{accuracy} m\'aximo de un 84\% a partir de donde el aprendizaje es lento y llegamos a un \textit{overfitting} con las t\'ecnicas utilizadas. Es por esto que decidimos usar una Deep Feed Forward Neural Network para intentar reducir el \textit{bias} del modelo.\\
 		La arquitectura que utilizaremos para la nueva serie de experimento ser\'a:
 		
 		\begin{enumerate}
@@ -273,13 +273,13 @@
 			
 			
 		\subsection{Experimento 2: Reducimos \textit{epochs} y utilizamos regularizaci\'on}
-		
+		\label{s-a2-e2}
 			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-a2-e2}.
 			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & l2 0.001
+						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & \textbf{l2 0.001}
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 2}
 					\label{tab:hip-a2-e2}
@@ -314,13 +314,14 @@
 			
 			
 		\subsection{Experimento 3: Cambiamos el optimizador}
+		\label{s-a2-e3}
 			En este experimento vamos a comprobar si con un optimizador distinto podemos obtener mejor \textit{accuracy} sin llegar al \textit{overfitting}, para ello utilizaremos ADAM. La configuraci\'on es la siguiente:
 			
 			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
+						400 & 0.1 & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 2}
 					\label{tab:hip-a2-e3}
@@ -342,7 +343,7 @@
 				\end{center}
 			\end{table}
 			
-			Como vemos en la tabla resultados son los peores obtenidos hasta el momento y por mucha diferencia, apenas hemos conseguido un 25\% de \textit{accuracy}. Analizando la figura \ref{tr-a2-e3}, el modelo se queda estancado en un m\'inimo local muy temprano en el entrenamiento.
+			Como vemos en la tabla resultados son los peores obtenidos hasta el momento y con mucha diferencia, apenas hemos conseguido un 25\% de \textit{accuracy}. Analizando la figura \ref{tr-a2-e3}, el modelo se queda estancado en un m\'inimo local muy temprano en el entrenamiento.
 			\begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a2-e3.png}		
@@ -351,7 +352,7 @@
 				\end{center}
 			\end{figure}
 			
-			Mirando la matriz de confusi\'on confirmamos nuestra teor\'ia, clasifica todos los jugadores en la misma clase.
+			Observando la matriz de confusi\'on confirmamos nuestra teor\'ia, clasifica todos los jugadores en la misma clase.
 			\begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.7]{cm-a2-e3.png}		
@@ -364,14 +365,15 @@
 			
 			
 		\subsection{Experimento 4: Ajustamos el optimizador ADAM}
-			Consultando el paper en el que se present\'o ADAM (\textit{Adam: A Method for Stochastic Optimization}, (2015), D. Kingma y J. Ba), vemos que este optimizador es una combinaci\'on entre AdaGrad y RMSProp y que tiene unos par\'ametros que controlan el ratio de decrecimiento de los momentos (beta1=0.9 y beta2=0.999) que no hemos definido en el experimento anterior. Adem\'as de esto, los autores sugieren usar un \textit{learning rate} m\'as bajo del que estamos usando.\\
+		\label{s-a2-e4}
+			Consultando el art\'iculo en el que se present\'o ADAM (\textit{Adam: A Method for Stochastic Optimization}, (2015), D. Kingma y J. Ba), vemos que este optimizador es una combinaci\'on entre AdaGrad y RMSProp y que tiene unos par\'ametros que controlan el ratio de decrecimiento de los momentos (beta1=0.9 y beta2=0.999) que no hemos definido en el experimento anterior. Adem\'as de esto, los autores sugieren usar un \textit{learning rate} m\'as bajo del que estamos usando.\\
 			
 			La configuraci\'on queda as\'i:
 			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-						400 & \textbf{0.001} & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
+						400 & \textbf{0.001} & 128 & tanh & Categorical Crossentropy & ADAM & l2 0.001
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 2}
 					\label{tab:hip-a2-e4}
@@ -409,16 +411,17 @@
 					\label{cm-a2-e4}
 				\end{center}
 			\end{figure}
-			
+		\newpage
 		\subsection{Experimento 5: Reducimos \textit{batch-size}}
+		\label{s-a2-e5}
 			Decidimos reducir el \textit{batch size} para intentar reducir el \textit{bias} como en el experimento \ref{s-a1-e5}. La configuraci\'on para este experimento es:
 			\begin{table}[!h]
-					\begin{tabular}{| c | c | c | c | c | c | c |}
-						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-						400 & 0.001 & \textbf{64} & tanh & Categorical Crossentropy & ADAM & l2 0.001
-					\end{tabular}
-					\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 2}
-					\label{tab:hip-a2-e5}
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & \textbf{64} & tanh & Categorical Crossentropy & ADAM & l2 0.001
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 2}
+				\label{tab:hip-a2-e5}
 			\end{table}
 			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -435,14 +438,23 @@
 				\end{center}
 			\end{table}
 			
-			No hemos obtenido mejora, este cambio no merece la pena porque aumenta mucho el tiempo de entrenamiento. Como vemos en la figura \ref{tr-a2-e5}, parece que el modelo deja de aprender, quiz\'as por el problema del \textit{vanishing gradient} que intentaremos resolver con la siguiente arquitectura
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a2-e5.png}		
+					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 2}	
+					\label{tr-a2-e5}
+				\end{center}
+			\end{figure}
+			
+			\newpage
+			No hemos obtenido mejora, este cambio no merece la pena porque aumenta mucho el tiempo de entrenamiento. Como vemos en la figura \ref{tr-a2-e5}, parece que el modelo deja de aprender, quiz\'as por el problema del \textit{vanishing gradient} que intentaremos resolver con la siguiente arquitectura.
 		
 		\subsection{Conclusiones de la Arquitectura 2}
 			A lo largo de estos experimentos hemos concluido que:
 			\begin{itemize}
 				\item La regularizaci\'on evita el \textit{overfitting}.
 				\item El optimizador ADAM necesita un \textit{learning rate} bajo.
-				\item El optimizador ADAM no ha proporcionado mejoras significativas con esta arquitectura.
+				\item El optimizador ADAM no ha proporcionado mejoras significativas con respecto al SGD para esta arquitectura.
 			\end{itemize}
 			
 \end{document}
