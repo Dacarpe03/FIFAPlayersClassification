@@ -30,7 +30,7 @@
 
 %\address{}
 
-	\section{Arquitectura 1: One Layer Neural Network}
+	\section{Arquitectura 1: Feed Forward Neural Network}
 		La primera arquitectura que usaremos es tan simple como:
 		\begin{enumerate}
 			\item Capa densa con 512 neuronas.
@@ -205,7 +205,7 @@
 					\label{tab:res-a1-e5}
 				\end{center}
 			\end{table}
-			Como vemos en la tabla \ref{tab:res-a1-e5} no conseguimos mejorar de forma significativa el \textit{accuracy}. Aumentar el \textit{batch size} ha incrementado exponencialmente el tiempo de entrenamiento por lo que no merece la pena reducir el \textit{batch size} en este caso. Lo que hemos conseguido reduciendo el \textit{batch size} ha sido que el modelo escape r\'apidamente del primer m\'inimo local con el que se topa como vemos en la figura \ref{tr-a1-e5} as\'i que concluimos que con esta t\'ecnica podemos obtener un resultado aceptable en poco tiempo.
+			Como vemos en la tabla \ref{tab:res-a1-e5} no conseguimos mejorar de forma significativa el \textit{accuracy}. Aumentar el \textit{batch size} ha incrementado exponencialmente el tiempo de entrenamiento por lo que no merece la pena reducir el \textit{batch size} en este caso. Lo que hemos conseguido reduciendo el \textit{batch size} ha sido que el modelo escape r\'apidamente del primer m\'inimo local con el que se topa como vemos en la figura \ref{tr-a1-e5} as\'i que concluimos que con esta t\'ecnica podemos obtener un resultado aceptable en menor tiempo.
 			\begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a1-e5.png}		
@@ -220,5 +220,14 @@
 				\item \textit{tanh} tiene un proceso de aprendizaje m\'as lento que \textit{ReLU}
 				\item Reducir el \textit{batch size} implica llegar a un \'optimo de forma m\'as r\'apida con \textit{tanh}.
 			\end{itemize}
-	\section{Arquitectura 2:}
+			
+	\section{Arquitectura 2: Deep Feed Forward Neural Network}
+		Hemos visto que con la arquitectura anterior obtenemos un \textit{accuracy} m\'aximo de un 84\% a partir de donde el aprendizaje es lento y llegamos a un overfitting con las t\'ecnicas utilizadas. Es por esto que decidimos usar una Deep Feed Forward Neural Network para conseguir reducir el \textit{bias} del modelo.\\
+		La arquitectura que utilizaremos para la nueva serie de experimento ser\'a:
+		
+		\begin{enumerate}
+			\item Capa densa de 128 neuronas
+			\item Capa densa de 64 neuronas
+			\item Capa densa de 32 neuronas
+		\end{enumerate}
 \end{document}
