@@ -373,10 +373,46 @@
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
 						400 & \textbf{0.001} & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
 					\end{tabular}
-					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 2}
-					\label{tab:hip-a2-e3}
+					\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 2}
+					\label{tab:hip-a2-e4}
 				\end{center}
 			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 81.97 & 80.48 & 13.02 & 1.49 & 250.2 \\ \hline
+						\textbf{Std} & 0.15 & 0.15 & 0.15 & 0.19 & 19.35 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 3 de la Arquitectura 2}
+					\label{tab:res-a2-e4}
+				\end{center}
+			\end{table}
+			
+			Al haber configurado correctamente el optimizador volvemos a conseguir un \textit{accuracy} similar al que hemos estado obteniendo. Observando la figira \ref{tr-a2-e4} vemos qe podr\'iamos seguir entrenando el modelo por m\'as \textit{epochs} antes de llegar al \textit{overfitting}.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a2-e4.png}		
+					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 2}	
+					\label{tr-a2-e4}
+				\end{center}
+			\end{figure}
+			
+			Analizando la matriz de confusi\'on vemos que ahora hemos solucionado el problema del modelo anterior que clasificaba todos los jugadores en la misma clase
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.7]{cm-a2-e4.png}		
+					\caption{Matriz de confusi\'on en el Experimento 3 de la Arquitectura 2}	
+					\label{cm-a2-e4}
+				\end{center}
+			\end{figure}
+			
+			Esto puede deberse a que no estamos usando correctamente el optimizador ADAM.
+			
+			
 			
 			
 \end{document}

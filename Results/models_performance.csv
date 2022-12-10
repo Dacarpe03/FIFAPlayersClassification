@@ -39,3 +39,9 @@
 37,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.51,28.16,69.49,-2.65,269
 38,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.47,23.39,69.53,2.08,263
 39,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.51,28.16,69.49,-2.65,261
+40,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.92,80.77,13.08,1.15,265
+41,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.95,80.52,13.05,1.43,267
+42,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,82.13,80.46,12.87,1.67,263
+43,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,82.13,80.46,12.87,1.67,263
+44,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.9,80.71,13.1,1.19,232
+45,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.77,80.27,13.23,1.5,226
