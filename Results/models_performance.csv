@@ -24,3 +24,28 @@
 22,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.61,80.58,12.39,2.03,546
 23,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.96,80.52,12.04,2.44,503
 24,D512,1000,0.1,128,tanh,categorical_crossentropy,SGD,,82.88,81.2,12.12,1.68,533
+25,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.82,74.69,-4.82,25.13,580
+26,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.91,75.06,-4.91,24.85,586
+27,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.94,74.69,-4.94,25.25,574
+28,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.92,75.25,-4.92,24.67,577
+29,D128_D64_D32,1000,0.1,128,tanh,categorical_crossentropy,SGD,,99.88,75.19,-4.88,24.69,577
+30,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.37,79.96,13.63,1.41,249
+31,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,80.96,78.6,14.04,2.36,255
+32,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.0,80.65,14.0,0.35,249
+33,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.29,80.96,13.71,0.33,246
+34,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.36,79.4,13.64,1.96,250
+35,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,24.83,23.39,70.17,1.44,273
+36,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.39,28.16,69.61,-2.77,268
+37,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.51,28.16,69.49,-2.65,269
+38,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.47,23.39,69.53,2.08,263
+39,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,25.51,28.16,69.49,-2.65,261
+40,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.92,80.77,13.08,1.15,265
+41,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.95,80.52,13.05,1.43,267
+42,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,82.13,80.46,12.87,1.67,263
+43,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.9,80.71,13.1,1.19,232
+44,D128_D64_D32,400,0.001,128,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.77,80.27,13.23,1.5,226
+45,D128_D64_D32,400,0.001,64,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,82.2,79.22,12.8,2.98,543
+46,D128_D64_D32,400,0.001,64,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,82.0,80.02,13.0,1.98,528
+47,D128_D64_D32,400,0.001,64,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.77,80.09,13.23,1.68,533
+48,D128_D64_D32,400,0.001,64,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.64,79.59,13.36,2.05,456
+49,D128_D64_D32,400,0.001,64,tanh,categorical_crossentropy,ADAM b109 b20999,l2 0.001,81.76,81.27,13.24,0.49,472
