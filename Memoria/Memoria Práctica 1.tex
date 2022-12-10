@@ -305,15 +305,62 @@
 			\begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a2-e2.png}		
-					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 2}	
+					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 2}	
 					\label{tr-a2-e2}
 				\end{center}
 			\end{figure}
 			
 			En la figura \ref{tr-a2-e2} se aprecia ruido en las m\'etricas del conjunto de validaci\'on, esto es una consecuencia de la regularizaci\'on, sin ella ese ruido se descontrolar\'ia y llegar\'iamos al \textit{overfitting} como en el experimento anterior.
 			
+			
 		\subsection{Experimento 3: Cambiamos el optimizador}
 			En este experimento vamos a comprobar si con un optimizador distinto podemos obtener mejor \textit{accuracy} sin llegar al \textit{overfitting}, para ello utilizaremos ADAM. La configuraci\'on es la siguiente:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 2}
+					\label{tab:hip-a2-e3}
+				\end{center}
+			\end{table}
+			
+			\newpage
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 25.34 & 26.25 & 69.65 & -0.91 & 266.8 \\ \hline
+						\textbf{Std} & 0.29 & 2.61 & 0.29 & 2.44 & 4.81 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 3 de la Arquitectura 2}
+					\label{tab:res-a2-e3}
+				\end{center}
+			\end{table}
+			
+			Como vemos en la tabla resultados son los peores obtenidos hasta el momento y por mucha diferencia, apenas hemos conseguido un 25\% de \textit{accuracy}. Analizando la figura \ref{tr-a2-e3}, el modelo se queda estancado en un m\'inimo local muy temprano en el entrenamiento.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a2-e3.png}		
+					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 2}	
+					\label{tr-a2-e3}
+				\end{center}
+			\end{figure}
+			
+			Mirando la matriz de confusi\'on confirmamos nuestra teor\'ia, clasifica todos los jugadores en la misma clase.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.7]{cm-a2-e3.png}		
+					\caption{Matriz de confusi\'on en el Experimento 3 de la Arquitectura 2}	
+					\label{cm-a2-e3}
+				\end{center}
+			\end{figure}
+			
+			Esto puede deberse a que no estamos usando correctamente el optimizador ADAM.
 			
 			
 \end{document}
