@@ -363,4 +363,20 @@
 			Esto puede deberse a que no estamos usando correctamente el optimizador ADAM.
 			
 			
+		\subsection{Experimento 4: Ajustamos el optimizador ADAM}
+			Consultando el paper en el que se present\'o ADAM (\textit{Adam: A Method for Stochastic Optimization}, (2015), D. Kingma y J. Ba), vemos que este optimizador es una combinaci\'on entre AdaGrad y RMSProp y que tiene unos par\'ametros que controlan el ratio de decrecimiento de los momentos (beta1=0.9 y beta2=0.999) que no hemos definido en el experimento anterior. Adem\'as de esto, los autores sugieren usar un \textit{learning rate} m\'as bajo del que estamos usando.\\
+			
+			La configuraci\'on queda as\'i:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c | c | c |}
+						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+						400 & \textbf{0.001} & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
+					\end{tabular}
+					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 2}
+					\label{tab:hip-a2-e3}
+				\end{center}
+			\end{table}
+			
+			
 \end{document}
