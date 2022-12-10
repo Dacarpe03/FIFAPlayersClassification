@@ -34,3 +34,4 @@
 32,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.0,80.65,14.0,0.35,249
 33,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.29,80.96,13.71,0.33,246
 34,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,SGD,l2 0.001,81.36,79.4,13.64,1.96,250
+35,D128_D64_D32,400,0.1,128,tanh,categorical_crossentropy,ADAM,l2 0.001,24.83,23.39,70.17,1.44,273
