@@ -457,4 +457,199 @@
 				\item El optimizador ADAM no ha proporcionado mejoras significativas con respecto al SGD para esta arquitectura.
 			\end{itemize}
 			
+	\section{Arquitectura 3: Batch normalization}
+		Despu\'es de no conseguir reducir el \textit{bias} de nuestro modelo con m\'as capas ocultas suponemos que estamos ante un problema de \textit{vanishing gradient}, una de las soluciones que existe es utilizar capas de \textit{batch normalization} para estandarizar los pesos de las neuronas. La arquitectura que utilizaremos durante los siguientes experimentos es:
+		\begin{enumerate}
+			\item Capa densa de 128 neuronas
+			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
+			\item Capa densa de 64 neuronas
+			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
+			\item Capa densa de 32 neuronas
+			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
+		\end{enumerate}
+		
+		\subsection{Experimento 1: Probamos la configuraci\'on del experimento \ref{s-a2-e5}}
+		\label{s-a3-e1}
+			Para comprobar como afecta la introducci\'on del \textit{batch normalization}, utilizamos la configuraci\'on del \'ultimo experimento realizado.
+			
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 64 & tanh & Categorical Crossentropy & ADAM & l2 0.001
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 3}
+				\label{tab:hip-a3-e1}
+			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 89.23 & 76.23 & 5.76 & 15.59 & 950.4 \\ \hline
+						\textbf{Std} & 0.46 & 1.54 & 0.46 & 1.75 & 55.11 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 1 de la Arquitectura 3}
+					\label{tab:res-a3-e1}
+				\end{center}
+			\end{table}
+			La tabla \ref{tab:res-a3-e1} nos muestra que con \textit{batch normalization} hemos obtenido una buena \textit{accuracy} en el conjunto de entrenamiento pero a cambio de obtener un modelo con \textit{overfitting} como nos indica el \textit{variance} de 15\%. Tambi\'en ha sido la ejecuci\'on m\'as larga dado el tama\~no del batch y que hemos usado \textit{batch normalization} que ralentiza el proceso de entrenamiento.
+			\newpage
+			 
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e1.png}		
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 3}	
+					\label{tr-a3-e1}
+				\end{center}
+			\end{figure}
+			
+			En la figura \ref{tr-a3-e1} vemos como el modelo llega al punto de \textit{overfit} alrededor de la \textit{epoch} 50 donde el \textit{accuracy} de validaci\'on se separa del de entrenamiento.
+			
+		\subsection{Experimento 2: Aumentamos \textit{batch size}}
+		\label{s-a3-e2}
+			A\'un no hemos conseguido mejorar el \textit{accuracy} en el conjunto de validaci\'on, pero en este experimento vamos a intentar retrasar el \textit{overfitting} del modelo a la vez que el tiempo de entrenamiento aumentando el \textit{batch size}. La configuraci\'on para este experimento es la siguiente:
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & \textbf{256} & tanh & Categorical Crossentropy & ADAM & l2 0.001
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 3}
+				\label{tab:hip-a3-e2}
+			\end{table}
+				
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 97.02 & 73.89 & -2.02 & 23.17 & 254 \\ \hline
+						\textbf{Std} & 0.53 & 0.48 & 0.53 & 0.61 & 14.04 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 2 de la Arquitectura 3}
+					\label{tab:res-a3-e2}
+				\end{center}
+			\end{table}
+				
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.4]{tr-a3-e2.png}		
+					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 3}	
+					\label{tr-a3-e2}
+				\end{center}
+			\end{figure}
+			Lo \'unico que hemos conseguido reducir con este experimento ha sido el tiempo de entrenamiento, el \textit{variance} ha aumentado hasta un 23\%.
+			En la figura \ref{tr-a3-e2} vemos reflejado el \textit{overfitting}, lo que explica el \textit{bias} negativo.
+			
+		\subsection{Experimento 3: Aumentamos la penalizaci\'on del regularizador}
+		\label{s-a3-e3}
+			El regularizador L2 a\~nade una penalizaci\'on en base al tama\~no de los pesos, como no queremos que se descontrolen como ha estado ocurriendo, aumentamos esta penalizaci\'on para evitar el overfitting. La configuraci\'on para este experimento es:
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & tanh & Categorical Crossentropy & ADAM & \textbf{l2 0.1}
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 3}
+				\label{tab:hip-a3-e3}
+			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 80.92 & 75.14 & 14.08 & 5.72 & 255.2 \\ \hline
+						\textbf{Std} & 0.51 & 2.41 & 0.51 & 2.27 & 9.25 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 3 de la Arquitectura 3}
+					\label{tab:res-a3-e3}
+				\end{center}
+			\end{table}
+			
+			En este experimento hemos conseguido reducir considerablemente el \textit{variance} as\'i que podemos concluir que el aumento de la penalizaci\'on del regularizador sirve para evitar el \textit{overfitting}.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e3.png}		
+					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 3}	
+					\label{tr-a3-e3}
+				\end{center}
+			\end{figure}
+			En la figura \ref{tr-a3-e3} observamos una evoluci\'on err\'atica en el \textit{loss} en validaci\'on lo que puede indicar que el problema del \text{vanishing gradient} puede estar presente en el modelo.
+			
+		\subsection{Experimento 4: Volvemos a ReLU}
+		\label{s-a3-e4}
+			Cambiamos la funci\'on de activaci\'on a ReLU para comprobar si ayuda con el problema del \textit{vanishing gradient}.
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & \textbf{ReLU} & Categorical Crossentropy & ADAM & l2 0.1
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 3}
+				\label{tab:hip-a3-e4}
+			\end{table}
+			\newpage			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 80.92 & 77.03 & 14.08 & 4.07 & 258.4 \\ \hline
+						\textbf{Std} & 0.46 & 1.8 & 0.46 & 1.56 & 7.46 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 4 de la Arquitectura 3}
+					\label{tab:res-a3-e4}
+				\end{center}
+			\end{table}
+			
+			Hemos obtenido unos resultados similares al experimento anterior, adem\'as en la figura \ref{tr-a3-e4} se aprecia que no hay una fase de entrenamiento tan err\'atica.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e4.png}		
+					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 3}	
+					\label{tr-a3-e4}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 5: Eliminamos la regularizaci\'on}
+		\label{s-a3-e5}
+			Nos preguntamos si tantos mecanismos contra el \textit{vanishing gradient} y \textit{overfitting} (\textit{batch normalization}, ReLU, regularizaci\'on L2) est\'an interfiriendo entre ellos as\'i que para comprobarlo retiramos la regularizaci\'on L2 de las capas ocultas.
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & No
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 3}
+				\label{tab:hip-a3-e5}
+			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 97.31 & 74.55 & -2.31 & 22.76 & 248 \\ \hline
+						\textbf{Std} & 0.44 & 0.99 & 0.44 & 0.68 & 6.12 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 5 de la Arquitectura 3}
+					\label{tab:res-a3-e5}
+				\end{center}
+			\end{table}
+			\newpage
+			Definitivamente la regularizaci\'on es necesaria para evitar el \textit{overfitting}
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e5.png}		
+					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 3}	
+					\label{tr-a3-e5}
+				\end{center}
+			\end{figure}
+		
+		\subsection{Conclusiones de la Arquitectura 3}
+			\begin{itemize}
+				\item La regularizaci\'on L2 es necesaria para evitar el \textit{overfitting}.
+				\item A mayor penalizaci\'on en L2 menor \textit{overfitting}.
+				\item ReLU ayuda a mitigar el \textit{vanishing gradient}.
+				\item Batch Normalization no ayuda a reducir el \textit{bias}.
+			\end{itemize}
 \end{document}
