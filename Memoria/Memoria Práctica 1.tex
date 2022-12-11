@@ -608,7 +608,35 @@
 			\end{figure}
 			
 		\subsection{Experimento 5: Eliminamos la regularizaci\'on}
-			Nos preguntamos si tantos mecanismos contra el \textit{vanishing gradient} (\textit{batch normalization}, ReLU, regularizaci\'on L2) est\'an interfiriendo entre ellos as\'i que para comprobarlo retiramos la regularizaci\'on L2 de las capas ocultas.
+			Nos preguntamos si tantos mecanismos contra el \textit{vanishing gradient} y \textit{overfitting} (\textit{batch normalization}, ReLU, regularizaci\'on L2) est\'an interfiriendo entre ellos as\'i que para comprobarlo retiramos la regularizaci\'on L2 de las capas ocultas.
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & No
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 3}
+				\label{tab:hip-a3-e5}
+			\end{table}
 			
-		
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 97.31 & 74.55 & -2.31 & 22.76 & 248 \\ \hline
+						\textbf{Std} & 0.44 & 0.99 & 0.44 & 0.68 & 6.12 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 5 de la Arquitectura 3}
+					\label{tab:res-a3-e5}
+				\end{center}
+			\end{table}
+			\newpage
+			Definitivamente la regularizaci\'on es necesaria para evitar el \textit{overfitting}
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e5.png}		
+					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 3}	
+					\label{tr-a3-e5}
+				\end{center}
+			\end{figure}
 \end{document}
