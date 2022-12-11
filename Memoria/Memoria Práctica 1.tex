@@ -574,5 +574,41 @@
 			\end{figure}
 			En la figura \ref{tr-a3-e3} observamos una evoluci\'on err\'atica en el \textit{loss} en validaci\'on lo que puede indicar que el problema del \text{vanishing gradient} puede estar presente en el modelo.
 			
+		\subsection{Experimento 4: Volvemos a ReLU}
+			Cambiamos la funci\'on de activaci\'on a ReLU para comprobar si ayuda con el problema del \textit{vanishing gradient}.
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & \textbf{ReLU} & Categorical Crossentropy & ADAM & l2 0.1
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 3}
+				\label{tab:hip-a3-e4}
+			\end{table}
+			\newpage			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 80.92 & 77.03 & 14.08 & 4.07 & 258.4 \\ \hline
+						\textbf{Std} & 0.46 & 1.8 & 0.46 & 1.56 & 7.46 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 4 de la Arquitectura 3}
+					\label{tab:res-a3-e4}
+				\end{center}
+			\end{table}
+			
+			Hemos obtenido unos resultados similares al experimento anterior, adem\'as en la figura \ref{tr-a3-e4} se aprecia que no hay una fase de entrenamiento tan err\'atica.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e4.png}		
+					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 3}	
+					\label{tr-a3-e4}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 5: Eliminamos la regularizaci\'on}
+			Nos preguntamos si tantos mecanismos contra el \textit{vanishing gradient} (\textit{batch normalization}, ReLU, regularizaci\'on L2) est\'an interfiriendo entre ellos as\'i que para comprobarlo retiramos la regularizaci\'on L2 de las capas ocultas.
+			
 		
 \end{document}
