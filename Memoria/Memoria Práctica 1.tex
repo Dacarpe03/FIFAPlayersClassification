@@ -457,4 +457,55 @@
 				\item El optimizador ADAM no ha proporcionado mejoras significativas con respecto al SGD para esta arquitectura.
 			\end{itemize}
 			
+	\section{Arquitectura 3: Batch normalization}
+		Despu\'es de no conseguir reducir el \textit{bias} de nuestro modelo con m\'as capas ocultas suponemos que estamos ante un problema de \textit{vanishing gradient}, una de las soluciones que existe es utilizar capas de \textit{batch normalization} para estandarizar los pesos de las neuronas. La arquitectura que utilizaremos durante los siguientes experimentos es:
+		\begin{enumerate}
+			\item Capa densa de 128 neuronas
+			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
+			\item Capa densa de 64 neuronas
+			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
+			\item Capa densa de 32 neuronas
+			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
+		\end{enumerate}
+		
+		\subsection{Experimento 1: Probamos la configuraci\'on del experimento \ref{s-a2-e5}}
+			Para comprobar como afecta la introducci\'on del \textit{batch normalization}, utilizamos la configuraci\'on del \'ultimo experimento realizado.
+			
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 64 & tanh & Categorical Crossentropy & ADAM & l2 0.001
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 3}
+				\label{tab:hip-a3-e1}
+			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 89.23 & 76.23 & 5.76 & 15.59 & 950.4 \\ \hline
+						\textbf{Std} & 0.46 & 1.54 & 0.46 & 1.75 & 55.11 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 1 de la Arquitectura 3}
+					\label{tab:res-a3-e1}
+				\end{center}
+			\end{table}
+			La tabla \ref{tab:res-a3-e1} nos muestra que con \textit{batch normalization} hemos obtenido una buena \textit{accuracy} en el conjunto de entrenamiento pero a cambio de obtener un modelo con \textit{overfitting} como nos indica el \textit{variance} de 15\%. Tambi\'en ha sido la ejecuci\'on m\'as larga dado el tama\~no del batch y que hemos usado \textit{batch normalization} que ralentiza el proceso de entrenamiento.
+			\newpage
+			 
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e1.png}		
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 3}	
+					\label{tr-a3-e1}
+				\end{center}
+			\end{figure}
+			
+			En la figura \ref{tr-a3-e1} vemos como el modelo llega al punto de \textit{overfit} alrededor de la \textit{epoch} 50 donde el \textit{accuracy} de validaci\'on se separa del de entrenamiento.
+			
+			\subsection{Experimento 2: Aumentamos \textit{batch size}}
+				A\'un no hemos conseguido mejorar el \textit{accuracy} en el conjunto de validaci\'on, pero en este experimento vamos a intentar retrasar el \textit{overfitting} del modelo a la vez que el tiempo de entrenamiento aumentando el \textit{batch size}
 \end{document}
