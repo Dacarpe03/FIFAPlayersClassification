@@ -506,6 +506,39 @@
 			
 			En la figura \ref{tr-a3-e1} vemos como el modelo llega al punto de \textit{overfit} alrededor de la \textit{epoch} 50 donde el \textit{accuracy} de validaci\'on se separa del de entrenamiento.
 			
-			\subsection{Experimento 2: Aumentamos \textit{batch size}}
-				A\'un no hemos conseguido mejorar el \textit{accuracy} en el conjunto de validaci\'on, pero en este experimento vamos a intentar retrasar el \textit{overfitting} del modelo a la vez que el tiempo de entrenamiento aumentando el \textit{batch size}
+		\subsection{Experimento 2: Aumentamos \textit{batch size}}
+			A\'un no hemos conseguido mejorar el \textit{accuracy} en el conjunto de validaci\'on, pero en este experimento vamos a intentar retrasar el \textit{overfitting} del modelo a la vez que el tiempo de entrenamiento aumentando el \textit{batch size}. La configuraci\'on para este experimento es la siguiente:
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & \textbf{256} & tanh & Categorical Crossentropy & ADAM & l2 0.001
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 3}
+				\label{tab:hip-a3-e2}
+			\end{table}
+				
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 97.02 & 73.89 & -2.02 & 23.17 & 254 \\ \hline
+						\textbf{Std} & 0.53 & 0.48 & 0.53 & 0.61 & 14.04 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 2 de la Arquitectura 3}
+					\label{tab:res-a3-e1}
+				\end{center}
+			\end{table}
+				
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.4]{tr-a3-e2.png}		
+					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 3}	
+					\label{tr-a3-e2}
+				\end{center}
+			\end{figure}
+			Lo \'unico que hemos conseguido reducir con este experimento ha sido el tiempo de entrenamiento, el \textit{variance} ha aumentado hasta un 23\%.
+			En la figura \ref{tr-a3-e2} vemos reflejado el \textit{overfitting}, lo que explica el \textit{bias} negativo.
+			
+				
 \end{document}
