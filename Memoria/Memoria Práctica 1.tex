@@ -526,7 +526,7 @@
 						\textbf{Std} & 0.53 & 0.48 & 0.53 & 0.61 & 14.04 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 2 de la Arquitectura 3}
-					\label{tab:res-a3-e1}
+					\label{tab:res-a3-e2}
 				\end{center}
 			\end{table}
 				
@@ -540,5 +540,39 @@
 			Lo \'unico que hemos conseguido reducir con este experimento ha sido el tiempo de entrenamiento, el \textit{variance} ha aumentado hasta un 23\%.
 			En la figura \ref{tr-a3-e2} vemos reflejado el \textit{overfitting}, lo que explica el \textit{bias} negativo.
 			
-				
+		\subsection{Experimento 3: Aumentamos la penalizaci\'on del regularizador}
+			El regularizador L2 a\~nade una penalizaci\'on en base al tama\~no de los pesos, como no queremos que se descontrolen como ha estado ocurriendo, aumentamos esta penalizaci\'on para evitar el overfitting. La configuraci\'on para este experimento es:
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & tanh & Categorical Crossentropy & ADAM & \textbf{l2 0.1}
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 3}
+				\label{tab:hip-a3-e3}
+			\end{table}
+			
+			Tras 5 entrenamientos obtenemos los siguientes resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Mean} & 80.92 & 75.14 & 14.08 & 5.72 & 255.2 \\ \hline
+						\textbf{Std} & 0.51 & 2.41 & 0.51 & 2.27 & 9.25 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 3 de la Arquitectura 3}
+					\label{tab:res-a3-e3}
+				\end{center}
+			\end{table}
+			
+			En este experimento hemos conseguido reducir considerablemente el \textit{variance} as\'i que podemos concluir que el aumento de la penalizaci\'on del regularizador sirve para evitar el \textit{overfitting}.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a3-e3.png}		
+					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 3}	
+					\label{tr-a3-e3}
+				\end{center}
+			\end{figure}
+			En la figura \ref{tr-a3-e3} observamos una evoluci\'on err\'atica en el \textit{loss} en validaci\'on lo que puede indicar que el problema del \text{vanishing gradient} puede estar presente en el modelo.
+			
+		
 \end{document}
