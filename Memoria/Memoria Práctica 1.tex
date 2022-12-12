@@ -652,4 +652,22 @@
 				\item ReLU ayuda a mitigar el \textit{vanishing gradient}.
 				\item Batch Normalization no ayuda a reducir el \textit{bias}.
 			\end{itemize}
+			
+	\section{Arquitectura 4: A\~nadimos profundidad}
+		Hasta el momento el m\'aximo \textit{accuracy} en validaci\'on que hemos conseguido ha sido en el experimento \ref{s-a1-e2} con un 81.5\%, nos parece que es un resultado malo para un problema de juguete como es este. Tras haber intentado distintos m\'etodos para reducir el \textit{bias} sin aumentar el \textit{variance} sin \'exito decidimos aumentar la profundidad de la red a 7 capas:
+		\begin{enumerate}
+			\item Capa densa de 2048 con Batch Normalization.
+			\item Capa densa de 1048 con BN.
+			\item Capa densa de 512 con BN.
+			\item Capa densa de 256 con BN.
+			\item Capa densa de 128 con BN.
+			\item Capa densa de 64 con BN.
+			\item Capa densa de 32 con BN.
+		\end{enumerate}
+		
+		Cabe destacar que hemos estado repitiendo cada experimento 5 veces y no hemos encontrado diferencias significativas entre ellos, adem\'as una muestra aleatoria de tama\~no 5 no suele ser representativa del conjunto total. Creemos que el objetivo de esta pr\'actica es variar los hperpar\'ametros y analizar su efecto en el modelo as\'i que a partir de este punto solo realizaremos cada experimento otra vez para poder probar m\'as combinaciones.
+		
+		\subsection{Experimento 1: Repetimos la \'ultima configuraci\'on}
+			Vamos a usar la configuraci\'on del experimento \ref{s-a3-e5} para comprobar como afecta el cambio de arquitectura.
+			
 \end{document}
