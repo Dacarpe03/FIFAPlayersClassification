@@ -617,7 +617,7 @@
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
 					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
-					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & No
+					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & \textbf{No}
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 3}
 				\label{tab:hip-a3-e5}
@@ -652,4 +652,280 @@
 				\item ReLU ayuda a mitigar el \textit{vanishing gradient}.
 				\item Batch Normalization no ayuda a reducir el \textit{bias}.
 			\end{itemize}
+			
+	\section{Arquitectura 4: A\~nadimos profundidad}
+		Hasta el momento el m\'aximo \textit{accuracy} en validaci\'on que hemos conseguido ha sido en el experimento \ref{s-a1-e2} con un 81.5\%, nos parece que es un resultado malo para un problema de juguete como es este. Tras haber intentado distintos m\'etodos para reducir el \textit{bias} sin aumentar el \textit{variance} sin \'exito decidimos aumentar la profundidad de la red a 7 capas:
+		\begin{enumerate}
+			\item Capa densa de 2048 con Batch Normalization.
+			\item Capa densa de 1048 con BN.
+			\item Capa densa de 512 con BN.
+			\item Capa densa de 256 con BN.
+			\item Capa densa de 128 con BN.
+			\item Capa densa de 64 con BN.
+			\item Capa densa de 32 con BN.
+		\end{enumerate}
+		
+		Cabe destacar que hemos estado repitiendo cada experimento 5 veces y no hemos encontrado diferencias significativas entre ellos, adem\'as una muestra aleatoria de tama\~no 5 no suele ser representativa del conjunto total. Creemos que el objetivo de esta pr\'actica es variar los hiperpar\'ametros y analizar su efecto en el modelo as\'i que a partir de este punto solo realizaremos cada experimento otra vez para poder probar m\'as combinaciones.
+		\newpage
+		
+		\subsection{Experimento 1: Repetimos la \'ultima configuraci\'on}
+		\label{s-a4-e1}
+			Vamos a usar la configuraci\'on del experimento \ref{s-a3-e5} para comprobar como afecta el cambio de arquitectura.
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & No
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 4}
+				\label{tab:hip-a4-e1}
+			\end{table}
+			
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						99.88 & 74.13 & -4.88 & 25.87 & 426 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 1 de la Arquitectura 4}
+					\label{tab:res-a4-e	}
+				\end{center}
+			\end{table}
+			
+			Como vemos hemos vuelto a obtener \textit{overfitting}, dado que no hemos reintroducido la regularizaci\'on desde el experimento \ref{s-a3-e5}.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e1.png}		
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 4}	
+					\label{tr-a4-e1}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 2: Reintroducimos la regularizaci\'on L2}
+		\label{s-a4-e2}
+			Para evitar el \textit{overfitting} volvemos a usar la regularizaci\'on L2 con penalizaci\'on 0.1
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & \textbf{l2 0.1}
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 4}
+				\label{tab:hip-a4-e2}
+			\end{table}
+			
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						80.99 & 74.75 & 14.01 & 6.24 & 457 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 2 de la Arquitectura 4}
+					\label{tab:res-a4-e2}
+				\end{center}
+			\end{table}
+			
+			Hemos evitado que el modelo haga \textit{overfitting} pero en la figura \ref{tr-a4-e2} se ve un entrenamiento demasiado err\'atico en cuanto al conjunto de validaci\'on, el \textit{loss} var\'ia enormemente en cada iteraci\'on, puede ser porque estemos estancados en un m\'inimo local.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e2.png}		
+					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 4}	
+					\label{tr-a4-e2}
+				\end{center}
+			\end{figure}
+			
+			En la matriz de confusi\'on, hemos detectado que por primera vez las clases "Intermediate" y "Good" son las que mayor \textit{recall} tienen lo que refuerza nuestra teor\'ia del m\'inimo local.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.7]{cm-a4-e2.png}		
+					\caption{Matriz de confusi\'on en el Experimento 2 de la Arquitectura 4}	
+					\label{cm-a4-e2}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 3: Desactivamos el bias de las capas ocultas}
+			En este momento reparamos en que estamos usando el vector \textit{bias} de las capas ocultas, pero no es necesario tenerlo en cuenta porque al estar usando \textit{Batch Normalization} ya estamos incluyendo un par\'ametro de \textit{offset} $\beta$. Vamos a comprobar si mejora el proceso de entrenamiento.
+			
+			\begin{table}[!h]
+				\begin{tabular}{| c | c | c | c | c | c | c |}
+					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
+					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & l2 0.1
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 4}
+				\label{tab:hip-a4-e3}
+			\end{table}
+			
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						81.16 & 75.81 & 13.84 & 5.35 & 422 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 3 de la Arquitectura 4}
+					\label{tab:res-a4-e3}
+				\end{center}
+			\end{table}
+			
+			Como vemos, el cambio introducido no ha afectado al proceso de entrenamiento, simplemente hemos reducido el tiempo en 30 segundos.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e3.png}		
+					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 4}	
+					\label{tr-a4-e3}
+				\end{center}
+			\end{figure}
+			
+			En la matriz de confusi\'on comprobamos que la diagonal ha vuelto a los valores usuales.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.7]{cm-a4-e3.png}		
+					\caption{Matriz de confusi\'on en el Experimento 3 de la Arquitectura 4}	
+					\label{cm-a4-e3}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 4: Usamos inicializadores}
+        \label{s-a4-e4}
+			Al estar usando una arquitectura profunda es importante que los pesos no se inicializen con valores demasiado altos ya que estos valores pueden crecer descontroladamente en las \'ultimas capas, as\'i que utilizaremos el initicializador \textit{He Normal}. La configuraci\'on queda as\'i:
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & 256 & ReLU & C.C. & ADAM & l2 0.1 & \textbf{He Normal}
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 4}
+				\label{tab:hip-a4-e4}
+			\end{table}
+            \newpage
+            			
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						81.16 & 75.81 & 13.84 & 5.35 & 422 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 4 de la Arquitectura 4}
+					\label{tab:res-a4-e4}
+				\end{center}
+			\end{table}
+			
+			Como vemos, el cambio introducido no ha afectado al proceso de entrenamiento, simplemente hemos reducido el tiempo en 30 segundos. Puede que tengamos que cambiar el regularizador.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e4.png}		
+					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 4}	
+					\label{tr-a4-e4}
+				\end{center}
+			\end{figure}
+			
+		\subsection{Experimento 5: Cambiamos el regularizador}
+        \label{s-a4-e5}
+			Creemos que el problema del entrenamient err\'atico est\'a producido por el regularizador, hemos aumentado mucho la penalizaci\'on y L2 a\~nade penalizaci\'on proporcional a la media del cuadrado de los pesos. Pensamos que utilizando L1 y reduciendo $\lambda$ conseguiremos solucionar nuestro problema.
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & 256 & ReLU & C.C. & ADAM & \textbf{l1 0.0001} & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 4}
+				\label{tab:hip-a4-e5}
+			\end{table}
+   
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						95.86 & 74.01 & -0.86 & 21.85 & 455 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 5 de la Arquitectura 4}
+					\label{tab:res-a4-e5}
+				\end{center}
+			\end{table}
+
+			Relajando la penalizaci\'on en la regularizaci\'on hemos vuelto al \textit{overfitting} como se ve en la tabla \ref{tab:res-a4-e5}, ya que tenemos un \textit{variance} de 22\%. Lo bueno es que hemos reducido la variaci\'on en el entrenamiento como vemos en la figura \ref{tr-a4-e5}.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e5.png}		
+					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 4}	
+					\label{tr-a4-e5}
+				\end{center}
+			\end{figure}
+   
+        \subsection{Experimento 6: Aumentamos \textit{batch size}}
+        \label{s-a4-e6}
+			Antes de pasar a la siguiente arquitectura decidimos aumentar el tama\~no del \textit{batch size} para probar si as\'i reducimos algo el \textit{overfitting}.
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & \textbf{1024} & ReLU & C.C. & ADAM & l1 0.0001 & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 6 de la Arquitectura 4}
+				\label{tab:hip-a4-e6}
+			\end{table}
+            \newpage
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						99.8 & 74.88 & -4.8 & 24.92 & 455 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 6 de la Arquitectura 4}
+					\label{tab:res-a4-e6}
+				\end{center}
+			\end{table}
+   
+			Ha aumentado el \textit{ovefitting}, de hecho el \textit{loss} del conjunto de validaci\'on no aparece en el gr\'afico de evoluci\'on durante el entrenamiento.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e6.png}		
+					\caption{Entrenamiento durante el Experimento 6 de la Arquitectura 4}	
+					\label{tr-a4-e6}
+				\end{center}
+			\end{figure}
+        \newpage
+        
+        \subsection{Experimento 7: Reducimos \textit{batch size}}
+        \label{s-a4-e7}
+			No estamos satisfechos con el \'ultimo experimento que adem\'as nos sugiere que a mayor \textit{batch size} mayor \textit{bias} por lo que lo reducimos a un tama\~no de 32.
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & \textbf{32} & ReLU & C.C. & ADAM & l1 0.0001 & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 7 de la Arquitectura 4}
+				\label{tab:hip-a4-e7}
+			\end{table}
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						78.14 & 77.79 & 16.85 & 0.35 & 3239 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 7 de la Arquitectura 4}
+					\label{tab:res-a4-e7}
+				\end{center}
+			\end{table}
+   
+			Como vemos, reducir dr\'asticamente el \textit{batch size} ha eliminado por completo el \textit{overfitting}
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e7.png}		
+					\caption{Entrenamiento durante el Experimento 7 de la Arquitectura 4}	
+					\label{tr-a4-e7}
+				\end{center}
+			\end{figure}
+        \subsection{Conclusiones Arquitectura 4}
+            \begin{itemize}
+                \item Sin regularizaci\'on el \textit{overfitting} persiste.
+                \item A menor tama\~no del \textit{batch size} menor \textit{overfitting}.
+                \item La regularizaci\'on L2 con un $\lambda$ grande hace que el entrenamiento sea err\'atico.
+                \item Una arquitectura con mayor profundidad no ha producido una mejora en el \textit{bias}.
+            \end{itemize}
 \end{document}
