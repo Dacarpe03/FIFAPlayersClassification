@@ -822,7 +822,7 @@
 			
 		\subsection{Experimento 5: Cambiamos el regularizador}
         \label{s-a4-e5}
-			Antes de pasar a la siguiente arquitectura se nos ocurre probar a aumen.
+			Creemos que el problema del entrenamient err\'atico est\'a producido por el regularizador, hemos aumentado mucho la penalizaci\'on y L2 a\~nade penalizaci\'on proporcional a la media del cuadrado de los pesos. Pensamos que utilizando L1 y reduciendo $\lambda$ conseguiremos solucionar nuestro problema.
 			
 			\begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|}
@@ -844,8 +844,7 @@
 					\label{tab:res-a4-e5}
 				\end{center}
 			\end{table}
-    
-			\newpage
+
 			Relajando la penalizaci\'on en la regularizaci\'on hemos vuelto al \textit{overfitting} como se ve en la tabla \ref{tab:res-a4-e5}, ya que tenemos un \textit{variance} de 22\%. Lo bueno es que hemos reducido la variaci\'on en el entrenamiento como vemos en la figura \ref{tr-a4-e5}.
 			\begin{figure}[!h]
 				\begin{center}
@@ -854,4 +853,39 @@
 					\label{tr-a4-e5}
 				\end{center}
 			\end{figure}
+   
+        \subsection{Experimento 6: Aumentamos \textit{batch size}}
+        \label{s-a4-e6}
+			Antes de pasar a la siguiente arquitectura decidimos aumentar el tama\~no del \textit{batch size} para probar si as\'i reducimos algo el \textit{overfitting}.
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & \textbf{1024} & ReLU & C.C. & ADAM & l1 0.0001 & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 6 de la Arquitectura 4}
+				\label{tab:hip-a4-e6}
+			\end{table}
+            \newpage
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						99.8 & 74.88 & -4.8 & 24.92 & 455 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 6 de la Arquitectura 4}
+					\label{tab:res-a4-e6}
+				\end{center}
+			\end{table}
+   
+			Ha aumentado el \textit{ovefitting}, de hecho el \textit{loss} del conjunto de validaci\'on no aparece en el gr\'afico de evoluci\'on durante el entrenamiento.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e6.png}		
+					\caption{Entrenamiento durante el Experimento 6 de la Arquitectura 4}	
+					\label{tr-a4-e6}
+				\end{center}
+			\end{figure}
+        \newpage
 \end{document}
