@@ -785,4 +785,39 @@
 				\end{center}
 			\end{figure}
 			
+		\subsection{Experimento 4: Usamos inicializadores}
+        \label{s-a4-e4}
+			Al estar usando una arquitectura profunda es importante que los pesos no se inicializen con valores demasiado altos ya que estos valores pueden crecer descontroladamente en las \'ultimas capas, as\'i que utilizaremos el initicializador \textit{He Normal}. La configuraci\'on queda as\'i:
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & 256 & ReLU & C.C. & ADAM & l2 0.1 & \textbf{He Normal}
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 4}
+				\label{tab:hip-a4-e4}
+			\end{table}
+            \newpage
+            			
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						81.16 & 75.81 & 13.84 & 5.35 & 422 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 4 de la Arquitectura 4}
+					\label{tab:res-a4-e4}
+				\end{center}
+			\end{table}
+			
+			Como vemos, el cambio introducido no ha afectado al proceso de entrenamiento, simplemente hemos reducido el tiempo en 30 segundos. Puede que tengamos que cambiar el regularizador.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e4.png}		
+					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 4}	
+					\label{tr-a4-e4}
+				\end{center}
+			\end{figure}
+			
 \end{document}
