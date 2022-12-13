@@ -888,4 +888,44 @@
 				\end{center}
 			\end{figure}
         \newpage
+        
+        \subsection{Experimento 7: Reducimos \textit{batch size}}
+        \label{s-a4-e7}
+			No estamos satisfechos con el \'ultimo experimento que adem\'as nos sugiere que a mayor \textit{batch size} mayor \textit{bias} por lo que lo reducimos a un tama\~no de 32.
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & \textbf{32} & ReLU & C.C. & ADAM & l1 0.0001 & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 7 de la Arquitectura 4}
+				\label{tab:hip-a4-e7}
+			\end{table}
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						78.14 & 77.79 & 16.85 & 0.35 & 3239 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 7 de la Arquitectura 4}
+					\label{tab:res-a4-e7}
+				\end{center}
+			\end{table}
+   
+			Como vemos, reducir dr\'asticamente el \textit{batch size} ha eliminado por completo el \textit{overfitting}
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e7.png}		
+					\caption{Entrenamiento durante el Experimento 7 de la Arquitectura 4}	
+					\label{tr-a4-e7}
+				\end{center}
+			\end{figure}
+        \subsection{Conclusiones Arquitectura 4}
+            \begin{itemize}
+                \item Sin regularizaci\'on el \textit{overfitting} persiste.
+                \item A menor tama\~no del \textit{batch size} menor \textit{overfitting}.
+                \item La regularizaci\'on L2 con un $\lambda$ grande hace que el entrenamiento sea err\'atico.
+                \item Una arquitectura con mayor profundidad no ha producido una mejora en el \textit{bias}.
+            \end{itemize}
 \end{document}
