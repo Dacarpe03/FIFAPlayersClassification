@@ -820,4 +820,38 @@
 				\end{center}
 			\end{figure}
 			
+		\subsection{Experimento 5: Cambiamos el regularizador}
+        \label{s-a4-e5}
+			Antes de pasar a la siguiente arquitectura se nos ocurre probar a aumen.
+			
+			\begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{Learning rate}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & 256 & ReLU & C.C. & ADAM & \textbf{l1 0.0001} & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 4}
+				\label{tab:hip-a4-e5}
+			\end{table}
+   
+			Y obtenemos los resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						95.86 & 74.01 & -0.86 & 21.85 & 455 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 5 de la Arquitectura 4}
+					\label{tab:res-a4-e5}
+				\end{center}
+			\end{table}
+    
+			\newpage
+			Relajando la penalizaci\'on en la regularizaci\'on hemos vuelto al \textit{overfitting} como se ve en la tabla \ref{tab:res-a4-e5}, ya que tenemos un \textit{variance} de 22\%. Lo bueno es que hemos reducido la variaci\'on en el entrenamiento como vemos en la figura \ref{tr-a4-e5}.
+			\begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a4-e5.png}		
+					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 4}	
+					\label{tr-a4-e5}
+				\end{center}
+			\end{figure}
 \end{document}
