@@ -31,12 +31,13 @@
 %\address{}
 
 	\section{Arquitectura 1: Feed Forward Neural Network}
+	\label{d-s-a1}
 		La primera arquitectura que usaremos es tan simple como:
 		\begin{enumerate}
 			\item Capa densa con 512 neuronas.
 		\end{enumerate}
 		\subsection{Experimento 1: Configuraci\'on base arbitraria}
-		\label{s-a1-e1}
+		\label{d-s-a1-e1}
 			Usamos la siguiente configuraci\'on:
 			\begin{table}[!h]
 				\begin{center}
@@ -45,7 +46,7 @@
 						100 & 0.1 & 512 & ReLU & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 1}
-					\label{tab:hip-a1-e1}
+					\label{tab:hip-d-a1-e1}
 				\end{center}
 			\end{table}
 		
@@ -58,14 +59,14 @@
 						\textbf{Std} & 0.05 & 0.14 & 0.05 & 0.19 & 0 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 1 de la Arquitectura 1}
-					\label{tab:res-a1-e1}
+					\label{tab:res-d-a1-e1}
 				\end{center}
 			\end{table}
 		
 			Tener un \textit{bias} alto y una \textit{variance} baja significa que hay margen de mejora antes de llegar al \textit{overfitting} y hay varias posibilidades para conseguir una mejor \textit{accuracy}: a\~nadir m\'as neuronas, entrenar con m\'as \textit{epochs}, ...
 		
 		\subsection{Experimento 2: Aumentamos \textit{epochs}}
-		\label{s-a1-e2}
+		\label{d-s-a1-e2}
 			Tras el experimento anterior, nos decantamos por entrenar el modelo durante m\'as \textit{epochs} para reducir el \textit{bias} usando la misma configuraci\'on.\\
 			\begin{table}[!h]
 				\begin{center}
@@ -74,7 +75,7 @@
 						\textbf{1000} & 0.1 & 512 & ReLU & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 1}
-					\label{tab:hip-a1-e2}
+					\label{tab:hip-d-a1-e2}
 				\end{center}
 			\end{table}
 			
@@ -87,21 +88,21 @@
 						\textbf{Std} & 0.03 & 0.17 & 0.03 & 0.18 & 8.8 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 2 de la Arquitectura 1}
-					\label{tab:res-a1-e2}
+					\label{tab:res-d-a1-e2}
 				\end{center}
 			\end{table}
 			Con respecto al experimento anterior hemos aumentado el \textit{accuracy} tanto en el entrenamiento como en validaci\'on, reduciendo as\'i el \textit{bias} del modelo en un 5\% aunque ha aumentado ligeramente el \textit{variance}. Como es l\'ogico el tiempo de entrenamiento ha crecido, aunque no de forma lineal.\\
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a1-e2.png}		
+					\includegraphics[scale=0.5]{d-tr-a1-e2.png}		
 					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 1}	
-					\label{tr-a1-e2}
+					\label{d-tr-a1-e2}
 				\end{center}
 			\end{figure}
-			En la figura \ref{tr-a1-e2} vemos que a partir del epoch 400 no hay una mejora en \textit{accuracy} para el conjunto de validaci\'on aunque s\'i para el conjunto de entrenamiento lo que nos indica que un n\'umero de \textit{epochs} tan elevado como el que hemos usado en este experimento con esta arquitectura y configuraci\'on conduce a un \textit{overfitting} del modelo, aunque por el momento no es excesivo como nos indica la \textit{variance}.
+			En la figura \ref{d-tr-a1-e2} vemos que a partir del epoch 400 no hay una mejora en \textit{accuracy} para el conjunto de validaci\'on aunque s\'i para el conjunto de entrenamiento lo que nos indica que un n\'umero de \textit{epochs} tan elevado como el que hemos usado en este experimento con esta arquitectura y configuraci\'on conduce a un \textit{overfitting} del modelo, aunque por el momento no es excesivo como nos indica la \textit{variance}.
 			
 		\subsection{Experimento 3: Cambiamos a \textit{tanh} y reducimos \textit{epochs}}
-		\label{s-a1-e3}
+		\label{d-s-a1-e3}
 			Para este experimento decidimos reducir las \textit{epochs} ya que como hemos visto en el experimento anterior, no hay una mejora significativa en validaci\'on con m\'as epochs.\\
 			Adem\'as de esto, cambiaremos la funci\'on de activaci\'on a \textit{tanh}. Hasta el momento hemos usado \textit{ReLU} pero no hay raz\'on para usarla para esta arquitectura porque resuelve el problema del \textit{vanishing gradient} que se da en arquitecturas profundas.\\
 			La configuraci\'on que usamos para el experimento 3 es:
@@ -112,7 +113,7 @@
 						\textbf{400} & 0.1 & 512 & \textbf{tanh} & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 1}
-					\label{tab:hip-a1-e3}
+					\label{tab:hip-d-a1-e3}
 				\end{center}
 			\end{table}
 			
@@ -125,24 +126,24 @@
 						\textbf{Std} & 0.2 & 0.51 & 0.22 & 0.33 & 3.27 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 3 de la Arquitectura 1}
-					\label{tab:res-a1-e3}
+					\label{tab:res-d-a1-e3}
 				\end{center}
 			\end{table}
 			
-			Con esta configuraci\'on el modelo ha vuelto a aumentar el \textit{bias} y obtenemos unos resultados pr\'acticamente id\'enticos al experimento uno con la funci\'on de activaci\'on \textit{ReLU} aunque con m\'as epochs. Parece que con la funci\'on \textit{tanh}, el modelo se queda atrapado en m\'inimos globales como podemos apreciar en la figura \ref{tr-a1-e3} y necesita m\'as epochs para escapar de ellos.\\
+			Con esta configuraci\'on el modelo ha vuelto a aumentar el \textit{bias} y obtenemos unos resultados pr\'acticamente id\'enticos al experimento uno con la funci\'on de activaci\'on \textit{ReLU} aunque con m\'as epochs. Parece que con la funci\'on \textit{tanh}, el modelo se queda atrapado en m\'inimos globales como podemos apreciar en la figura \ref{d-tr-a1-e3} y necesita m\'as epochs para escapar de ellos.\\
 			
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a1-e3.png}		
+					\includegraphics[scale=0.5]{d-tr-a1-e3.png}		
 					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 1}	
-					\label{tr-a1-e3}
+					\label{d-tr-a1-e3}
 				\end{center}
 			\end{figure}
 			
 			Tambi\'en observamos que no ha habido overfitting hasta la epoch 400, al contrario de lo que hab\'iamos supuesto al inicio de este experimento.
 			
 		\subsection{Experimento 4: Aumentamos \textit{epochs}}
-		\label{s-a1-e4}
+		\label{d-s-a1-e4}
 			El objetivo de este experimento es comprobar cu\'antas \textit{epochs} podemos realizar antes de que el modelo comience a dirigirse hacia un \textit{overfitting} por lo que la configuraci\'on es la misma que en la ejecuci\'on anterior, excepto que volvemos a incrementar las epochs a 1000:
 			\begin{table}[!h]
 				\begin{center}
@@ -151,7 +152,7 @@
 						\textbf{1000} & 0.1 & 512 & tanh & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 1}
-					\label{tab:hip-a1-e4}
+					\label{tab:hip-d-a1-e4}
 				\end{center}
 			\end{table}
 			
@@ -164,23 +165,23 @@
 						\textbf{Std} & 0.14 & 0.62 & 0.14 & 0.53 & 2.3 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 4 de la Arquitectura 1}
-					\label{tab:res-a1-e4}
+					\label{tab:res-d-a1-e4}
 				\end{center}
 			\end{table}
 			
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a1-e4.png}		
+					\includegraphics[scale=0.5]{d-tr-a1-e4.png}		
 					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 1}	
-					\label{tr-a1-e4}
+					\label{d-tr-a1-e4}
 				\end{center}
 			\end{figure}
 			
-			Aunque hemos doblado las \textit{epochs} con respecto al experimento 3, la mejora ha sido de apenas un 2\% en \textit{accuracy}. Por otra parte, como se muestra en la figura \ref{tr-a1-e4}, el modelo no ha llegado al punto de \textit{overfitting} aun habiendo usado un n\'umero tan alto de epochs.\\
+			Aunque hemos doblado las \textit{epochs} con respecto al experimento 3, la mejora ha sido de apenas un 2\% en \textit{accuracy}. Por otra parte, como se muestra en la figura \ref{d-tr-a1-e4}, el modelo no ha llegado al punto de \textit{overfitting} aun habiendo usado un n\'umero tan alto de epochs.\\
 			Esto quiere decir que todav\'ia hay margen de mejora si seguimos entrenando con m\'as epochs aunque llevar\'ia mucho tiempo porque el aprendizaje es lento.\\
 			
 		\subsection{Experimento 5: Reducimos \textit{batch size}}
-		\label{s-a1-e5}
+		\label{d-s-a1-e5}
 			Como se necesitar\'ia aumentar exponencialmente el n\'umero de \textit{epochs} para conseguir una mejora en el \textit{accuracy}, decidimos reducir el \textit{batch size} y comprobar si de esta forma el modelo consigue mejores resultados.
 			\begin{table}[!h]
 				\begin{center}
@@ -189,7 +190,7 @@
 						1000 & 0.1 & \textbf{128} & tanh & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 1}
-					\label{tab:hip-a1-e5}
+					\label{tab:hip-d-a1-e5}
 				\end{center}
 			\end{table}
 			
@@ -202,19 +203,20 @@
 						\textbf{Std} & 0.19 & 0.29 & 0.19 & 0.28 & 25.61 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 4 de la Arquitectura 1}
-					\label{tab:res-a1-e5}
+					\label{tab:res-d-a1-e5}
 				\end{center}
 			\end{table}
-			Como vemos en la tabla \ref{tab:res-a1-e5} no conseguimos mejorar de forma significativa el \textit{accuracy}. Aumentar el \textit{batch size} ha incrementado exponencialmente el tiempo de entrenamiento por lo que no merece la pena reducir el \textit{batch size} en este caso. Lo que hemos conseguido reduciendo el \textit{batch size} ha sido que el modelo escape r\'apidamente del primer m\'inimo local con el que se topa como vemos en la figura \ref{tr-a1-e5} as\'i que concluimos que con esta t\'ecnica podemos obtener un resultado aceptable en menor tiempo.
+			Como vemos en la tabla \ref{tab:res-d-a1-e5} no conseguimos mejorar de forma significativa el \textit{accuracy}. Aumentar el \textit{batch size} ha incrementado exponencialmente el tiempo de entrenamiento por lo que no merece la pena reducir el \textit{batch size} en este caso. Lo que hemos conseguido reduciendo el \textit{batch size} ha sido que el modelo escape r\'apidamente del primer m\'inimo local con el que se topa como vemos en la figura \ref{d-tr-a1-e5} as\'i que concluimos que con esta t\'ecnica podemos obtener un resultado aceptable en menor tiempo.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a1-e5.png}		
+					\includegraphics[scale=0.5]{d-tr-a1-e5.png}		
 					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 1}	
-					\label{tr-a1-e5}
+					\label{d-tr-a1-e5}
 				\end{center}
 			\end{figure}
 			
 		\subsection{Conclusiones de la Arquitectura 1}
+		\label{d-cl-a1}
 			\begin{itemize}
 				\item \textit{ReLU} llega a un estado de \textit{overfitting} con menos \textit{epochs} que \textit{tanh}
 				\item \textit{tanh} tiene un proceso de aprendizaje m\'as lento que \textit{ReLU}
@@ -222,6 +224,7 @@
 			\end{itemize}
 			
 	\section{Arquitectura 2: Deep Feed Forward Neural Network}
+	\label{d-s-a2}
 		Hemos visto que con la arquitectura anterior obtenemos un \textit{accuracy} m\'aximo de un 84\% a partir de donde el aprendizaje es lento y llegamos a un \textit{overfitting} con las t\'ecnicas utilizadas. Es por esto que decidimos usar una Deep Feed Forward Neural Network para intentar reducir el \textit{bias} del modelo.\\
 		La arquitectura que utilizaremos para la nueva serie de experimento ser\'a:
 		
@@ -232,7 +235,7 @@
 		\end{enumerate}
 		
 		\subsection{Experimento 1: Comparaci\'on con arquitectura 1}
-		\label{s-a2-e1}
+		\label{d-s-a2-e1}
 			En este experimento utilizaremos la misma configuraci\'on que en el experimento anterior:
 			\begin{table}[!h]
 				\begin{center}
@@ -241,7 +244,7 @@
 						1000 & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & None
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 2}
-					\label{tab:hip-a2-e1}
+					\label{tab:hip-d-a2-e1}
 				\end{center}
 			\end{table}
 			
@@ -255,17 +258,17 @@
 						\textbf{Std} & 0.04 & 0.26 & 0.04 & 0.26 & 4.54 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 1 de la Arquitectura 2}
-					\label{tab:res-a2-e1}
+					\label{tab:res-d-a2-e1}
 				\end{center}
 			\end{table}
 			
-			Hemos obtenido un modelo con un \textit{overfitting} muy alto, tan alto que ha cometido menos error que un humano y por eso el \textit{bias} es negativo. Podemos ver el \textit{overfitting} reflejado en el \textit{variance} de un 25\% de la tabla \ref{tab:res-a2-e1} y la evoluci\'on del \textit{validation categorical accuracy} en la figura \ref{tr-a2-e1} que empeora a lo largo del entrenamiento.
+			Hemos obtenido un modelo con un \textit{overfitting} muy alto, tan alto que ha cometido menos error que un humano y por eso el \textit{bias} es negativo. Podemos ver el \textit{overfitting} reflejado en el \textit{variance} de un 25\% de la tabla \ref{tab:res-d-a2-e1} y la evoluci\'on del \textit{validation categorical accuracy} en la figura \ref{d-tr-a2-e1} que empeora a lo largo del entrenamiento.
 			
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a2-e1.png}		
+					\includegraphics[scale=0.5]{d-tr-a2-e1.png}		
 					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 2}	
-					\label{tr-a2-e1}
+					\label{d-tr-a2-e1}
 				\end{center}
 			\end{figure}
 			
@@ -273,8 +276,8 @@
 			
 			
 		\subsection{Experimento 2: Reducimos \textit{epochs} y utilizamos regularizaci\'on}
-		\label{s-a2-e2}
-			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-a2-e2}.
+		\label{d-s-a2-e2}
+			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-d-a2-e2}.
 			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c | c | c |}
@@ -282,7 +285,7 @@
 						\textbf{400} & 0.1 & 128 & tanh & Categorical Crossentropy & SGD & \textbf{l2 0.001}
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 2}
-					\label{tab:hip-a2-e2}
+					\label{tab:hip-d-a2-e2}
 				\end{center}
 			\end{table}
 			
@@ -296,25 +299,25 @@
 						\textbf{Std} & 0.2 & 0.95 & 0.2 & 0.92 & 3.29 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 2 de la Arquitectura 2}
-					\label{tab:res-a2-e2}
+					\label{tab:res-d-a2-e2}
 				\end{center}
 			\end{table}
 			
-			Como se observa en la tabla \ref{tab:res-a2-e2}, hemos conseguido reducir el \textit{variance} un 24\% simplemente usando regularizaci\'on, ahora bien, en cuanto a \textit{accuracy} seguimos sin conseguir una mejora significativa.
+			Como se observa en la tabla \ref{tab:res-d-a2-e2}, hemos conseguido reducir el \textit{variance} un 24\% simplemente usando regularizaci\'on, ahora bien, en cuanto a \textit{accuracy} seguimos sin conseguir una mejora significativa.
 			
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a2-e2.png}		
+					\includegraphics[scale=0.5]{d-tr-a2-e2.png}		
 					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 2}	
-					\label{tr-a2-e2}
+					\label{d-tr-a2-e2}
 				\end{center}
 			\end{figure}
 			
-			En la figura \ref{tr-a2-e2} se aprecia ruido en las m\'etricas del conjunto de validaci\'on, esto es una consecuencia de la regularizaci\'on, sin ella ese ruido se descontrolar\'ia y llegar\'iamos al \textit{overfitting} como en el experimento anterior.
+			En la figura \ref{d-tr-a2-e2} se aprecia ruido en las m\'etricas del conjunto de validaci\'on, esto es una consecuencia de la regularizaci\'on, sin ella ese ruido se descontrolar\'ia y llegar\'iamos al \textit{overfitting} como en el experimento anterior.
 			
 			
 		\subsection{Experimento 3: Cambiamos el optimizador}
-		\label{s-a2-e3}
+		\label{d-s-a2-e3}
 			En este experimento vamos a comprobar si con un optimizador distinto podemos obtener mejor \textit{accuracy} sin llegar al \textit{overfitting}, para ello utilizaremos ADAM. La configuraci\'on es la siguiente:
 			
 			\begin{table}[!h]
@@ -324,7 +327,7 @@
 						400 & 0.1 & 128 & tanh & Categorical Crossentropy & \textbf{ADAM} & l2 0.001
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 2}
-					\label{tab:hip-a2-e3}
+					\label{tab:hip-d-a2-e3}
 				\end{center}
 			\end{table}
 			
@@ -339,25 +342,25 @@
 						\textbf{Std} & 0.29 & 2.61 & 0.29 & 2.44 & 4.81 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 3 de la Arquitectura 2}
-					\label{tab:res-a2-e3}
+					\label{tab:res-d-a2-e3}
 				\end{center}
 			\end{table}
 			
-			Como vemos en la tabla resultados son los peores obtenidos hasta el momento y con mucha diferencia, apenas hemos conseguido un 25\% de \textit{accuracy}. Analizando la figura \ref{tr-a2-e3}, el modelo se queda estancado en un m\'inimo local muy temprano en el entrenamiento.
+			Como vemos en la tabla resultados son los peores obtenidos hasta el momento y con mucha diferencia, apenas hemos conseguido un 25\% de \textit{accuracy}. Analizando la figura \ref{d-tr-a2-e3}, el modelo se queda estancado en un m\'inimo local muy temprano en el entrenamiento.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a2-e3.png}		
+					\includegraphics[scale=0.5]{d-tr-a2-e3.png}		
 					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 2}	
-					\label{tr-a2-e3}
+					\label{d-tr-a2-e3}
 				\end{center}
 			\end{figure}
 			
 			Observando la matriz de confusi\'on confirmamos nuestra teor\'ia, clasifica todos los jugadores en la misma clase.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.7]{cm-a2-e3.png}		
+					\includegraphics[scale=0.7]{d-cm-a2-e3.png}		
 					\caption{Matriz de confusi\'on en el Experimento 3 de la Arquitectura 2}	
-					\label{cm-a2-e3}
+					\label{d-cm-a2-e3}
 				\end{center}
 			\end{figure}
 			
@@ -365,7 +368,7 @@
 			
 			
 		\subsection{Experimento 4: Ajustamos el optimizador ADAM}
-		\label{s-a2-e4}
+		\label{d-s-a2-e4}
 			Consultando el art\'iculo en el que se present\'o ADAM (\textit{Adam: A Method for Stochastic Optimization}, (2015), D. Kingma y J. Ba), vemos que este optimizador es una combinaci\'on entre AdaGrad y RMSProp y que tiene unos par\'ametros que controlan el ratio de decrecimiento de los momentos (beta1=0.9 y beta2=0.999) que no hemos definido en el experimento anterior. Adem\'as de esto, los autores sugieren usar un \textit{learning rate} m\'as bajo del que estamos usando.\\
 			
 			La configuraci\'on queda as\'i:
@@ -376,7 +379,7 @@
 						400 & \textbf{0.001} & 128 & tanh & Categorical Crossentropy & ADAM & l2 0.001
 					\end{tabular}
 					\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 2}
-					\label{tab:hip-a2-e4}
+					\label{tab:hip-d-a2-e4}
 				\end{center}
 			\end{table}
 			
@@ -390,38 +393,38 @@
 						\textbf{Std} & 0.15 & 0.15 & 0.15 & 0.19 & 19.35 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 4 de la Arquitectura 2}
-					\label{tab:res-a2-e4}
+					\label{tab:res-d-a2-e4}
 				\end{center}
 			\end{table}
 			
-			Al haber configurado correctamente el optimizador volvemos a conseguir un \textit{accuracy} similar al que hemos estado obteniendo. Observando la figira \ref{tr-a2-e4} vemos qe podr\'iamos seguir entrenando el modelo por m\'as \textit{epochs} antes de llegar al \textit{overfitting}. Aun con todo esto, no hemos obtenido mejores resultados que con el optimizador \textit{SGD}.
+			Al haber configurado correctamente el optimizador volvemos a conseguir un \textit{accuracy} similar al que hemos estado obteniendo. Observando la figira \ref{d-tr-a2-e4} vemos qe podr\'iamos seguir entrenando el modelo por m\'as \textit{epochs} antes de llegar al \textit{overfitting}. Aun con todo esto, no hemos obtenido mejores resultados que con el optimizador \textit{SGD}.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a2-e4.png}		
+					\includegraphics[scale=0.5]{d-tr-a2-e4.png}		
 					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 2}	
-					\label{tr-a2-e4}
+					\label{d-tr-a2-e4}
 				\end{center}
 			\end{figure}
 			
-			Analizando la matriz de confusi\'on en la figura \ref{cm-a2-e4} vemos que ahora hemos solucionado el problema del modelo anterior que clasificaba todos los jugadores en la misma clase
+			Analizando la matriz de confusi\'on en la figura \ref{d-cm-a2-e4} vemos que ahora hemos solucionado el problema del modelo anterior que clasificaba todos los jugadores en la misma clase
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.7]{cm-a2-e4.png}		
+					\includegraphics[scale=0.7]{d-cm-a2-e4.png}		
 					\caption{Matriz de confusi\'on en el Experimento 4 de la Arquitectura 2}	
-					\label{cm-a2-e4}
+					\label{d-cm-a2-e4}
 				\end{center}
 			\end{figure}
 		\newpage
 		\subsection{Experimento 5: Reducimos \textit{batch-size}}
-		\label{s-a2-e5}
-			Decidimos reducir el \textit{batch size} para intentar reducir el \textit{bias} como en el experimento \ref{s-a1-e5}. La configuraci\'on para este experimento es:
+		\label{d-s-a2-e5}
+			Decidimos reducir el \textit{batch size} para intentar reducir el \textit{bias} como en el experimento \ref{d-s-a1-e5}. La configuraci\'on para este experimento es:
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
 					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
 					400 & 0.001 & \textbf{64} & tanh & Categorical Crossentropy & ADAM & l2 0.001
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 2}
-				\label{tab:hip-a2-e5}
+				\label{tab:hip-d-a2-e5}
 			\end{table}
 			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -434,22 +437,23 @@
 						\textbf{Std} & 0.22 & 0.77 & 0.22 & 0.89 & 38.48 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 5 de la Arquitectura 2}
-					\label{tab:res-a2-e5}
+					\label{tab:res-d-a2-e5}
 				\end{center}
 			\end{table}
 			
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a2-e5.png}		
+					\includegraphics[scale=0.5]{d-tr-a2-e5.png}		
 					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 2}	
-					\label{tr-a2-e5}
+					\label{d-tr-a2-e5}
 				\end{center}
 			\end{figure}
 			
 			\newpage
-			No hemos obtenido mejora, este cambio no merece la pena porque aumenta mucho el tiempo de entrenamiento. Como vemos en la figura \ref{tr-a2-e5}, parece que el modelo deja de aprender, quiz\'as por el problema del \textit{vanishing gradient} que intentaremos resolver con la siguiente arquitectura.
+			No hemos obtenido mejora, este cambio no merece la pena porque aumenta mucho el tiempo de entrenamiento. Como vemos en la figura \ref{d-tr-a2-e5}, parece que el modelo deja de aprender, quiz\'as por el problema del \textit{vanishing gradient} que intentaremos resolver con la siguiente arquitectura.
 		
 		\subsection{Conclusiones de la Arquitectura 2}
+		\label{d-cl-a2}
 			A lo largo de estos experimentos hemos concluido que:
 			\begin{itemize}
 				\item La regularizaci\'on evita el \textit{overfitting}.
@@ -458,6 +462,7 @@
 			\end{itemize}
 			
 	\section{Arquitectura 3: Batch normalization}
+	\label{d-s-a3}
 		Despu\'es de no conseguir reducir el \textit{bias} de nuestro modelo con m\'as capas ocultas suponemos que estamos ante un problema de \textit{vanishing gradient}, una de las soluciones que existe es utilizar capas de \textit{batch normalization} para estandarizar los pesos de las neuronas. La arquitectura que utilizaremos durante los siguientes experimentos es:
 		\begin{enumerate}
 			\item Capa densa de 128 neuronas
@@ -468,8 +473,8 @@
 			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
 		\end{enumerate}
 		
-		\subsection{Experimento 1: Probamos la configuraci\'on del experimento \ref{s-a2-e5}}
-		\label{s-a3-e1}
+		\subsection{Experimento 1: Probamos la configuraci\'on del experimento \ref{d-s-a2-e5}}
+		\label{d-s-a3-e1}
 			Para comprobar como afecta la introducci\'on del \textit{batch normalization}, utilizamos la configuraci\'on del \'ultimo experimento realizado.
 			
 			\begin{table}[!h]
@@ -478,7 +483,7 @@
 					400 & 0.001 & 64 & tanh & Categorical Crossentropy & ADAM & l2 0.001
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 3}
-				\label{tab:hip-a3-e1}
+				\label{tab:hip-d-a3-e1}
 			\end{table}
 			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -491,24 +496,24 @@
 						\textbf{Std} & 0.46 & 1.54 & 0.46 & 1.75 & 55.11 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 1 de la Arquitectura 3}
-					\label{tab:res-a3-e1}
+					\label{tab:res-d-a3-e1}
 				\end{center}
 			\end{table}
-			La tabla \ref{tab:res-a3-e1} nos muestra que con \textit{batch normalization} hemos obtenido una buena \textit{accuracy} en el conjunto de entrenamiento pero a cambio de obtener un modelo con \textit{overfitting} como nos indica el \textit{variance} de 15\%. Tambi\'en ha sido la ejecuci\'on m\'as larga dado el tama\~no del batch y que hemos usado \textit{batch normalization} que ralentiza el proceso de entrenamiento.
+			La tabla \ref{tab:res-d-a3-e1} nos muestra que con \textit{batch normalization} hemos obtenido una buena \textit{accuracy} en el conjunto de entrenamiento pero a cambio de obtener un modelo con \textit{overfitting} como nos indica el \textit{variance} de 15\%. Tambi\'en ha sido la ejecuci\'on m\'as larga dado el tama\~no del batch y que hemos usado \textit{batch normalization} que ralentiza el proceso de entrenamiento.
 			\newpage
 			 
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a3-e1.png}		
+					\includegraphics[scale=0.5]{d-tr-a3-e1.png}		
 					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 3}	
-					\label{tr-a3-e1}
+					\label{d-tr-a3-e1}
 				\end{center}
 			\end{figure}
 			
-			En la figura \ref{tr-a3-e1} vemos como el modelo llega al punto de \textit{overfit} alrededor de la \textit{epoch} 50 donde el \textit{accuracy} de validaci\'on se separa del de entrenamiento.
+			En la figura \ref{d-tr-a3-e1} vemos como el modelo llega al punto de \textit{overfit} alrededor de la \textit{epoch} 50 donde el \textit{accuracy} de validaci\'on se separa del de entrenamiento.
 			
 		\subsection{Experimento 2: Aumentamos \textit{batch size}}
-		\label{s-a3-e2}
+		\label{d-s-a3-e2}
 			A\'un no hemos conseguido mejorar el \textit{accuracy} en el conjunto de validaci\'on, pero en este experimento vamos a intentar retrasar el \textit{overfitting} del modelo a la vez que el tiempo de entrenamiento aumentando el \textit{batch size}. La configuraci\'on para este experimento es la siguiente:
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
@@ -516,7 +521,7 @@
 					400 & 0.001 & \textbf{256} & tanh & Categorical Crossentropy & ADAM & l2 0.001
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 3}
-				\label{tab:hip-a3-e2}
+				\label{tab:hip-d-a3-e2}
 			\end{table}
 				
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -528,22 +533,22 @@
 						\textbf{Std} & 0.53 & 0.48 & 0.53 & 0.61 & 14.04 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 2 de la Arquitectura 3}
-					\label{tab:res-a3-e2}
+					\label{tab:res-d-a3-e2}
 				\end{center}
 			\end{table}
 				
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.4]{tr-a3-e2.png}		
+					\includegraphics[scale=0.4]{d-tr-a3-e2.png}		
 					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 3}	
-					\label{tr-a3-e2}
+					\label{d-tr-a3-e2}
 				\end{center}
 			\end{figure}
 			Lo \'unico que hemos conseguido reducir con este experimento ha sido el tiempo de entrenamiento, el \textit{variance} ha aumentado hasta un 23\%.
-			En la figura \ref{tr-a3-e2} vemos reflejado el \textit{overfitting}, lo que explica el \textit{bias} negativo.
+			En la figura \ref{d-tr-a3-e2} vemos reflejado el \textit{overfitting}, lo que explica el \textit{bias} negativo.
 			
 		\subsection{Experimento 3: Aumentamos la penalizaci\'on del regularizador}
-		\label{s-a3-e3}
+		\label{d-s-a3-e3}
 			El regularizador L2 a\~nade una penalizaci\'on en base al tama\~no de los pesos, como no queremos que se descontrolen como ha estado ocurriendo, aumentamos esta penalizaci\'on para evitar el overfitting. La configuraci\'on para este experimento es:
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
@@ -551,7 +556,7 @@
 					400 & 0.001 & 256 & tanh & Categorical Crossentropy & ADAM & \textbf{l2 0.1}
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 3}
-				\label{tab:hip-a3-e3}
+				\label{tab:hip-d-a3-e3}
 			\end{table}
 			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -563,22 +568,22 @@
 						\textbf{Std} & 0.51 & 2.41 & 0.51 & 2.27 & 9.25 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 3 de la Arquitectura 3}
-					\label{tab:res-a3-e3}
+					\label{tab:res-d-a3-e3}
 				\end{center}
 			\end{table}
 			
 			En este experimento hemos conseguido reducir considerablemente el \textit{variance} as\'i que podemos concluir que el aumento de la penalizaci\'on del regularizador sirve para evitar el \textit{overfitting}.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a3-e3.png}		
+					\includegraphics[scale=0.5]{d-tr-a3-e3.png}		
 					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 3}	
-					\label{tr-a3-e3}
+					\label{d-tr-a3-e3}
 				\end{center}
 			\end{figure}
-			En la figura \ref{tr-a3-e3} observamos una evoluci\'on err\'atica en el \textit{loss} en validaci\'on lo que puede indicar que el problema del \text{vanishing gradient} puede estar presente en el modelo.
+			En la figura \ref{d-tr-a3-e3} observamos una evoluci\'on err\'atica en el \textit{loss} en validaci\'on lo que puede indicar que el problema del \text{vanishing gradient} puede estar presente en el modelo.
 			
 		\subsection{Experimento 4: Volvemos a ReLU}
-		\label{s-a3-e4}
+		\label{d-s-a3-e4}
 			Cambiamos la funci\'on de activaci\'on a ReLU para comprobar si ayuda con el problema del \textit{vanishing gradient}.
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
@@ -586,7 +591,7 @@
 					400 & 0.001 & 256 & \textbf{ReLU} & Categorical Crossentropy & ADAM & l2 0.1
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 3}
-				\label{tab:hip-a3-e4}
+				\label{tab:hip-d-a3-e4}
 			\end{table}
 			\newpage			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -598,21 +603,21 @@
 						\textbf{Std} & 0.46 & 1.8 & 0.46 & 1.56 & 7.46 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 4 de la Arquitectura 3}
-					\label{tab:res-a3-e4}
+					\label{tab:res-d-a3-e4}
 				\end{center}
 			\end{table}
 			
-			Hemos obtenido unos resultados similares al experimento anterior, adem\'as en la figura \ref{tr-a3-e4} se aprecia que no hay una fase de entrenamiento tan err\'atica.
+			Hemos obtenido unos resultados similares al experimento anterior, adem\'as en la figura \ref{d-tr-a3-e4} se aprecia que no hay una fase de entrenamiento tan err\'atica.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a3-e4.png}		
+					\includegraphics[scale=0.5]{d-tr-a3-e4.png}		
 					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 3}	
-					\label{tr-a3-e4}
+					\label{d-tr-a3-e4}
 				\end{center}
 			\end{figure}
 			
 		\subsection{Experimento 5: Eliminamos la regularizaci\'on}
-		\label{s-a3-e5}
+		\label{d-s-a3-e5}
 			Nos preguntamos si tantos mecanismos contra el \textit{vanishing gradient} y \textit{overfitting} (\textit{batch normalization}, ReLU, regularizaci\'on L2) est\'an interfiriendo entre ellos as\'i que para comprobarlo retiramos la regularizaci\'on L2 de las capas ocultas.
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
@@ -620,7 +625,7 @@
 					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & \textbf{No}
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 3}
-				\label{tab:hip-a3-e5}
+				\label{tab:hip-d-a3-e5}
 			\end{table}
 			
 			Tras 5 entrenamientos obtenemos los siguientes resultados:
@@ -632,20 +637,21 @@
 						\textbf{Std} & 0.44 & 0.99 & 0.44 & 0.68 & 6.12 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 5 de la Arquitectura 3}
-					\label{tab:res-a3-e5}
+					\label{tab:res-d-a3-e5}
 				\end{center}
 			\end{table}
 			\newpage
 			Definitivamente la regularizaci\'on es necesaria para evitar el \textit{overfitting}
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a3-e5.png}		
+					\includegraphics[scale=0.5]{d-tr-a3-e5.png}		
 					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 3}	
-					\label{tr-a3-e5}
+					\label{d-tr-a3-e5}
 				\end{center}
 			\end{figure}
 		
 		\subsection{Conclusiones de la Arquitectura 3}
+		\label{d-cl-a3}
 			\begin{itemize}
 				\item La regularizaci\'on L2 es necesaria para evitar el \textit{overfitting}.
 				\item A mayor penalizaci\'on en L2 menor \textit{overfitting}.
@@ -654,7 +660,8 @@
 			\end{itemize}
 			
 	\section{Arquitectura 4: A\~nadimos profundidad}
-		Hasta el momento el m\'aximo \textit{accuracy} en validaci\'on que hemos conseguido ha sido en el experimento \ref{s-a1-e2} con un 81.5\%, nos parece que es un resultado malo para un problema de juguete como es este. Tras haber intentado distintos m\'etodos para reducir el \textit{bias} sin aumentar el \textit{variance} sin \'exito decidimos aumentar la profundidad de la red a 7 capas:
+	\label{d-s-a4}
+		Hasta el momento el m\'aximo \textit{accuracy} en validaci\'on que hemos conseguido ha sido en el experimento \ref{d-s-a1-e2} con un 81.5\%, nos parece que es un resultado malo para un problema de juguete como es este. Tras haber intentado distintos m\'etodos para reducir el \textit{bias} sin aumentar el \textit{variance} sin \'exito decidimos aumentar la profundidad de la red a 7 capas:
 		\begin{enumerate}
 			\item Capa densa de 2048 con Batch Normalization.
 			\item Capa densa de 1048 con BN.
@@ -669,15 +676,15 @@
 		\newpage
 		
 		\subsection{Experimento 1: Repetimos la \'ultima configuraci\'on}
-		\label{s-a4-e1}
-			Vamos a usar la configuraci\'on del experimento \ref{s-a3-e5} para comprobar como afecta el cambio de arquitectura.
+		\label{d-s-a4-e1}
+			Vamos a usar la configuraci\'on del experimento \ref{d-s-a3-e5} para comprobar como afecta el cambio de arquitectura.
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
 					\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Loss} & \textbf{Optimizer} & \textbf{Regularization} \\ \hline
 					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & No
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 4}
-				\label{tab:hip-a4-e1}
+				\label{tab:hip-d-a4-e1}
 			\end{table}
 			
 			Y obtenemos los resultados:
@@ -688,21 +695,21 @@
 						99.88 & 74.13 & -4.88 & 25.87 & 426 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 1 de la Arquitectura 4}
-					\label{tab:res-a4-e	}
+					\label{tab:res-d-a4-e	}
 				\end{center}
 			\end{table}
 			
-			Como vemos hemos vuelto a obtener \textit{overfitting}, dado que no hemos reintroducido la regularizaci\'on desde el experimento \ref{s-a3-e5}.
+			Como vemos hemos vuelto a obtener \textit{overfitting}, dado que no hemos reintroducido la regularizaci\'on desde el experimento \ref{d-s-a3-e5}.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e1.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e1.png}		
 					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 4}	
-					\label{tr-a4-e1}
+					\label{d-tr-a4-e1}
 				\end{center}
 			\end{figure}
 			
 		\subsection{Experimento 2: Reintroducimos la regularizaci\'on L2}
-		\label{s-a4-e2}
+		\label{d-s-a4-e2}
 			Para evitar el \textit{overfitting} volvemos a usar la regularizaci\'on L2 con penalizaci\'on 0.1
 			\begin{table}[!h]
 				\begin{tabular}{| c | c | c | c | c | c | c |}
@@ -710,7 +717,7 @@
 					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & \textbf{l2 0.1}
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 4}
-				\label{tab:hip-a4-e2}
+				\label{tab:hip-d-a4-e2}
 			\end{table}
 			
 			Y obtenemos los resultados:
@@ -721,29 +728,30 @@
 						80.99 & 74.75 & 14.01 & 6.24 & 457 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 2 de la Arquitectura 4}
-					\label{tab:res-a4-e2}
+					\label{tab:res-d-a4-e2}
 				\end{center}
 			\end{table}
 			
-			Hemos evitado que el modelo haga \textit{overfitting} pero en la figura \ref{tr-a4-e2} se ve un entrenamiento demasiado err\'atico en cuanto al conjunto de validaci\'on, el \textit{loss} var\'ia enormemente en cada iteraci\'on, puede ser porque estemos estancados en un m\'inimo local.
+			Hemos evitado que el modelo haga \textit{overfitting} pero en la figura \ref{d-tr-a4-e2} se ve un entrenamiento demasiado err\'atico en cuanto al conjunto de validaci\'on, el \textit{loss} var\'ia enormemente en cada iteraci\'on, puede ser porque estemos estancados en un m\'inimo local.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e2.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e2.png}		
 					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 4}	
-					\label{tr-a4-e2}
+					\label{d-tr-a4-e2}
 				\end{center}
 			\end{figure}
 			
 			En la matriz de confusi\'on, hemos detectado que por primera vez las clases "Intermediate" y "Good" son las que mayor \textit{recall} tienen lo que refuerza nuestra teor\'ia del m\'inimo local.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.7]{cm-a4-e2.png}		
+					\includegraphics[scale=0.7]{d-cm-a4-e2.png}		
 					\caption{Matriz de confusi\'on en el Experimento 2 de la Arquitectura 4}	
-					\label{cm-a4-e2}
+					\label{d-cm-a4-e2}
 				\end{center}
 			\end{figure}
 			
 		\subsection{Experimento 3: Desactivamos el bias de las capas ocultas}
+		\label{d-s-a4-e3}
 			En este momento reparamos en que estamos usando el vector \textit{bias} de las capas ocultas, pero no es necesario tenerlo en cuenta porque al estar usando \textit{Batch Normalization} ya estamos incluyendo un par\'ametro de \textit{offset} $\beta$. Vamos a comprobar si mejora el proceso de entrenamiento.
 			
 			\begin{table}[!h]
@@ -752,7 +760,7 @@
 					400 & 0.001 & 256 & ReLU & Categorical Crossentropy & ADAM & l2 0.1
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 4}
-				\label{tab:hip-a4-e3}
+				\label{tab:hip-d-a4-e3}
 			\end{table}
 			
 			Y obtenemos los resultados:
@@ -763,27 +771,28 @@
 						81.16 & 75.81 & 13.84 & 5.35 & 422 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 3 de la Arquitectura 4}
-					\label{tab:res-a4-e3}
+					\label{tab:res-d-a4-e3}
 				\end{center}
 			\end{table}
 			
 			Como vemos, el cambio introducido no ha afectado al proceso de entrenamiento, simplemente hemos reducido el tiempo en 30 segundos.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e3.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e3.png}		
 					\caption{Entrenamiento durante el Experimento 3 de la Arquitectura 4}	
-					\label{tr-a4-e3}
+					\label{d-tr-a4-e3}
 				\end{center}
 			\end{figure}
 			
 			En la matriz de confusi\'on comprobamos que la diagonal ha vuelto a los valores usuales.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.7]{cm-a4-e3.png}		
+					\includegraphics[scale=0.7]{d-cm-a4-e3.png}		
 					\caption{Matriz de confusi\'on en el Experimento 3 de la Arquitectura 4}	
-					\label{cm-a4-e3}
+					\label{d-cm-a4-e3}
 				\end{center}
 			\end{figure}
+			
 			
 		\subsection{Experimento 4: Usamos inicializadores}
         \label{s-a4-e4}
@@ -795,7 +804,7 @@
 					400 & 0.001 & 256 & ReLU & C.C. & ADAM & l2 0.1 & \textbf{He Normal}
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 4}
-				\label{tab:hip-a4-e4}
+				\label{tab:hip-d-a4-e4}
 			\end{table}
             \newpage
             			
@@ -807,21 +816,21 @@
 						81.16 & 75.81 & 13.84 & 5.35 & 422 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 4 de la Arquitectura 4}
-					\label{tab:res-a4-e4}
+					\label{tab:res-d-a4-e4}
 				\end{center}
 			\end{table}
 			
 			Como vemos, el cambio introducido no ha afectado al proceso de entrenamiento, simplemente hemos reducido el tiempo en 30 segundos. Puede que tengamos que cambiar el regularizador.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e4.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e4.png}		
 					\caption{Entrenamiento durante el Experimento 4 de la Arquitectura 4}	
-					\label{tr-a4-e4}
+					\label{tr-d-a4-e4}
 				\end{center}
 			\end{figure}
 			
 		\subsection{Experimento 5: Cambiamos el regularizador}
-        \label{s-a4-e5}
+        \label{d-s-a4-e5}
 			Creemos que el problema del entrenamient err\'atico est\'a producido por el regularizador, hemos aumentado mucho la penalizaci\'on y L2 a\~nade penalizaci\'on proporcional a la media del cuadrado de los pesos. Pensamos que utilizando L1 y reduciendo $\lambda$ conseguiremos solucionar nuestro problema.
 			
 			\begin{table}[!h]
@@ -830,7 +839,7 @@
 					400 & 0.001 & 256 & ReLU & C.C. & ADAM & \textbf{l1 0.0001} & He Normal
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 4}
-				\label{tab:hip-a4-e5}
+				\label{tab:hip-d-a4-e5}
 			\end{table}
    
 			Y obtenemos los resultados:
@@ -841,21 +850,21 @@
 						95.86 & 74.01 & -0.86 & 21.85 & 455 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 5 de la Arquitectura 4}
-					\label{tab:res-a4-e5}
+					\label{tab:res-d-a4-e5}
 				\end{center}
 			\end{table}
 
-			Relajando la penalizaci\'on en la regularizaci\'on hemos vuelto al \textit{overfitting} como se ve en la tabla \ref{tab:res-a4-e5}, ya que tenemos un \textit{variance} de 22\%. Lo bueno es que hemos reducido la variaci\'on en el entrenamiento como vemos en la figura \ref{tr-a4-e5}.
+			Relajando la penalizaci\'on en la regularizaci\'on hemos vuelto al \textit{overfitting} como se ve en la tabla \ref{tab:res-d-a4-e5}, ya que tenemos un \textit{variance} de 22\%. Lo bueno es que hemos reducido la variaci\'on en el entrenamiento como vemos en la figura \ref{d-tr-a4-e5}.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e5.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e5.png}		
 					\caption{Entrenamiento durante el Experimento 5 de la Arquitectura 4}	
-					\label{tr-a4-e5}
+					\label{d-tr-a4-e5}
 				\end{center}
 			\end{figure}
    
         \subsection{Experimento 6: Aumentamos \textit{batch size}}
-        \label{s-a4-e6}
+        \label{d-s-a4-e6}
 			Antes de pasar a la siguiente arquitectura decidimos aumentar el tama\~no del \textit{batch size} para probar si as\'i reducimos algo el \textit{overfitting}.
 			
 			\begin{table}[!h]
@@ -864,7 +873,7 @@
 					400 & 0.001 & \textbf{1024} & ReLU & C.C. & ADAM & l1 0.0001 & He Normal
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 6 de la Arquitectura 4}
-				\label{tab:hip-a4-e6}
+				\label{tab:hip-d-a4-e6}
 			\end{table}
             \newpage
 			Y obtenemos los resultados:
@@ -875,22 +884,22 @@
 						99.8 & 74.88 & -4.8 & 24.92 & 455 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 6 de la Arquitectura 4}
-					\label{tab:res-a4-e6}
+					\label{tab:res-d-a4-e6}
 				\end{center}
 			\end{table}
    
 			Ha aumentado el \textit{ovefitting}, de hecho el \textit{loss} del conjunto de validaci\'on no aparece en el gr\'afico de evoluci\'on durante el entrenamiento.
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e6.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e6.png}		
 					\caption{Entrenamiento durante el Experimento 6 de la Arquitectura 4}	
-					\label{tr-a4-e6}
+					\label{d-tr-a4-e6}
 				\end{center}
 			\end{figure}
         \newpage
         
         \subsection{Experimento 7: Reducimos \textit{batch size}}
-        \label{s-a4-e7}
+        \label{d-s-a4-e7}
 			No estamos satisfechos con el \'ultimo experimento que adem\'as nos sugiere que a mayor \textit{batch size} mayor \textit{bias} por lo que lo reducimos a un tama\~no de 32.
 			
 			\begin{table}[!h]
@@ -899,7 +908,7 @@
 					400 & 0.001 & \textbf{32} & ReLU & C.C. & ADAM & l1 0.0001 & He Normal
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 7 de la Arquitectura 4}
-				\label{tab:hip-a4-e7}
+				\label{tab:hip-d-a4-e7}
 			\end{table}
 			Y obtenemos los resultados:
 			\begin{table}[!h]
@@ -909,19 +918,20 @@
 						78.14 & 77.79 & 16.85 & 0.35 & 3239 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 7 de la Arquitectura 4}
-					\label{tab:res-a4-e7}
+					\label{tab:res-d-a4-e7}
 				\end{center}
 			\end{table}
    
 			Como vemos, reducir dr\'asticamente el \textit{batch size} ha eliminado por completo el \textit{overfitting}
 			\begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a4-e7.png}		
+					\includegraphics[scale=0.5]{d-tr-a4-e7.png}		
 					\caption{Entrenamiento durante el Experimento 7 de la Arquitectura 4}	
-					\label{tr-a4-e7}
+					\label{d-tr-a4-e7}
 				\end{center}
 			\end{figure}
         \subsection{Conclusiones Arquitectura 4}
+        \label{d-cl-a4}
             \begin{itemize}
                 \item Sin regularizaci\'on el \textit{overfitting} persiste.
                 \item A menor tama\~no del \textit{batch size} menor \textit{overfitting}.
@@ -931,7 +941,10 @@
             
 
     \section{Arquitectura 5: A\~nadimos dropout a las cap}
+	\label{d-s-a5}    
+    
     \section{Arquitectura 6: Solucionando el overfitting en 256-124-64-32}
+    \label{b-s-a6}
 			Probaremos una arquitectura de complejidad media para buscar un overfitting y aplicaremos tº\'ecnicas de regularizaci\'on para reducir la varianza. 
 			\begin{itemize}
 			    \item Capa densa de 256 con Batch Normalization y Dropout = 0
@@ -940,15 +953,15 @@
                 \item Capa densa de 32 con BN y Dropout = 0
 			\end{itemize}
 		\subsection{Experimento 1: Primera configuraci\'on}
-        \label{s-a6-e1}
-            Como se puede observar en la figura \ref{tab:tr-a6-e1}, tenemos un overfitting bastante grande y debemos aplicar t\'ecnicas de regularizaci\'on para mejorar la generalizaci\'on de la red. 
+        \label{b-s-a6-e1}
+            Como se puede observar en la figura \ref{b-tr-a6-e1}, tenemos un overfitting bastante grande y debemos aplicar t\'ecnicas de regularizaci\'on para mejorar la generalizaci\'on de la red. 
             \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}  & \textbf{Initializer} \\ \hline
 					400 & 0.001 & 64 & ReLU & C.C. & ADAM & No & 0 & He Normal
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 6}
-				\label{tab:hip-a6-e1}
+				\label{tab:hip-b-a6-e1}
 			\end{table}
    
             \begin{table}[!h]
@@ -958,20 +971,20 @@
 						97.05 & 73.33 & -2.05 & 23.72 & 462 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 1 de la Arquitectura 6}
-					\label{tab:res-a6-e1}
+					\label{tab:res-b-a6-e1}
 				\end{center}
 			\end{table}
             
             \begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a6-e1.png}		
+					\includegraphics[scale=0.5]{b-tr-a6-e1.png}		
 					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 6}	
-					\label{tab:tr-a6-e1}
+					\label{b-tr-a6-e1}
 				\end{center}
 			\end{figure}
    
         \subsection{Experimento 2: A\~{n}adimos Dropout 0.2}
-        \label{s-a6-e2}
+        \label{b-s-a6-e2}
             Se a\~{n}ade un Dropout de 0.2 para reducir la varianza y mejorar la generalizaci\'on. La configuraci\'on es la siguiente: 
    
             \begin{table}[!h]
@@ -980,7 +993,7 @@
 					400 & 0.001 & 64 & ReLU & C.C. & ADAM & No & 0.2 & He Normal
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 6}
-				\label{tab:hip-a6-e2}
+				\label{tab:hip-b-a6-e2}
 			\end{table}
    
             Los resultados obtenidos son los siguientes: 
@@ -991,18 +1004,18 @@
 						 84.52 & 77.42 & 10.48  & 7.1 & 503 \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 2 de la Arquitectura 6}
-					\label{tab:res-a6-e2}
+					\label{tab:res-b-a6-e2}
 				\end{center}
 			\end{table}
             \begin{figure}[!h]
 				\begin{center}
-					\includegraphics[scale=0.5]{tr-a6-e2.png}		
+					\includegraphics[scale=0.5]{b-tr-a6-e2.png}		
 					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 6}	
-					\label{tab:tr-a6-e2}
+					\label{b-tr-a6-e2}
 				\end{center}
 			\end{figure}
             Se consigue una reducci\'on de la varianza a cambio de un empeoramiento del Bias. 
             
         \subsection{Experimento 3: Aumentar Epochs}
-        \label{s-a6-e3}
+        \label{b-s-a6-e3}
 \end{document}
