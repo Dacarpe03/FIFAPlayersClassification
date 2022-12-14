@@ -928,4 +928,81 @@
                 \item La regularizaci\'on L2 con un $\lambda$ grande hace que el entrenamiento sea err\'atico.
                 \item Una arquitectura con mayor profundidad no ha producido una mejora en el \textit{bias}.
             \end{itemize}
+            
+
+    \section{Arquitectura 5: A\~nadimos dropout a las cap}
+    \section{Arquitectura 6: Solucionando el overfitting en 256-124-64-32}
+			Probaremos una arquitectura de complejidad media para buscar un overfitting y aplicaremos tº\'ecnicas de regularizaci\'on para reducir la varianza. 
+			\begin{itemize}
+			    \item Capa densa de 256 con Batch Normalization y Dropout = 0
+                \item Capa densa de 124 con BN y Dropout = 0
+                \item Capa densa de 64 con BN y Dropout = 0
+                \item Capa densa de 32 con BN y Dropout = 0
+			\end{itemize}
+		\subsection{Experimento 1: Primera configuraci\'on}
+        \label{s-a6-e1}
+            Como se puede observar en la figura \ref{tab:tr-a6-e1}, tenemos un overfitting bastante grande y debemos aplicar t\'ecnicas de regularizaci\'on para mejorar la generalizaci\'on de la red. 
+            \begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & 64 & ReLU & C.C. & ADAM & No & 0 & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 6}
+				\label{tab:hip-a6-e1}
+			\end{table}
+   
+            \begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						97.05 & 73.33 & -2.05 & 23.72 & 462 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 1 de la Arquitectura 6}
+					\label{tab:res-a6-e1}
+				\end{center}
+			\end{table}
+            
+            \begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a6-e1.png}		
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 6}	
+					\label{tab:tr-a6-e1}
+				\end{center}
+			\end{figure}
+   
+        \subsection{Experimento 2: A\~{n}adimos Dropout 0.2}
+        \label{s-a6-e2}
+            Se a\~{n}ade un Dropout de 0.2 para reducir la varianza y mejorar la generalizaci\'on. La configuraci\'on es la siguiente: 
+   
+            \begin{table}[!h]
+				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}  & \textbf{Initializer} \\ \hline
+					400 & 0.001 & 64 & ReLU & C.C. & ADAM & No & 0.2 & He Normal
+				\end{tabular}
+				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 6}
+				\label{tab:hip-a6-e2}
+			\end{table}
+   
+            Los resultados obtenidos son los siguientes: 
+            \begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{| c | c | c | c | c |}
+						\textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						 84.52 & 77.42 & 10.48  & 7.1 & 503 \\ \hline
+					\end{tabular}
+					\caption{Resultados del Experimento 2 de la Arquitectura 6}
+					\label{tab:res-a6-e2}
+				\end{center}
+			\end{table}
+            \begin{figure}[!h]
+				\begin{center}
+					\includegraphics[scale=0.5]{tr-a6-e2.png}		
+					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 6}	
+					\label{tab:tr-a6-e2}
+				\end{center}
+			\end{figure}
+            Se consigue una reducci\'on de la varianza a cambio de un empeoramiento del Bias. 
+            
+        \subsection{Experimento 3: Aumentar Epochs}
+        \label{s-a6-e3}
 \end{document}
