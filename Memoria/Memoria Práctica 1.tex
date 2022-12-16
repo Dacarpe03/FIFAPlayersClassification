@@ -49,14 +49,42 @@
 \end{titlepage}
 
 \tableofcontents
+	\section{Introducci\'on}
+	\label{intro}
+		Este proyecto tiene como objetivo diseñar una red neuronal artificial para resolver un problema de clasificación supervisada de jugadores del videojuego FIFA 19. Para ello se hará uso de las técnicas y herramientas aprendidas en la clase de “Redes de neuronas artificiales y deep learning”.\\
 
-	\section{Arquitectura 1: Feed Forward Neural Network}
+	Se hará uso del lenguaje de programación Python 3 junto a las librerías Tensorflow 2 y Keras. Los entornos utilizados serán: Jupyter notebook en local y Google Colab.\\
+
+	El dataset a utilizar es {}. Este dataset contiene 18.207 instancias con 89 atributos cada una. Tras un preprocesado se han reducido tanto las instancias como los atributos a utilizar, 16.122 instancias con 17 atributos cada una. Los atributos están relacionados con la habilidad de cada jugador en ciertas facetas relacionadas con el fútbol: Crossing, Heading Accuracy, Pase Corto, Voleas, Regate, Curva, Precisión de Tiro Libre, Pase Largo, Control del Balón, Reacción, Potencia de Tiro, Resistencia, Tiros lejanos, Agresividad, Posicionamiento, Visión y Compostura.\\
+
+	Para etiquetar las clases se ha hecho una media de los atributos de los jugadores y se ha repartido de la siguiente manera: 
+	\begin{enumerate}
+		\item Poor para medias entre [46,62]
+    	\item Intermediate para medias entre [63,66]
+    	\item Good para medias entre [67,71]
+    	\item Excellent para medias entre [72,94]
+	\end{enumerate}
+	
+	\subsection{Estructura}
+		La investigaci\'on se divide en dos fases:
+		\begin{itemize}
+			\item Familiarizaci\'on con hiperpar\'ametros y t\'ecnicas de regularizaci\'on.
+			\item Optimizaci\'on sistem\'atica de hiperpar\'ametros
+		\end{itemize}
+		
+		En ambas partes realizaremos cambios at\'omicos para comprobar el efecto de los mismos en el modelo, pero en la primera fase trabajamos de una forma reactiva, solucionando los problemas que nos surgen para comprender el impacto de cada cambio que hacemos. Una vez interiorizados estos efectos pasamos a comprobar distintos valores para cada hiperpar\'ametro para quedarnos con el mejor, fijarlo en la configuraci\'on y pasar al siguiente.\\
+		
+		Por \'ultimo, presentaremos nuestras conclusiones.
+
+\section{Fase 1: Cambios reactivos}
+	Como hemos comentado, en esta fase iremos realizando peque\~nos cambios, observando c\'omo afectan a los resultados del modelo y al proceso de entrenamiento.
+	\subsection{Arquitectura 1: Feed Forward Neural Network}
 	\label{d-s-a1}
 		La primera arquitectura que usaremos es tan simple como:
 		\begin{enumerate}
 			\item Capa densa con 512 neuronas.
 		\end{enumerate}
-		\subsection{Experimento 1: Configuraci\'on base arbitraria}
+		\subsubsection{Experimento 1: Configuraci\'on base arbitraria}
 		\label{d-s-a1-e1}
 			Usamos la siguiente configuraci\'on:
 			\begin{table}[!h]
@@ -85,7 +113,7 @@
 		
 			Tener un \textit{bias} alto y una \textit{variance} baja significa que hay margen de mejora antes de llegar al \textit{overfitting} y hay varias posibilidades para conseguir una mejor \textit{accuracy}: a\~nadir m\'as neuronas, entrenar con m\'as \textit{epochs}, ...
 		
-		\subsection{Experimento 2: Aumentamos \textit{epochs}}
+		\subsubsection{Experimento 2: Aumentamos \textit{epochs}}
 		\label{d-s-a1-e2}
 			Tras el experimento anterior, nos decantamos por entrenar el modelo durante m\'as \textit{epochs} para reducir el \textit{bias} usando la misma configuraci\'on.\\
 			\begin{table}[!h]
@@ -121,7 +149,7 @@
 			\end{figure}
 			En la figura \ref{d-tr-a1-e2} vemos que a partir del epoch 400 no hay una mejora en \textit{accuracy} para el conjunto de validaci\'on aunque s\'i para el conjunto de entrenamiento lo que nos indica que un n\'umero de \textit{epochs} tan elevado como el que hemos usado en este experimento con esta arquitectura y configuraci\'on conduce a un \textit{overfitting} del modelo, aunque por el momento no es excesivo como nos indica la \textit{variance}.
 			
-		\subsection{Experimento 3: Cambiamos a \textit{tanh} y reducimos \textit{epochs}}
+		\subsubsection{Experimento 3: Cambiamos a \textit{tanh} y reducimos \textit{epochs}}
 		\label{d-s-a1-e3}
 			Para este experimento decidimos reducir las \textit{epochs} ya que como hemos visto en el experimento anterior, no hay una mejora significativa en validaci\'on con m\'as epochs.\\
 			Adem\'as de esto, cambiaremos la funci\'on de activaci\'on a \textit{tanh}. Hasta el momento hemos usado \textit{ReLU} pero no hay raz\'on para usarla para esta arquitectura porque resuelve el problema del \textit{vanishing gradient} que se da en arquitecturas profundas.\\
@@ -162,7 +190,7 @@
 			
 			Tambi\'en observamos que no ha habido overfitting hasta la epoch 400, al contrario de lo que hab\'iamos supuesto al inicio de este experimento.
 			
-		\subsection{Experimento 4: Aumentamos \textit{epochs}}
+		\subsubsection{Experimento 4: Aumentamos \textit{epochs}}
 		\label{d-s-a1-e4}
 			El objetivo de este experimento es comprobar cu\'antas \textit{epochs} podemos realizar antes de que el modelo comience a dirigirse hacia un \textit{overfitting} por lo que la configuraci\'on es la misma que en la ejecuci\'on anterior, excepto que volvemos a incrementar las epochs a 1000:
 			\begin{table}[!h]
@@ -200,7 +228,7 @@
 			Aunque hemos doblado las \textit{epochs} con respecto al experimento 3, la mejora ha sido de apenas un 2\% en \textit{accuracy}. Por otra parte, como se muestra en la figura \ref{d-tr-a1-e4}, el modelo no ha llegado al punto de \textit{overfitting} aun habiendo usado un n\'umero tan alto de epochs.\\
 			Esto quiere decir que todav\'ia hay margen de mejora si seguimos entrenando con m\'as epochs aunque llevar\'ia mucho tiempo porque el aprendizaje es lento.\\
 			
-		\subsection{Experimento 5: Reducimos \textit{batch size}}
+		\subsubsection{Experimento 5: Reducimos \textit{batch size}}
 		\label{d-s-a1-e5}
 			Como se necesitar\'ia aumentar exponencialmente el n\'umero de \textit{epochs} para conseguir una mejora en el \textit{accuracy}, decidimos reducir el \textit{batch size} y comprobar si de esta forma el modelo consigue mejores resultados.
 			\begin{table}[!h]
@@ -235,7 +263,7 @@
 				\end{center}
 			\end{figure}
 			
-		\subsection{Conclusiones de la Arquitectura 1}
+		\subsubsection{Conclusiones de la Arquitectura 1}
 		\label{d-cl-a1}
 			\begin{itemize}
 				\item \textit{ReLU} llega a un estado de \textit{overfitting} con menos \textit{epochs} que \textit{tanh}
@@ -243,7 +271,7 @@
 				\item Reducir el \textit{batch size} implica llegar a un \'optimo de forma m\'as r\'apida con \textit{tanh}.
 			\end{itemize}
 			
-	\section{Arquitectura 2: Deep Feed Forward Neural Network}
+	\subsection{Arquitectura 2: Deep Feed Forward Neural Network}
 	\label{d-s-a2}
 		Hemos visto que con la arquitectura anterior obtenemos un \textit{accuracy} m\'aximo de un 84\% a partir de donde el aprendizaje es lento y llegamos a un \textit{overfitting} con las t\'ecnicas utilizadas. Es por esto que decidimos usar una Deep Feed Forward Neural Network para intentar reducir el \textit{bias} del modelo.\\
 		La arquitectura que utilizaremos para la nueva serie de experimento ser\'a:
@@ -254,7 +282,7 @@
 			\item Capa densa de 32 neuronas
 		\end{enumerate}
 		
-		\subsection{Experimento 1: Comparaci\'on con arquitectura 1}
+		\subsubsection{Experimento 1: Comparaci\'on con arquitectura 1}
 		\label{d-s-a2-e1}
 			En este experimento utilizaremos la misma configuraci\'on que en el experimento anterior:
 			\begin{table}[!h]
@@ -295,7 +323,7 @@
 			\newpage
 			
 			
-		\subsection{Experimento 2: Reducimos \textit{epochs} y utilizamos regularizaci\'on}
+		\subsubsection{Experimento 2: Reducimos \textit{epochs} y utilizamos regularizaci\'on}
 		\label{d-s-a2-e2}
 			Una de las t\'ecnicas que podemos utilizar para reducir el \textit{variance} es usar regularizaci\'on para controlar que los pesos de las neuronas no se hagan demasiado grande. Adem\'as para ahorrar algo de tiempo tambi\'en reduciremos las epochs. La configuraci\'on para este experimento queda reflejada en la tabla \ref{tab:hip-d-a2-e2}.
 			\begin{table}[!h]
@@ -336,7 +364,7 @@
 			En la figura \ref{d-tr-a2-e2} se aprecia ruido en las m\'etricas del conjunto de validaci\'on, esto es una consecuencia de la regularizaci\'on, sin ella ese ruido se descontrolar\'ia y llegar\'iamos al \textit{overfitting} como en el experimento anterior.
 			
 			
-		\subsection{Experimento 3: Cambiamos el optimizador}
+		\subsubsection{Experimento 3: Cambiamos el optimizador}
 		\label{d-s-a2-e3}
 			En este experimento vamos a comprobar si con un optimizador distinto podemos obtener mejor \textit{accuracy} sin llegar al \textit{overfitting}, para ello utilizaremos ADAM. La configuraci\'on es la siguiente:
 			
@@ -387,7 +415,7 @@
 			Esto puede deberse a que no estamos usando correctamente el optimizador ADAM.
 			
 			
-		\subsection{Experimento 4: Ajustamos el optimizador ADAM}
+		\subsubsection{Experimento 4: Ajustamos el optimizador ADAM}
 		\label{d-s-a2-e4}
 			Consultando el art\'iculo en el que se present\'o ADAM (\textit{Adam: A Method for Stochastic Optimization}, (2015), D. Kingma y J. Ba), vemos que este optimizador es una combinaci\'on entre AdaGrad y RMSProp y que tiene unos par\'ametros que controlan el ratio de decrecimiento de los momentos (beta1=0.9 y beta2=0.999) que no hemos definido en el experimento anterior. Adem\'as de esto, los autores sugieren usar un \textit{learning rate} m\'as bajo del que estamos usando.\\
 			
@@ -435,7 +463,7 @@
 				\end{center}
 			\end{figure}
 		\newpage
-		\subsection{Experimento 5: Reducimos \textit{batch-size}}
+		\subsubsection{Experimento 5: Reducimos \textit{batch-size}}
 		\label{d-s-a2-e5}
 			Decidimos reducir el \textit{batch size} para intentar reducir el \textit{bias} como en el experimento \ref{d-s-a1-e5}. La configuraci\'on para este experimento es:
 			\begin{table}[!h]
@@ -472,7 +500,7 @@
 			\newpage
 			No hemos obtenido mejora, este cambio no merece la pena porque aumenta mucho el tiempo de entrenamiento. Como vemos en la figura \ref{d-tr-a2-e5}, parece que el modelo deja de aprender, quiz\'as por el problema del \textit{vanishing gradient} que intentaremos resolver con la siguiente arquitectura.
 		
-		\subsection{Conclusiones de la Arquitectura 2}
+		\subsubsection{Conclusiones de la Arquitectura 2}
 		\label{d-cl-a2}
 			A lo largo de estos experimentos hemos concluido que:
 			\begin{itemize}
@@ -481,7 +509,7 @@
 				\item El optimizador ADAM no ha proporcionado mejoras significativas con respecto al SGD para esta arquitectura.
 			\end{itemize}
 			
-	\section{Arquitectura 3: Batch normalization}
+	\subsection{Arquitectura 3: Batch normalization}
 	\label{d-s-a3}
 		Despu\'es de no conseguir reducir el \textit{bias} de nuestro modelo con m\'as capas ocultas suponemos que estamos ante un problema de \textit{vanishing gradient}, una de las soluciones que existe es utilizar capas de \textit{batch normalization} para estandarizar los pesos de las neuronas. La arquitectura que utilizaremos durante los siguientes experimentos es:
 		\begin{enumerate}
@@ -493,7 +521,7 @@
 			\item Capa de \textit{Batch Normalization} antes de la activaci\'on.
 		\end{enumerate}
 		
-		\subsection{Experimento 1: Probamos la configuraci\'on del experimento \ref{d-s-a2-e5}}
+		\subsubsection{Experimento 1: Probamos la configuraci\'on del experimento \ref{d-s-a2-e5}}
 		\label{d-s-a3-e1}
 			Para comprobar como afecta la introducci\'on del \textit{batch normalization}, utilizamos la configuraci\'on del \'ultimo experimento realizado.
 			
@@ -532,7 +560,7 @@
 			
 			En la figura \ref{d-tr-a3-e1} vemos como el modelo llega al punto de \textit{overfit} alrededor de la \textit{epoch} 50 donde el \textit{accuracy} de validaci\'on se separa del de entrenamiento.
 			
-		\subsection{Experimento 2: Aumentamos \textit{batch size}}
+		\subsubsection{Experimento 2: Aumentamos \textit{batch size}}
 		\label{d-s-a3-e2}
 			A\'un no hemos conseguido mejorar el \textit{accuracy} en el conjunto de validaci\'on, pero en este experimento vamos a intentar retrasar el \textit{overfitting} del modelo a la vez que el tiempo de entrenamiento aumentando el \textit{batch size}. La configuraci\'on para este experimento es la siguiente:
 			\begin{table}[!h]
@@ -567,7 +595,7 @@
 			Lo \'unico que hemos conseguido reducir con este experimento ha sido el tiempo de entrenamiento, el \textit{variance} ha aumentado hasta un 23\%.
 			En la figura \ref{d-tr-a3-e2} vemos reflejado el \textit{overfitting}, lo que explica el \textit{bias} negativo.
 			
-		\subsection{Experimento 3: Aumentamos la penalizaci\'on del regularizador}
+		\subsubsection{Experimento 3: Aumentamos la penalizaci\'on del regularizador}
 		\label{d-s-a3-e3}
 			El regularizador L2 a\~nade una penalizaci\'on en base al tama\~no de los pesos, como no queremos que se descontrolen como ha estado ocurriendo, aumentamos esta penalizaci\'on para evitar el overfitting. La configuraci\'on para este experimento es:
 			\begin{table}[!h]
@@ -602,7 +630,7 @@
 			\end{figure}
 			En la figura \ref{d-tr-a3-e3} observamos una evoluci\'on err\'atica en el \textit{loss} en validaci\'on lo que puede indicar que el problema del \text{vanishing gradient} puede estar presente en el modelo.
 			
-		\subsection{Experimento 4: Volvemos a ReLU}
+		\subsubsection{Experimento 4: Volvemos a ReLU}
 		\label{d-s-a3-e4}
 			Cambiamos la funci\'on de activaci\'on a ReLU para comprobar si ayuda con el problema del \textit{vanishing gradient}.
 			\begin{table}[!h]
@@ -636,7 +664,7 @@
 				\end{center}
 			\end{figure}
 			
-		\subsection{Experimento 5: Eliminamos la regularizaci\'on}
+		\subsubsection{Experimento 5: Eliminamos la regularizaci\'on}
 		\label{d-s-a3-e5}
 			Nos preguntamos si tantos mecanismos contra el \textit{vanishing gradient} y \textit{overfitting} (\textit{batch normalization}, ReLU, regularizaci\'on L2) est\'an interfiriendo entre ellos as\'i que para comprobarlo retiramos la regularizaci\'on L2 de las capas ocultas.
 			\begin{table}[!h]
@@ -670,7 +698,7 @@
 				\end{center}
 			\end{figure}
 		
-		\subsection{Conclusiones de la Arquitectura 3}
+		\subsubsection{Conclusiones de la Arquitectura 3}
 		\label{d-cl-a3}
 			\begin{itemize}
 				\item La regularizaci\'on L2 es necesaria para evitar el \textit{overfitting}.
@@ -679,7 +707,7 @@
 				\item Batch Normalization no ayuda a reducir el \textit{bias}.
 			\end{itemize}
 			
-	\section{Arquitectura 4: A\~nadimos profundidad}
+	\subsection{Arquitectura 4: A\~nadimos profundidad}
 	\label{d-s-a4}
 		Hasta el momento el m\'aximo \textit{accuracy} en validaci\'on que hemos conseguido ha sido en el experimento \ref{d-s-a1-e2} con un 81.5\%, nos parece que es un resultado malo para un problema de juguete como es este. Tras haber intentado distintos m\'etodos para reducir el \textit{bias} sin aumentar el \textit{variance} sin \'exito decidimos aumentar la profundidad de la red a 7 capas:
 		\begin{enumerate}
@@ -695,7 +723,7 @@
 		Cabe destacar que hemos estado repitiendo cada experimento 5 veces y no hemos encontrado diferencias significativas entre ellos, adem\'as una muestra aleatoria de tama\~no 5 no suele ser representativa del conjunto total. Creemos que el objetivo de esta pr\'actica es variar los hiperpar\'ametros y analizar su efecto en el modelo as\'i que a partir de este punto solo realizaremos cada experimento otra vez para poder probar m\'as combinaciones.
 		\newpage
 		
-		\subsection{Experimento 1: Repetimos la \'ultima configuraci\'on}
+		\subsubsection{Experimento 1: Repetimos la \'ultima configuraci\'on}
 		\label{d-s-a4-e1}
 			Vamos a usar la configuraci\'on del experimento \ref{d-s-a3-e5} para comprobar como afecta el cambio de arquitectura.
 			\begin{table}[!h]
@@ -728,7 +756,7 @@
 				\end{center}
 			\end{figure}
 			
-		\subsection{Experimento 2: Reintroducimos la regularizaci\'on L2}
+		\subsubsection{Experimento 2: Reintroducimos la regularizaci\'on L2}
 		\label{d-s-a4-e2}
 			Para evitar el \textit{overfitting} volvemos a usar la regularizaci\'on L2 con penalizaci\'on 0.1
 			\begin{table}[!h]
@@ -770,7 +798,7 @@
 				\end{center}
 			\end{figure}
 			
-		\subsection{Experimento 3: Desactivamos el bias de las capas ocultas}
+		\subsubsection{Experimento 3: Desactivamos el bias de las capas ocultas}
 		\label{d-s-a4-e3}
 			En este momento reparamos en que estamos usando el vector \textit{bias} de las capas ocultas, pero no es necesario tenerlo en cuenta porque al estar usando \textit{Batch Normalization} ya estamos incluyendo un par\'ametro de \textit{offset} $\beta$. Vamos a comprobar si mejora el proceso de entrenamiento.
 			
@@ -814,7 +842,7 @@
 			\end{figure}
 			
 			
-		\subsection{Experimento 4: Usamos inicializadores}
+		\subsubsection{Experimento 4: Usamos inicializadores}
         \label{s-a4-e4}
 			Al estar usando una arquitectura profunda es importante que los pesos no se inicializen con valores demasiado altos ya que estos valores pueden crecer descontroladamente en las \'ultimas capas, as\'i que utilizaremos el initicializador \textit{He Normal}. La configuraci\'on queda as\'i:
 			
@@ -849,7 +877,7 @@
 				\end{center}
 			\end{figure}
 			
-		\subsection{Experimento 5: Cambiamos el regularizador}
+		\subsubsection{Experimento 5: Cambiamos el regularizador}
         \label{d-s-a4-e5}
 			Creemos que el problema del entrenamient err\'atico est\'a producido por el regularizador, hemos aumentado mucho la penalizaci\'on y L2 a\~nade penalizaci\'on proporcional a la media del cuadrado de los pesos. Pensamos que utilizando L1 y reduciendo $\lambda$ conseguiremos solucionar nuestro problema.
 			
@@ -883,7 +911,7 @@
 				\end{center}
 			\end{figure}
    
-        \subsection{Experimento 6: Aumentamos \textit{batch size}}
+        \subsubsection{Experimento 6: Aumentamos \textit{batch size}}
         \label{d-s-a4-e6}
 			Antes de pasar a la siguiente arquitectura decidimos aumentar el tama\~no del \textit{batch size} para probar si as\'i reducimos algo el \textit{overfitting}.
 			
@@ -918,7 +946,7 @@
 			\end{figure}
         \newpage
         
-        \subsection{Experimento 7: Reducimos \textit{batch size}}
+        \subsubsection{Experimento 7: Reducimos \textit{batch size}}
         \label{d-s-a4-e7}
 			No estamos satisfechos con el \'ultimo experimento que adem\'as nos sugiere que a mayor \textit{batch size} mayor \textit{bias} por lo que lo reducimos a un tama\~no de 32.
 			
@@ -950,7 +978,7 @@
 					\label{d-tr-a4-e7}
 				\end{center}
 			\end{figure}
-        \subsection{Conclusiones Arquitectura 4}
+        \subsubsection{Conclusiones Arquitectura 4}
         \label{d-cl-a4}
             \begin{itemize}
                 \item Sin regularizaci\'on el \textit{overfitting} persiste.
@@ -960,7 +988,7 @@
             \end{itemize}
             
 
-    \section{Arquitectura 5: Arquitectura reloj de arena}
+    \subsection{Arquitectura 5: Arquitectura reloj de arena}
 	\label{d-s-a5}
 		Aunque no llega a ser un encoder-decoder, decidimos usar una arquitectura algo distinta a las que hemos estado usando hasta el momento. La arquitectura es la siguiente:
 		\begin{enumerate}
@@ -971,7 +999,7 @@
 			\item Capa densa de 512 neuronas con \textit{BN}
 		\end{enumerate}
 		
-		\subsection{Experimento 1: Probamos con la misma configuraci\'on del experimento \ref{d-s-a4-e7}}
+		\subsubsection{Experimento 1: Probamos con la misma configuraci\'on del experimento \ref{d-s-a4-e7}}
 		\label{d-s-a5-e1}
 			Aqu\'i describir el cambio que hemos hecho con respecto al experimento anterior.
 		
@@ -1016,7 +1044,7 @@
 				\end{center}
 			\end{figure}
 		
-		\subsection{Experimento 2: Aumentamos \textit{batch size} y \textit{learning rate}}
+		\subsubsection{Experimento 2: Aumentamos \textit{batch size} y \textit{learning rate}}
 		\label{d-s-a5-e2}
 			El problema de tener un \textit{batch size} peque\~no es que el tiempo de entrenamiento aumenta de forma dr\'astica. En el paper \textit{Understanding Batch Normalization (2018)} de J. Bjorck et al. se menciona que el optimizador est\'a afectado por un ruido acotado superiormente por $\frac{lr}{bs}$, es decir por el \textit{learning rate} dividido por el \textit{batch size}. Esto implica que aumentar el \textit{batch size} tiene el mismo efecto que reducir el \textit{learning rate}. Como actualmente tenemos un buen equilibrio entre estos dos hiperpar\'ametros que no conduce al \textit{overfitting} vamos a aumentar ambos para mantener esta proporci\'on y adem\'as reducir el tiempo de entrenamiento.
 		
@@ -1053,7 +1081,7 @@
 				\end{center}
 			\end{figure}
 		
-		\subsection{Experimento 3: Aumentamos \textit{batch size} y \textit{learning rate}}
+		\subsubsection{Experimento 3: Aumentamos \textit{batch size} y \textit{learning rate}}
 		\label{d-s-a5-e3}
 			Para evitar el problema del \textit{overfitting} a largo plazo que hemos detectado en el experimento \ref{d-s-a5-e2} introducimos una t\'ecnica que hasta ahora no hab\'iamos tenido en cuenta, el \textit{dropout}.
 		
@@ -1090,7 +1118,7 @@
 			\end{figure}
 		
 		
-		\subsection{Experimento 4: Cambiamos la funci\'on de activaci\'on}
+		\subsubsection{Experimento 4: Cambiamos la funci\'on de activaci\'on}
 		\label{d-s-a5-e4}
 			Otra opci\'on que no hemos probado hasta ahora es usar la funci\'on de activaci\'on \textit{eLU}, as\'i que en este experimento la usaremos con la esperanza de mejorar el \textit{bias} del modelo.
 		
@@ -1125,15 +1153,17 @@
 			\end{figure}
 		
 		
-		\subsection{Conclusiones Arquitectura 5}
+		\subsubsection{Conclusiones Arquitectura 5}
 		\label{d-cl-a5}
 			\begin{itemize}
 				\item El \textit{dropout} consigue mitigar el \textit{overfitting}.
 				\item La funci\'on de activaci\'on \textit{eLU} consigue un menor \textit{variance} en esta arquitectura.
 			\end{itemize}
 		
-    
-    \section{Arquitectura Borja}
+\section{Fase 2: Optimizaci\'on sistem\'atica}
+	En esta fase iremos realizando cambios at\'omicos, es decir, para cada experimento nos centraremos en un hiperpar\'ametro a optimizar, qued\'andonos con el modelo que tenga mejor \textit{accuracy} en el conjunto de validaci\'on. Todos los experimentos a continuaci\'on han sido realizados 10 veces.
+	
+    \subsection{Arquitectura Borja}
 			Probaremos una arquitectura de complejidad media para buscar el overfitting y aplicaremos t\'ecnicas de regularizaci\'on para reducir la varianza. 
 			\begin{itemize}
 			    \item Capa densa de 256 con Batch Normalization y Dropout = 0
@@ -1141,7 +1171,7 @@
                 \item Capa densa de 64 con BN y Dropout = 0
                 \item Capa densa de 32 con BN y Dropout = 0
 			\end{itemize}
-		\subsection{Experimento 1: Primera configuraci\'on}
+		\subsubsection{Experimento 1: Primera configuraci\'on}
         \label{s-a6-e1}
             Como se puede observar en la figura \ref{tab:tr-a6-e1}, tenemos un overfitting bastante grande y debemos aplicar t\'ecnicas de regularizaci\'on para mejorar la generalizaci\'on de la red. 
             \begin{table}[!h]
@@ -1173,7 +1203,7 @@
 				\end{center}
 			\end{figure}
    
-        \subsection{Experimento 2: A\~{n}adimos Dropout 0.2}
+        \subsubsection{Experimento 2: A\~{n}adimos Dropout 0.2}
         \label{s-a6-e2}
             Se a\~{n}ade un Dropout de 0.2 para reducir la varianza y mejorar la generalizaci\'on. La configuraci\'on es la siguiente: 
    
@@ -1207,7 +1237,7 @@
 			\end{figure}
             Se consigue una reducci\'on de la varianza a cambio de un empeoramiento del Bias. 
         
-        \subsection{Experimento 3: Regularizac\'on L1, L2 y L1-L2 }
+        \subsubsection{Experimento 3: Regularizac\'on L1, L2 y L1-L2 }
         Seguimos buscando la reducci\'on de la varianza. Para ello probaremos los regularizadores L1, L2 y L1-L2. 
 
 
@@ -1254,7 +1284,7 @@
    
 
    
-        \subsection{Experimento 4: Aumentar Epochs}
+        \subsubsection{Experimento 4: Aumentar Epochs}
         En el experimento anterior se ha conseguido una mejora de la generalizaci\'on de la red a cambio de un alto Bias, es por ello que en este experimento se busca la reducci\'on del Bias utilizando m\'as epochs de entrenamiento. 
         
         \begin{table}[!h]
@@ -1282,7 +1312,7 @@
 			\end{table}
 
 Duplicando o triplicando el n\'umero de epochs no se est\'a logrando una mejora significativa de la varianza. Esto puede ser debido a que la red se est\'a quedando atrapada en un m\'inimo local y hay que aplicar más reconfiguraciones para solventar este problema. 
-\subsection{Experimento 5: Optimizadores}
+\subsubsection{Experimento 5: Optimizadores}
 Se van a probar los diferentes optimizadores con los hiper par\'ametros por defecto para buscar una mejor aproximaci\'on e intentar salir en el m\'inimo local en que se encuentra la red. 
 
  \begin{table}[!h]
@@ -1318,7 +1348,7 @@ Se van a probar los diferentes optimizadores con los hiper par\'ametros por defe
 			\end{figure}
    
    Como se puede observar con el optimizador SGD se consigue una liguera mejora en los resultados. Sin embargo, creemos que se puede conseguir mejores resultados ya que el Bias sigue siendo demasiado alto y la curva de aprendizaje es plana, lo que nos puede indicar que seguimos atrapados en un mínimo local. 
-   \subsection{Experimento 6: Variando el Batch size}
+   \subsubsection{Experimento 6: Variando el Batch size}
 
 Se sigue buscando una reducci\'on del Bias, para ello en este experimento se probar\'an diferentes tama\~{n}os de Batch para comprobar si se consigue una mejora. 
 
@@ -1349,7 +1379,7 @@ Se sigue buscando una reducci\'on del Bias, para ello en este experimento se pro
 			\end{table}
    
 
-    \subsection{Experimento 7: Variando el Learning Rate}
+    \subsubsection{Experimento 7: Variando el Learning Rate}
 
      \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -1375,8 +1405,6 @@ Se sigue buscando una reducci\'on del Bias, para ello en este experimento se pro
 					\label{tab:res-a2-e5}
 				\end{center}
 			\end{table}
-Todos los experimentos a continuaci\'on han sido realizados 10 veces y calculando la media de estos.
-Adem\'as, para verificar que el cambio realizado es el responsable de la mejora del resultado los cambios han sido at\'omicos, es decir, uno a uno.
 
 	Todos los experimentos a continuaci\'on han sido realizados 10 veces y calculando la media de estos.
 Adem\'as, para verificar que el cambio realizado es el responsable de la mejora del resultado los cambios han sido at\'omicos, es decir, uno a uno.
@@ -1778,7 +1806,7 @@ Uniform (-0.1,0.1)  & 84.11          & 83.34          & 84.78          & 83.93  
 			\end{figure}
 			La figura \ref{d-s-tr-dp-1} nos muestra la diferencia entre usar distintos datos en el entrenamiento. Con \textit{data imputation} obtenemos un entrenamiento en el que la red aprende de manera m\'as constante, adem\'as obtenemos mejores valores en todas las m\'etricas.
 			
-			\subsection{Comparaci\'on de Arquitectura \ref{d-s-a1} con y sin data imputation}
+			\subsection{Comparaci\'on de Arquitectura \ref{d-s-a2} con y sin data imputation}
 		\label{d-s-dp-2}
 			Usaremos la configuraci\'on del experimento \ref{d-s-a3-e4} y comparamos resultados:
 			\begin{table}[!h]
