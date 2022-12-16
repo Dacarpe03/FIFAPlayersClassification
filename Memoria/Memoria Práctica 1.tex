@@ -1949,11 +1949,41 @@ Se aprecia que con \textit{data imputation}, el modelo comienza con un \textit{a
          			\includegraphics[scale=0.4]{cmfinalcon.png}
          			\caption{Entrenamiento con \textit{data imputation}}
     		 	\end{subfigure}
-    		 	\caption{Comparaci\'on del entrenamiento}
+    		 	\caption{Comparaci\'on de las matrices de confusi\'on}
     		 	\label{confusion-final}
 			\end{figure}
+
+Finalmente usamos el conjunto de test para evaluar nuestro modelo.
+\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)}  \\ \hline
+						\textbf{Sin DI} & 81.32 \\ \hline
+						\textbf{Con DI} & 90.85 \\ \hline
+					\end{tabular}
+					\caption{Comparaci\'on de resultados de la mejor arquitectura encontrada en el conjunto de test}
+					\label{tab:res-test}
+				\end{center}
+			\end{table}
+Claramente la tabla \ref{tab:res-test} nos muestra de nuevo la gran diferencia entre usar datos imputados y no hacerlo. Lo bueno es que es ning\'un caso hay una diferencia extrema entre los resultados obtenidos en el conjunto de validaci\'on. En la figura \ref{confusion-test} podemos ver que tampoco hay gran diferencia entre el conjunto de test y el de validaci\'on en cuanto a \textit{recall}.\newpage
+		\begin{figure}[!h]
+				\centering
+     			\begin{subfigure}[b]{0.4\textwidth}
+         			\centering
+         			\includegraphics[scale=0.4]{cmtestsin.png}
+         		\caption{Entrenamiento sin \textit{data imputation}}
+         		\end{subfigure}
+         		\hfill
+     			\begin{subfigure}[b]{0.4\textwidth}
+       				\centering
+         			\includegraphics[scale=0.4]{cmtestcon.png}
+         			\caption{Entrenamiento con \textit{data imputation}}
+    		 	\end{subfigure}
+    		 	\caption{Comparaci\'on de las matrices de confusi\'on para el conjunto de test}
+    		 	\label{confusion-test}
+			\end{figure}
 			
-\section{Conclusines}
+\section{Conclusiones}
 Finalizando esta pr\'actica hemos concluido que:
 \begin{itemize}
 	\item Encontrar el equilibrio entre los hiperpar\'ametros es un proceso emp\'irico que requiere conocer los problemas y soluciones que pueden surgir con las redes neuronales.
