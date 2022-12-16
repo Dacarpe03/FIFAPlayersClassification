@@ -1033,7 +1033,7 @@
 		
 		\subsubsection{Experimento 2: Aumentamos \textit{batch size} y \textit{learning rate}}
 		\label{d-s-a5-e2}
-			El problema de tener un \textit{batch size} peque\~no es que el tiempo de entrenamiento aumenta de forma dr\'astica. En el paper \textit{Understanding Batch Normalization (2018)} de J. Bjorck et al. se menciona que el optimizador est\'a afectado por un ruido acotado superiormente por $\frac{lr}{bs}$, es decir por el \textit{learning rate} dividido por el \textit{batch size}. Esto implica que aumentar el \textit{batch size} tiene el mismo efecto que reducir el \textit{learning rate}. Como actualmente tenemos un buen equilibrio entre estos dos hiperpar\'ametros que no conduce al \textit{overfitting} vamos a aumentar ambos para mantener esta proporci\'on y adem\'as reducir el tiempo de entrenamiento.
+			El problema de tener un \textit{batch size} peque\~no es que el tiempo de entrenamiento aumenta de forma dr\'astica. En el paper \textit{Understanding Batch Normalization (2018)} de J. Bjorck et al. se menciona que el optimizador est\'a afectado por un ruido acotado superiormente por $\frac{lr}{bs}$, es decir por el \textit{learning rate} dividido entre el \textit{batch size}. Esto implica que aumentar el \textit{batch size} tiene el mismo efecto que reducir el \textit{learning rate}. Como actualmente tenemos un buen equilibrio entre estos dos hiperpar\'ametros que no conduce al \textit{overfitting} vamos a aumentar ambos para mantener esta proporci\'on y adem\'as reducir el tiempo de entrenamiento.
 		
 			\begin{table}[!h]
 				\begin{center}
@@ -1045,8 +1045,7 @@
 					\label{tab:hip-d-a5-e2}
 				\end{center}
 			\end{table}
-			
-			Y obtenemos los siguientes resultados:
+
 			\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{| c | c | c | c | c |}
@@ -1067,6 +1066,7 @@
 					\label{d-tr-a5-e2}
 				\end{center}
 			\end{figure}
+			\newpage
 		
 		\subsubsection{Experimento 3: Aumentamos \textit{batch size} y \textit{learning rate}}
 		\label{d-s-a5-e3}
@@ -1130,7 +1130,7 @@
 				\end{center}
 			\end{table}
 		    
-		    No hemos conseguido reducir el \textit{bias} pero si el \textit{variance} un 2\%. Como consecuencia de usar esta funci\'on de activaci\'on, el proceso de entrenamiento se ha visto afectado, la variaci\'on tanto en el \textit{loss} como en el \textit{accuracy} del conjunto de validaci\'on tiene una variaci\'on muy grande.
+		    No hemos conseguido reducir el \textit{bias} pero si el \textit{variance} un 2\%. Como consecuencia de usar esta funci\'on de activaci\'on, el proceso de entrenamiento se ha visto afectado, la variaci\'on tanto en el \textit{loss} como en el \textit{accuracy} del conjunto de validaci\'on tiene una variaci\'on muy grande a lo largo del entrenamiento.
 			\begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{d-tr-a5-e4.png}		
@@ -1153,7 +1153,8 @@
 		
 		\subsection{Data imputation}
 		\label{d-s-dp-di}
-			Usando el notebook base de \textit{PreparingFootballPlayerDataset} lo modificamos para seleccionar distintas \textit{features} e imputar datos mediante \textbf{regresi\'on lineal} para el campo de \textit{Release Clause} e \textit{imputaci\'on de medias} para 48 jugadores con una puntuaci\'on global de 82.
+			Tomando como base el notebook de \textit{PreparingFootballPlayerDataset} proprocinado, lo modificamos para seleccionar distintas \textit{features} e imputar datos mediante \textbf{regresi\'on lineal} para el campo de \textit{Release Clause} e \textit{imputaci\'on de medias} para 48 jugadores con una puntuaci\'on global de 82. Para m\'as detalle comprobar el notebook \textit{Data Imputation} que se ha proporcionado o se puede consultar en nuestro \href{https://github.com/Dacarpe03/FIFAPlayersClassification/blob/main/DataProcessingNotebooks/Data%20Imputation.ipynb}{repositorio}.
+			\\A continuaci\'on haremos dos pruebas para ver c\'omo afecta usar este nuevo conjunto en algunas de las arquitecturas anteriores.
 			
 		\subsection{Comparaci\'on de Arquitectura \ref{d-s-a1} con y sin data imputation}
 		\label{d-s-dp-1}
@@ -1221,7 +1222,7 @@
 			La figura \ref{d-s-tr-dp-2} nos muestra la diferencia entre usar distintos datos en el entrenamiento. Con \textit{data imputation} obtenemos \textit{overfitting}, a\'un as\'i, el porcentaje de \textit{accuracy} en validaci\'on es el mayor obtenido hasta el momento y podemos asegurar que el procesamiento de los datos tiene un gran peso a la hora de mejorar resultados.
 			
 \section{Fase 2: Optimizaci\'on sistem\'atica}
-	En esta fase iremos realizando cambios at\'omicos, es decir, para cada experimento nos centraremos en un hiperpar\'ametro a optimizar, qued\'andonos con el modelo que tenga mejor \textit{accuracy} en el conjunto de validaci\'on. Todos los experimentos a continuaci\'on han sido realizados 10 veces.
+	En esta fase iremos realizando cambios at\'omicos, es decir, para cada experimento nos centraremos en un hiperpar\'ametro a optimizar, qued\'andonos con el modelo que tenga mejor \textit{accuracy} en el conjunto de validaci\'on. Todos los experimentos a continuaci\'on han sido realizados 10 veces para obtener una representaci\'on robusta de los modelos usados.
 	\subsection{Arquitectura 1: MLP4}
 			Probaremos una arquitectura de complejidad media para buscar el overfitting y aplicaremos t\'ecnicas de regularizaci\'on para reducir la varianza. 
 			\begin{itemize}
@@ -1238,7 +1239,7 @@
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					400 & 0.001 & 64 & ReLU & C.C. & ADAM & No & 0 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 6}
+				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 1}
 				\label{tab:hip-a6-e1}
 			\end{table}
    
@@ -1249,7 +1250,7 @@
 						\textbf{Mean} & 98.7 & 70.47 & -3.7  & 28.23 & 817   \\ \hline
 						\textbf{Std} &  0.83 & 0.28 &  0.83 & 0.86 & 8.4  \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 1 de la Arquitectura 6}
+					\caption{Resultados del Experimento 1 de la Arquitectura 1 tras 10 entrenamientos}
 					\label{tab:res-a2-e5}
 				\end{center}
 			\end{table}
@@ -1257,21 +1258,21 @@
             \begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a6-e1.png}		
-					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 6}	
+					\caption{Entrenamiento durante el Experimento 1 de la Arquitectura 1}	
 					\label{tab:tr-a6-e1}
 				\end{center}
 			\end{figure}
-   
+   			\newpage
         \subsubsection{Experimento 2: A\~{n}adimos Dropout 0.2}
         \label{s-a6-e2}
-            Se a\~{n}ade un Dropout de 0.2 para reducir la varianza y mejorar la generalizaci\'on. La configuraci\'on es la siguiente: 
-   
+            Se a\~{n}ade un Dropout de 0.2 para reducir la varianza y mejorar la generalizaci\'on. La configuraci\'on es la siguiente
+ 
             \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					400 & 0.001 & 64 & ReLU & C.C. & ADAM & No & 0.2 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 1 de la Arquitectura 6}
+				\caption{Hiperpar\'ametros para el Experimento 2 de la Arquitectura 1}
 				\label{tab:hip-a6-e2}
 			\end{table}
    
@@ -1283,36 +1284,32 @@
 						\textbf{Mean} & 88.28  & 76.67 & 6.72 & 11.61 & 743  \\ \hline
 						\textbf{Std} & 1.15  & 0.79 & 1.15 & 1.89 & 8.9  \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 2 de la Arquitectura 6}
+					\caption{Resultados del Experimento 2 de la Arquitectura 1 tras 10 entrenamientos}
 					\label{tab:res-a2-e5}
 				\end{center}
 			\end{table}
+			
             \begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a6-e2.png}		
-					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 6}	
+					\caption{Entrenamiento durante el Experimento 2 de la Arquitectura 1}	
 					\label{tab:tr-a6-e2}
 				\end{center}
 			\end{figure}
-            Se consigue una reducci\'on de la varianza a cambio de un empeoramiento del Bias. 
+            Se consigue una reducci\'on del \textit{variance} a cambio de un empeoramiento del \textit{bias}. 
         
         \subsubsection{Experimento 3: Regularizac\'on L1, L2 y L1-L2 }
         Seguimos buscando la reducci\'on de la varianza. Para ello probaremos los regularizadores L1, L2 y L1-L2. 
-
-
-      
         \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					400 & 0.001 & 64 & ReLU & C.C. & ADAM & ? & 0.2 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 6}
-				\label{tab:hip-a6-e2}
-			\end{table}
+				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 1}
+				\label{tab:hip-a6-e3}
+		\end{table}
 
-    
-   
-   \begin{table}[!h]
+		\begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{ c | c | c | c | c | c |}
 						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
@@ -1320,21 +1317,21 @@
 						\textbf{L2 0.1} & 73.06   & 76.86 &  21.94 & -3.8 &864   \\ \hline
                         \textbf{L1-L2 0.1} &  63.7  &72.02 &  31.3 & -8.32 &804   \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 3 de la Arquitectura 6}
-					\label{tab:res-a2-e5}
+					\caption{Resultados del Experimento 3 de la Arquitectura 1 tras 10 entrenamientos}
+					\label{tab:res-a2-e3}
 				\end{center}
 			\end{table}
    
    \begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{tr-a6-e3.1.png}		
-					\caption{Entrenamiento durante el Experimento 3 (L2) de la Arquitectura 6}	
-					\label{tab:tr-a6-e2}
+					\caption{Entrenamiento durante el Experimento 3 (L2) de la Arquitectura 1}	
+					\label{tab:tr-a6-e3}
 				\end{center}
 			\end{figure}
-    Como se puede observar la regularizac\'on L1 ha mejorado drasticamente la varianza y se ha conseguido una configuraci\'on que generaliza mejor. Sin embargo se ha aumentado demasiado el Bias, es por ello que en los siguientes experimentos habr\'a que intentar reducir el Bias. 
+    Como se puede observar en la tabla \ref{tab:hip-a6-e2} la regularizac\'on L1 ha mejorado drasticamente la varianza y se ha conseguido una configuraci\'on que generaliza mejor. Sin embargo se ha aumentado demasiado el \textit{bias}, es por ello que en los siguientes experimentos habr\'a que intentar reducirlo. 
     
-           La regularizac\'on L2 tambien ha conseguido reducir considerablemente la varianza, pero tiene la ventaja de que hemos conseguido menor empeoramiento que con L1. Se concluuye que en este caso es comveniente usar L2 frente a L1. En los siguientes experimentos habr\'a que intentar reducir el Bias, las soluciones partir\'ian de una reducci\'on del tama\~{n}o del Batch hasta una aumento de epochs. 
+           La regularizac\'on L2 tambien ha conseguido reducir considerablemente la varianza, pero tiene la ventaja de que hemos conseguido menor empeoramiento que con L1. Se concluye que en este caso es conveniente usar L2 frente a L1. En los siguientes experimentos habr\'a que intentar reducir el \textit{bias}, las soluciones partir\'ian de una reducci\'on del tama\~{n}o del \textit{batch} hasta una aumento de \textit{epochs}. 
            
   La regularizaci\'on L1-L2 tambi\'en mejora dr\'asticamente la varianza, pero empeora en exceso el Bias. 
 
@@ -1344,15 +1341,15 @@
 
    
         \subsubsection{Experimento 4: Aumentar Epochs}
-        En el experimento anterior se ha conseguido una mejora de la generalizaci\'on de la red a cambio de un alto Bias, es por ello que en este experimento se busca la reducci\'on del Bias utilizando m\'as epochs de entrenamiento. 
+        En el experimento anterior se ha conseguido una mejora de la generalizaci\'on de la red a cambio de un alto \textit{bias}, es por ello que en este experimento se busca la reducci\'on del \textit{bias} utilizando m\'as \textit{epochs} de entrenamiento. 
         
         \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					? & 0.001 & 64 & ReLU & C.C. & ADAM & L2 0.1 & 0.2 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 3 de la Arquitectura 6}
-				\label{tab:hip-a6-e2}
+				\caption{Hiperpar\'ametros para el Experimento 4 de la Arquitectura 1}
+				\label{tab:hip-a6-e4}
 			\end{table}
 
     
@@ -1365,12 +1362,13 @@
                         \textbf{800 } & 73.52   &77.98 &  21.48 & -4.46  &1585    \\ \hline
                         \textbf{1200} &  72.64  &75.37  &  22.36& -2.73 &1944    \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 4 de la Arquitectura 6}
-					\label{tab:res-a2-e5}
+					\caption{Resultados del Experimento 4 de la Arquitectura 1 tras 10 entrenamientos}
+					\label{tab:res-a2-e4}
 				\end{center}
 			\end{table}
 
 Duplicando o triplicando el n\'umero de epochs no se est\'a logrando una mejora significativa de la varianza. Esto puede ser debido a que la red se est\'a quedando atrapada en un m\'inimo local y hay que aplicar más reconfiguraciones para solventar este problema. 
+
 		\subsubsection{Experimento 5: Optimizadores}
 Se van a probar los diferentes optimizadores con los hiper par\'ametros por defecto para buscar una mejor aproximaci\'on e intentar salir en el m\'inimo local en que se encuentra la red. 
 
@@ -1379,8 +1377,8 @@ Se van a probar los diferentes optimizadores con los hiper par\'ametros por defe
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					800 & 0.001 & 64 & ReLU & C.C. & ? & L2 0.1 & 0.2 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 6}
-				\label{tab:hip-a6-e2}
+				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 1}
+				\label{tab:hip-a6-e5}
 			\end{table}
 
     
@@ -1393,7 +1391,7 @@ Se van a probar los diferentes optimizadores con los hiper par\'ametros por defe
                         \textbf{RMSprop } & 71.39   &79.53  & 23.61  & -8.14  &  865   \\ \hline
                         \textbf{SGD} &  77.42   &  78.35& 17.58 & -0.93 &   683  \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 5 de la Arquitectura 6}
+					\caption{Resultados del Experimento 5 de la Arquitectura 1}
 					\label{tab:res-a2-e5}
 				\end{center}
 			\end{table}
@@ -1401,23 +1399,23 @@ Se van a probar los diferentes optimizadores con los hiper par\'ametros por defe
    \begin{figure}[!h]
 				\begin{center}
 					\includegraphics[scale=0.5]{Images/tr-a6-e5(SGD).png}		
-					\caption{Entrenamiento durante el Experimento 5 (SGD) de la Arquitectura 6}	
-					\label{tab:tr-a6-e2}
+					\caption{Entrenamiento durante el Experimento 5 (SGD) de la Arquitectura 1}	
+					\label{tab:tr-a6-e5}
 				\end{center}
 			\end{figure}
    
-   Como se puede observar con el optimizador SGD se consigue una liguera mejora en los resultados. Sin embargo, creemos que se puede conseguir mejores resultados ya que el Bias sigue siendo demasiado alto y la curva de aprendizaje es plana, lo que nos puede indicar que seguimos atrapados en un mínimo local. 
+   Como se puede observar con el optimizador SGD se consigue una ligera mejora en los resultados. Sin embargo, creemos que se puede conseguir mejores resultados ya que el \textit{bias} sigue siendo demasiado alto y la curva de aprendizaje es plana, lo que nos puede indicar que seguimos atrapados en un mínimo local. 
    \subsubsection{Experimento 6: Variando el Batch size}
 
-Se sigue buscando una reducci\'on del Bias, para ello en este experimento se probar\'an diferentes tama\~{n}os de Batch para comprobar si se consigue una mejora. 
+Se sigue buscando una reducci\'on del \textit{bias}, para ello en este experimento se probar\'an diferentes tama\~{n}os de \textit{batch} para comprobar si se consigue una mejora. 
 
     \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					800 & 0.001 & ?& ReLU & C.C. & SGD & L2 0.1 & 0.2 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 6 de la Arquitectura 6}
-				\label{tab:hip-a6-e2}
+				\caption{Hiperpar\'ametros para el Experimento 6 de la Arquitectura 1}
+				\label{tab:hip-a6-e6}
 			\end{table}
 
     
@@ -1434,11 +1432,11 @@ Se sigue buscando una reducci\'on del Bias, para ello en este experimento se pro
                         \textbf{1024} & 84.33 &  80.65 & 10.67 & 3.68 &   263     \\ \hline
                         \textbf{2048} & 75.45 &  79.34 & 19.55  & -3.89 &   323      \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 6 de la Arquitectura 6}
-					\label{tab:res-a2-e5}
+					\caption{Resultados del Experimento 6 de la Arquitectura 1 tras 10 entrenamientos}
+					\label{tab:res-a2-e6}
 				\end{center}
 			\end{table}
-   El tama\~{n}o del batch \'optimo para la configuraci\'on actual es 1024. Obtenemos el mejor validation accuracy y Bias de los \'ultimos. Se concluye que al aumentar el tama\~{n}o del batch se consigue explorar m\'as y salir del m\'inimo local en el que nos encontr\'abamos antes. 
+   El tama\~{n}o del \textit{batch} \'optimo para la configuraci\'on actual es 1024. Obtenemos el mejor \textit{validation accuracy} y \textit{bias} de los \'ultimos. Se concluye que al aumentar el tama\~{n}o del \textit{batch} se consigue explorar m\'as y salir del m\'inimo local en el que nos encontr\'abamos antes. 
 
     \subsubsection{Experimento 7: Usando los nuevos datos}
 
@@ -1449,8 +1447,8 @@ En este experimento se probar\'a la mejor configuraci\'on con el nuevo dataset. 
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
 					800 & 1024  & 64 & ReLU & C.C. & SGD & L2 0.1 & 0.2 
 				\end{tabular}
-				\caption{Hiperpar\'ametros para el Experimento 7 de la Arquitectura 6}
-				\label{tab:hip-a6-e2}
+				\caption{Hiperpar\'ametros para el Experimento 7 de la Arquitectura 1}
+				\label{tab:hip-a6-e7}
 			\end{table}
     
    
@@ -1463,8 +1461,8 @@ En este experimento se probar\'a la mejor configuraci\'on con el nuevo dataset. 
                         \textbf{3000} & 88.61   & 85.72  & 6.39 & 2.89  &  1643     \\ \hline
                        
 					\end{tabular}
-					\caption{Resultados del Experimento 7 de la Arquitectura 6}
-					\label{tab:res-a2-e5}
+					\caption{Resultados del Experimento 7 de la Arquitectura 1 tras 10 entrenamientos}
+					\label{tab:res-a2-e7}
 				\end{center}
 			\end{table}
 
@@ -1473,7 +1471,7 @@ En este experimento se probar\'a la mejor configuraci\'on con el nuevo dataset. 
    
 		\subsection{Arquitectura 2: Buscando la mejor configuración}
 
- En esta sección buscaremos encontrar el mejor modelo, es decir, el que mejor accuracy obtiene, es por tanto que, todos los experimentos a continuación han sido realizados 10 veces y calculando la media de estos.
+ En esta sección buscaremos encontrar el mejor modelo, es decir, el que mejor \textit{accuracy} obtiene, es por tanto que, todos los experimentos a continuación tambi\'en han sido realizados 10 veces y calculando la media de estos.
 Además, para verificar que el cambio realizado es el responsable de la mejora del resultado los cambios han sido atómicos, es decir, uno a uno.
 
 	\label{j-s-a0} %La n es la incial de nuestros nombres, la x el numero de la arquitectura, por ejemplo en mi caso d-s-a3
@@ -1481,7 +1479,7 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 		
 		\subsubsection{Ronda de experimentos 0}
 		\label{j-s-a0-e0} %En mi caso d-s-a3-e4
-			En este primer experimentos se ha usado la arquitectura base, \'unicamente el n\'umero de neuronas de cada capa ha sido puesto en multiplos de dos. 
+			En este primer experimentos se ha usado la arquitectura base, \'unicamente el n\'umero de neuronas de cada capa ha sido puesto en m\'ultiplos de dos. 
         Por tanto la arquitectura usada ha sido un MLP-4 con [512,256,64,32].
 			
 			%Tabla con la configuraci\'on. IMPORTANTE PONER EN NEGRITA EL CAMBIO
@@ -1491,7 +1489,7 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Optimizer} & \textbf{Regularization} & \textbf{Initializer} & \textbf{Dropout}\\ \hline
 						1000 & 0.1 & 512 & ReLu & SGD & None & None & None
 					\end{tabular}
-					\caption{Hiperpar\'ametros para el Experimento 0 y de la Arquitectura 0}
+					\caption{Hiperpar\'ametros para el Experimento 0 y de la Arquitectura 2}
 					\label{tab:hip-j-a0-e0}
 				\end{center}
 			\end{table}
@@ -1506,17 +1504,17 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Mean} & 1.00 & 83.00 \\ \hline
 						\textbf{Best} & 1.00 & 83.31 \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 0 y de la Arquitectura 0}
+					\caption{Resultados del Experimento 0 y de la Arquitectura 2}
 					\label{tab:res-j-a0-e0}
 				\end{center}
 			\end{table}
 		    % Label de la tabla de configuraci\'on IMPORTANTE
 		    
-		    Como podemos comprobar, el primer problema con el que nos encontramos es el overfitting. Por lo tanto ser\'a esto lo primero que intentaremos solucionar en los siguientes experimentos.
+		    Como podemos comprobar, el primer problema con el que nos encontramos es el \textit{overfitting}. Por lo tanto ser\'a esto lo primero que intentaremos solucionar en los siguientes experimentos.
 
       \subsubsection{Ronda de experimentos 1 - A\~{n}adimos Batch Normalization}
 		\label{j-s-a0-e1} %En mi caso d-s-a3-e4
-			Primer experimento buscando solucionar el overfitting, para ello en este introduciremos Batch-Normalization antes de la funci\'on de activaci\'on.
+			Primer experimento buscando solucionar el \textit{overfitting}, para ello en este introduciremos \textit{Batch-Normalization} antes de la funci\'on de activaci\'on.
 			
 			
 			Tras realizar 10 veces el experimento con la anterior configuraci\'on, obtenemos los siguientes resultados:
@@ -1528,20 +1526,20 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Mean} & 99.31 & 78.40 \\ \hline
 						\textbf{Best} & 98.99 & 79.71 \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 1 y de la Arquitectura 0}
+					\caption{Resultados del Experimento 1 y de la Arquitectura 2}
 					\label{tab:res-j-a0-e1}
 				\end{center}
 			\end{table}
 		    % Label de la tabla de configuraci\'on IMPORTANTE
-		    
-		    A la vista de los resultados, el overfitting persiste en el modelo por lo que habr\'a que seguir buscando la manera de solucionarlo.
+		    \newpage
+		    A la vista de los resultados, el \textit{overfitting} persiste en el modelo por lo que habr\'a que seguir buscando la manera de solucionarlo.
 
       \subsubsection{Ronda de experimentos 2 - A\~{n}adimos Regularizaci\'on L1-L2}
 		\label{j-s-a0-e2} %En mi caso d-s-a3-e4
-			En este segundo experimento buscando solucionar el overfitting introducimos la regularizaci\'on L1-L2 con el objetivo de regularizar los pesos de nuestro modelo y que de esta forma el modelo no sobre aprenda.
+			En este segundo experimento buscando solucionar el \textit{overfitting} introducimos la regularizaci\'on L1-L2 con el objetivo de regularizar los pesos de nuestro modelo y que de esta forma el modelo no sobre aprenda.
             Es por tanto que en cada capa densa de nuestro modelo a\~{n}adimos lo siguiente:
             
-            kernel\_regularizer=regularizers.L1L2(l1=0.001,l2=0.1)
+            \textbf{kernel\_regularizer=regularizers.L1L2(l1=0.001,l2=0.1)}
 			
 			
 			Tras realizar 10 veces el experimento con la anterior configuraci\'on, obtenemos los siguientes resultados:
@@ -1553,7 +1551,7 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Mean} & 75.20 & 76.18 \\ \hline
 						\textbf{Best} & 78.10 & 75.40 \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 2 y de la Arquitectura 0}
+					\caption{Resultados del Experimento 2 y de la Arquitectura 2}
 					\label{tab:res-j-a0-e1}
 				\end{center}
 			\end{table}
@@ -1561,9 +1559,9 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 		    
 		    Como podemos ver, el overfitting se ha solucionado por lo que es el momento de mejorar ese accuracy.
       
-      	\paragraph{Experimento 2.1 - Regularizaci\'on L1-L2 sin Batch-Normalization}
+      	\paragraph{Experimento 2.1 - Regularizaci\'on L1-L2 sin \textit{Batch-Normalization}}
 		\label{j-s-a0-e2.1} %En mi caso d-s-a3-e4
-			Este experimento lo realizamos con el objetivo de comprobar si lo que ha solucionado el overfitting ha sido el Batch-Normalization junto a la regularizaci\'on L1-L2 o la regularizaci\'on por si sola ser\'ia capaz de solucionarlo.
+			Este experimento lo realizamos con el objetivo de comprobar si lo que ha solucionado el overfitting ha sido el \textit{Batch-Normalization} junto a la regularizaci\'on L1-L2 o la regularizaci\'on por si sola ser\'ia capaz de solucionarlo.
 			
 			Tras realizar 10 veces el experimento con la anterior configuraci\'on, obtenemos los siguientes resultados:
 			%Tabla con los resultados, si hemos repetido el experimento varias veces poner media y desviaci\'on est\'andar
@@ -1574,13 +1572,13 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Mean} & 47.64 & 49.97 \\ \hline
 						\textbf{Best} & 53.30 & 56.38 \\ \hline
 					\end{tabular}
-					\caption{Resultados del Experimento 2.1 y de la Arquitectura 1}
+					\caption{Resultados del Experimento 2.1 y de la Arquitectura 2}
 					\label{tab:res-j-a0-e2.1}
 				\end{center}
 			\end{table}
 		    % Label de la tabla de configuraci\'on IMPORTANTE
       
-		    A partir de los resultados de la Tabla \ref{tab:res-j-a0-e2.1} el modelo no aprende si introducimos la regularizaci\'on sin usar el Batch-Normalization.
+		    A partir de los resultados de la Tabla \ref{tab:res-j-a0-e2.1} el modelo no aprende si introducimos la regularizaci\'on sin usar el \textit{Batch-Normalization}.
       
      
     \subsubsection{Ronda de experimentos 3 - Batch size}
@@ -1594,7 +1592,7 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Activation} & \textbf{Optimizer} & \textbf{Regularization} & \textbf{Initializer} \\ \hline
 						1000 & 0.1 & ReLu & SGD & L1L2 & None 
 					\end{tabular}
-					\caption{Hiperpar\'ametros para esta ronda de experimentos y usando la arquitectura 0}
+					\caption{Hiperpar\'ametros para esta ronda de experimentos y usando la Arquitectura 2}
 					\label{tab:hip-j-a0-e3}
 				\end{center}
 			\end{table}
@@ -1620,16 +1618,15 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
                 8192 & 79.97 & 76.40 & 79.93 & 79.71 \\ \hline
                 \end{tabular}
 
-                \caption{Resultados de la ronda de experimentos 3 y usando la arquitectura 0}
+                \caption{Resultados de la ronda de experimentos 3 y usando la Arquitectura 2}
                 \label{tab:res-j-a0-e3}
                 \end{table}
 		    % Label de la tabla de configuraci\'on IMPORTANTE
 		    
-		    A ra\'iz de los anteriores resultados se ha tomado la decisi\'on de utilizar 4096 como valor para el Batch size, ya que este es el que obtiene los mejores resultados en el conjunto de validaci\'on obteniendo un 79.91 (\%)
-\newpage
+		    A ra\'iz de los anteriores resultados se ha tomado la decisi\'on de utilizar 4096 como valor para el \textit{batch size}, ya que este es el que obtiene los mejores resultados en el conjunto de validaci\'on obteniendo un 79.91 (\%)
       \subsubsection{Ronda de experimentos 4 - Arquitectura}
 		\label{j-s-a0-e4} %En mi caso d-s-a3-e4
-			Una vez definido el tama\~{n}o de Batch, el siguiente paso ser\'a encontrar la mejor arquitectura. En la Tabla \ref{tab:hip-j-a0-e4} veremos los hiperpar\'ametros que ser\'an utilizados para todas las arquitecturas evaluadas.
+			Una vez definido el tama\~{n}o de \textit{batch}, el siguiente paso ser\'a encontrar la mejor arquitectura. En la Tabla \ref{tab:hip-j-a0-e4} veremos los hiperpar\'ametros que ser\'an utilizados para todas las arquitecturas evaluadas.
             
 			%Tabla con la configuraci\'on. IMPORTANTE PONER EN NEGRITA EL CAMBIO
 			\begin{table}[h!]
@@ -1638,7 +1635,7 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 						\textbf{Epochs} & \textbf{Learning rate} & \textbf{Batch size} & \textbf{Activation} & \textbf{Optimizer} & \textbf{Regularization} & \textbf{Initializer}\\ \hline
 						1000 & 0.1 & 4096 & ReLu & SGD & L1L2 & None
 					\end{tabular}
-					\caption{Hiperpar\'ametros para esta ronda de experimentos y usando la arquitectura 0}
+					\caption{Hiperpar\'ametros para esta ronda de experimentos y usando la arquitectura 2}
 					\label{tab:hip-j-a0-e4}
 				\end{center}
 			\end{table}
@@ -1683,7 +1680,7 @@ Además, para verificar que el cambio realizado es el responsable de la mejora d
 		    Como podemos observar, en este caso estructura con la que mejor \textit{accuracy} en el conjunto de validaci\'on obtenemos es una MLP3 con [32,16,8] neuronas por capa respectivamente.
       \newpage
 \subsubsection{Ronda de experimentos 5 - Learning Rate}  
-En esta ronda de experimentos nuestro objetivo es encontrar el mejor valor para el learning rate. 
+En esta ronda de experimentos nuestro objetivo es encontrar el mejor valor para el \textit{learning rate}. 
 
 		    %Tabla con la configuraci\'on. IMPORTANTE PONER EN NEGRITA EL CAMBIO
 			\begin{table}[h!]
@@ -1692,13 +1689,13 @@ En esta ronda de experimentos nuestro objetivo es encontrar el mejor valor para 
 						\textbf{Arquitectura} & \textbf{Epochs} & \textbf{Batch size} & \textbf{Activation} & \textbf{Optimizer} & \textbf{Regularization} & \textbf{Initializer}\\ \hline
 						[32,16,8] & 1000 & 4096 & ReLu & SGD & L1L2 & None
 					\end{tabular}
-					\caption{Hiperpar\'ametros para esta ronda de experimentos y usando la arquitectura 0}
+					\caption{Hiperpar\'ametros para esta ronda de experimentos y usando la Arquitectura 2}
 					\label{tab:hip-j-a0-e5}
 				\end{center}
 			\end{table}
 			% Label de la tabla de configuraci\'on IMPORTANTE
 			
-			Tras realizar 10 veces el experimento para cada valor de learning rate con la anterior configuraci\'on, obtenemos los siguientes resultados:
+			Tras realizar 10 veces el experimento para cada valor de \textit{learning rate} con la anterior configuraci\'on, obtenemos los siguientes resultados:
 
    \begin{table}[h!]
 \begin{tabular}{c|cccc}
@@ -1717,7 +1714,7 @@ En esta ronda de experimentos nuestro objetivo es encontrar el mejor valor para 
 \label{tab:res-j-a0-e5}
 \end{table}
 
-En este caso, nos hemos dado cuenta que cuando el learning rate = 0.001 el mejor resultado es obtenido en la epoch 1000, lo que nos indica que si continuaramos entrenando este podr\'ia mejorar. Por lo que el pr\'oximo experimento lo haremos con la configuración siguiente:
+En este caso, nos hemos dado cuenta que cuando el \textit{learning rate} = 0.001 el mejor resultado es obtenido en la epoch 1000, lo que nos indica que si continuaramos entrenando este podr\'ia mejorar. Por lo que el pr\'oximo experimento lo haremos con la configuración siguiente:
 
 \begin{table}[h!]
 				\begin{center}
@@ -1744,8 +1741,8 @@ En este caso, nos hemos dado cuenta que cuando el learning rate = 0.001 el mejor
 \label{tab:res-j-a0-e6}
 \end{table}
 
-Como podemos comprobar en la Tabla \ref{tab:res-j-a0-e6}, este valor de learning rate es el mejor que hemos encontrado, y por lo tanto, el que utilizaremos para los siguientes experimentos.
-\newpage
+Como podemos comprobar en la Tabla \ref{tab:res-j-a0-e6}, este valor de \textit{learning rate} es el mejor que hemos encontrado, y por lo tanto, el que utilizaremos para los siguientes experimentos.
+
 \subsubsection{Ronda de experimentos 5.1 - Reducing Learning Rate }
 Antes de continuar con otros hiperparámetros nos planteamos el uso del callback ReduceLROnPlateau en nuestro modelo para comprobar si con este obtenemos un mejor resultado que usando un learning rate fijo tal y como se ha empleando en el experimento anterior.
 Por tanto el callback utilizado es el siguiente:
@@ -1806,8 +1803,6 @@ Tanh          & 82.46          & 83.01          & 82.67          & 83.68        
 
 Debido a los resultados de estos experimentos, nos quedaremos con la ReLu como función de activación para el resto de experimentos.
 
-\newpage
-
 \subsubsection{Ronda de experimentos 7 - Inicializador}
 
 En esta nueva ronda de experimentos, exploraremos el campo de los inicializadores de pesos. En la Tabla \ref{tab:hip-j-a0-e9} podemos ver los hiperparámetros para estos experimentos.
@@ -1824,7 +1819,7 @@ En esta nueva ronda de experimentos, exploraremos el campo de los inicializadore
     \end{center}
 \end{table}
 
-En la Tabla \ref{tab:res-j-a0-e9} vemos como el mejor inicializador es el He Uniform, ya que recordamos que el resultado que nos interesa en el accuracy en el conjunto de validación y este es el que mayor porcentaje de acierto obtiene.
+En la Tabla \ref{tab:res-j-a0-e9} vemos como el mejor inicializador es el He Uniform, ya que recordamos que el resultado que nos interesa en el \textit{accuracy} en el conjunto de validación y este es el que mayor porcentaje de acierto obtiene.
 
 \begin{table}[h!]
 \begin{tabular}{c|cccc}
@@ -1875,11 +1870,12 @@ RMSProp        & 86.16          & 83.07          & 86.63          & 83.56       
 Adam           & 88.33          & 81.76          & 88.57          & 82.38          \\
 Nadam          & 88.37          & 82.33          & 88.50          & 83.00          \\ \hline
 \end{tabular}
-\caption{Resultados para cada Optimizador.}
+\caption{Resultados para cada Optimizador}
 \label{tab:res-j-a0-e10}
 \end{table}
 \newpage
-\section{Conclusiones}
+\subsection{Conclusiones}
+\label{conclusiones-mejor}
 Como conclusiones podriamos decir, que sin realizar data imputation en los datos de entrenamiento, la mejor configuración es la que podemos ver en la Tabla \ref{tab:hip-j-a0-c}.
 
 
@@ -1893,6 +1889,74 @@ Como conclusiones podriamos decir, que sin realizar data imputation en los datos
         \label{tab:hip-j-a0-c}
     \end{center}
 \end{table}
-
 La cual obtiene un accuracy en el conjunto entrenamiento del 84.83 \% y en el de validación de 83.73 \%.
+
+\section{Resultados finales}
+Utilizaremos la mejor configuraci\'on encontrada en la Fase 2 que determinamos en la secci\'on \ref{conclusiones-mejor}.\\
+\begin{table}[h!]
+    \begin{center}
+    \begin{tabular}{| c | c | c | c | c | c | c | c |}
+            \textbf{Arquitechture} & \textbf{Epochs} & \textbf{Batch size} & \textbf{Optimizer} & \textbf{LR} & \textbf{Activation} &\textbf{Regularization} & \textbf{Initializer}\\ \hline
+            [32,16,8] & 5000 & 4096 & SGD & 0.001 & ReLu & L1L2 & He Uniform \\ \hline
+        \end{tabular}
+        \caption{Hiperpar\'ametros definitivos.}
+        \label{tab:hip-j-a0-c}
+    \end{center}
+\end{table}
+Adem\'as de usar ReduceOnPlateau usaremos el \textit{callback} de ModelCheckpoint para guardar el mejor modelo encontrado durante el entrenamiento.\\
+En primer lugar, presentamos en la tabla \ref{tab:res-final} los resultados obtenidos.
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Sin DI} & 83.11 & 81.33 & 11.89 & 1.78 & 463\\ \hline
+						\textbf{Con DI} & 92.17 & 91.53 & 2.73 & 0.74 & 484 \\ \hline
+					\end{tabular}
+					\caption{Comparaci\'on de resultados de la mejor arquitectura encontrada}
+					\label{tab:res-final}
+				\end{center}
+			\end{table}
+Se ve que el \textit{dataset} con datos introducidos tiene un gran impacto en los resultados, ambos \textit{accuracys} han incrementado un 10\% y hemos obtenido al mismo tiempo unos \textit{bias} y \textit{variance} bajos, cosa que hasta ahora no hab\'ia ocurrido.\\ \newpage
+
+Podemos ver la comparativa del proceso de entrenamiento en la figura \ref{comparativa-final}.
+\begin{figure}[!h]
+				\centering
+     			\begin{subfigure}[b]{0.4\textwidth}
+         			\centering
+         			\includegraphics[scale=0.3]{finalsin.png}
+         		\caption{Entrenamiento sin \textit{data imputation}}
+         		\end{subfigure}
+         		\hfill
+     			\begin{subfigure}[b]{0.4\textwidth}
+       				\centering
+         			\includegraphics[scale=0.3]{finalcon.png}
+         			\caption{Entrenamiento con \textit{data imputation}}
+    		 	\end{subfigure}
+    		 	\caption{Comparaci\'on del entrenamiento}
+    		 	\label{comparativa-final}
+			\end{figure}
+Se aprecia que con \textit{data imputation}, el modelo comienza con un \textit{accuracy} muy bajo y tarda unas 1500 \textit{epochs} en alcanzar su punto \'optimo mientras que en el caso (a) llega a ese punto antes de las 1000 \textit{epochs}. Adem\'as de esto podemos comprobar que el modelo generaliza bien mirando las matrices de confusi\'on en la figura \ref{confusion-final} donde vemos que el recall del modelo con \textit{data imputation} es mucho mejor.
+\begin{figure}[!h]
+				\centering
+     			\begin{subfigure}[b]{0.4\textwidth}
+         			\centering
+         			\includegraphics[scale=0.4]{cmfinalsin.png}
+         		\caption{Entrenamiento sin \textit{data imputation}}
+         		\end{subfigure}
+         		\hfill
+     			\begin{subfigure}[b]{0.4\textwidth}
+       				\centering
+         			\includegraphics[scale=0.4]{cmfinalcon.png}
+         			\caption{Entrenamiento con \textit{data imputation}}
+    		 	\end{subfigure}
+    		 	\caption{Comparaci\'on del entrenamiento}
+    		 	\label{confusion-final}
+			\end{figure}
+			
+\section{Conclusines}
+Finalizando esta pr\'actica hemos concluido que:
+\begin{itemize}
+	\item Encontrar el equilibrio entre los hiperpar\'ametros es un proceso emp\'irico que requiere conocer los problemas y soluciones que pueden surgir con las redes neuronales.
+	\item El procesamiento de datos es tan o m\'as importante que la optimizaci\'on de los hiperpar\'ametros. Tener unos buenos datos de entrenamiento implica tener unos mejores resultados y modelos como hemos podido comprobar.
+\end{itemize}
 \end{document}
