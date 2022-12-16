@@ -186,7 +186,7 @@ Se van a probar los diferentes optimizadores con los hiper par\'ametros por defe
  \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
-					400 & 0.001 & 64 & ReLU & C.C. & ? & L2 0.1 & 0.2 
+					800 & 0.001 & 64 & ReLU & C.C. & ? & L2 0.1 & 0.2 
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 5 de la Arquitectura 6}
 				\label{tab:hip-a6-e2}
@@ -198,7 +198,7 @@ Se van a probar los diferentes optimizadores con los hiper par\'ametros por defe
 				\begin{center}
 					\begin{tabular}{ c | c | c | c | c | c |}
 						 \textbf{Batch Size} & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
-						\textbf{Adam } & 73.06   & 76.86 &  21.94 & -3.8 &864   \\ \hline
+						\textbf{Adam } & 73.52   &77.98 &  21.48 & -4.46  &1585    \\ \hline
                         \textbf{RMSprop } & 71.39   &79.53  & 23.61  & -8.14  &  865   \\ \hline
                         \textbf{SGD} &  77.42   &  78.35& 17.58 & -0.93 &   683  \\ \hline
 					\end{tabular}
@@ -223,7 +223,7 @@ Se sigue buscando una reducci\'on del Bias, para ello en este experimento se pro
     \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
-					400 & 0.001 & ?& ReLU & C.C. & SGD & L2 0.1 & 0.2 
+					800 & 0.001 & ?& ReLU & C.C. & SGD & L2 0.1 & 0.2 
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 6 de la Arquitectura 6}
 				\label{tab:hip-a6-e2}
@@ -240,37 +240,42 @@ Se sigue buscando una reducci\'on del Bias, para ello en este experimento se pro
                         \textbf{32} &  73.9    & 79.16& 21.1 & -5.26 &   863  \\ \hline
                         \textbf{128} &  81.24  &  79.53& 13.76 &  1.71  &   443   \\ \hline
                         \textbf{256} &  84.74 &  78.47 & 10.26 & 6.27 &   383    \\ \hline
+                        \textbf{1024} & 84.33 &  80.65 & 10.67 & 3.68 &   263     \\ \hline
+                        \textbf{2048} & 75.45 &  79.34 & 19.55  & -3.89 &   323      \\ \hline
 					\end{tabular}
 					\caption{Resultados del Experimento 6 de la Arquitectura 6}
 					\label{tab:res-a2-e5}
 				\end{center}
 			\end{table}
-   
+   El tama\~{n}o del batch \'optimo para la configuraci\'on actual es 1024. Obtenemos el mejor validation accuracy y Bias de los \'ultimos. Se concluye que al aumentar el tama\~{n}o del batch se consigue explorar m\'as y salir del m\'inimo local en el que nos encontr\'abamos antes. 
 
-    \subsection{Experimento 7: Variando el Learning Rate}
+    \subsection{Experimento 7: Usando los nuevos datos}
+
+En este experimento se probar\'a la mejor configuraci\'on con el nuevo dataset. Se observa que los resultados mejoran ligeramente, con lo cual se probar\'a a aumentar los epochs para comprobar si mejora el rendimiento. 
 
      \begin{table}[!h]
 				\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 					\textbf{Epochs}&\textbf{L.R}&\textbf{Batch size}&\textbf{Activation}&\textbf{Loss}&\textbf{Optimizer}&\textbf{Regularization}&\textbf{Dropout}   \\ \hline
-					400 & ?  & 64 & ReLU & C.C. & SGD & L2 0.1 & 0.2 
+					800 & 1024  & 64 & ReLU & C.C. & SGD & L2 0.1 & 0.2 
 				\end{tabular}
 				\caption{Hiperpar\'ametros para el Experimento 7 de la Arquitectura 6}
 				\label{tab:hip-a6-e2}
 			\end{table}
-
     
    
    \begin{table}[!h]
 				\begin{center}
 					\begin{tabular}{ c | c | c | c | c | c |}
-						 \textbf{Learning Rate} & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
-	
-                        \textbf{0.001} &    &  78.35& 17.58 & -0.93 &   683  \\ \hline
-                        \textbf{0.01} &      & 79.16& 21.1 & -5.26 &   863  \\ \hline
-                        \textbf{0.1} &   &  78.35& 17.58 & -0.93 &   683  \\ \hline
+						 \textbf{Epochs} & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+                        \textbf{800} & 81.51   & 82.45 & 13.49 & -0.94  &   383   \\ \hline
+                        \textbf{1600} & 85.88   & 85.85 & 9.12 & 0.03  &  785    \\ \hline
+                        \textbf{3000} & 88.61   & 85.72  & 6.39 & 2.89  &  1643     \\ \hline
+                       
 					\end{tabular}
 					\caption{Resultados del Experimento 7 de la Arquitectura 6}
 					\label{tab:res-a2-e5}
 				\end{center}
 			\end{table}
+
+   El mejor modelo se obtiene con 1600 epochs, a partir de esos epochs sufrimos estancamiento en el validation accuracy, aunque se ha logrado una ligera mejora en el train accuracy. 
 \end{document}
