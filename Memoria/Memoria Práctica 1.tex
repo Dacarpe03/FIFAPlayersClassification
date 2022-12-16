@@ -2,6 +2,7 @@
 \documentclass{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphics,graphicx}
+\usepackage{subcaption}
 \usepackage{amsmath,amssymb,graphics,graphicx}
 \usepackage[ansinew]{inputenc}
 \usepackage[usenames,dvipsnames]{color}
@@ -1105,8 +1106,12 @@
 			\end{figure}
 		
 		
-		
-		
+		\subsection{Conclusiones Arquitectura 5}
+		\label{d-cl-a5}
+			\begin{itemize}
+				\item El \textit{dropout} consigue mitigar el \textit{overfitting}.
+				\item La funci\'on de activaci\'on \textit{eLU} consigue un menor \textit{variance} en esta arquitectura.
+			\end{itemize}
 		
     
     \section{Arquitectura 6: Solucionando el overfitting en 256-124-64-32}
@@ -1184,4 +1189,77 @@
             
         \subsection{Experimento 3: Aumentar Epochs}
         \label{b-s-a6-e3}
+        
+	\section{Procesamiento de datos}
+	\label{d-s-dp}
+		En esta secci\'on comprobaremos c\'omo afecta en distintas arquitecturas el procesamiento de datos
+		\subsection{Data imputation}
+		\label{d-s-dp-di}
+			Usando el notebook base de \textit{PreparingFootballPlayerDataset} lo modificamos para seleccionar distintas \textit{features} e imputar datos mediante \textbf{regresi\'on lineal} para el campo de \textit{Release Clause} e \textit{imputaci\'on de medias} para 48 jugadores con una puntuaci\'on global de 82.
+			
+		\subsection{Comparaci\'on de Arquitectura \ref{d-s-a1} con y sin data imputation}
+		\label{d-s-dp-1}
+			Usaremos la configuraci\'on del experimento \ref{d-s-a1-e2} y comparamos resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Sin DI} & 84.02 & 81.5 & 10.97 & 2.47 & 199\\ \hline
+						\textbf{Con DI} & 85.52 & 83.31 & 9.48 & 2.21 & 180 \\ \hline
+					\end{tabular}
+					\caption{Comparaci\'on de resultados del Experimento 2 de la Arquitectura 1}
+					\label{tab:res-d-a1-e2}
+				\end{center}
+			\end{table}
+			
+			\begin{figure}[!h]
+				\centering
+     			\begin{subfigure}[b]{0.4\textwidth}
+         			\centering
+         			\includegraphics[scale=0.3]{d-tr-a1-e2}
+         		\caption{Entrenamiento sin \textit{data imputation}}
+         		\end{subfigure}
+         		\hfill
+     			\begin{subfigure}[b]{0.4\textwidth}
+       				\centering
+         			\includegraphics[scale=0.3]{d-tr-a1-e2-di}
+         			\caption{Entrenamiento con \textit{data imputation}}
+    		 	\end{subfigure}
+    		 	\caption{Comparaci\'on del entrenamiento}
+    		 	\label{d-s-tr-dp-1}
+			\end{figure}
+			La figura \ref{d-s-tr-dp-1} nos muestra la diferencia entre usar distintos datos en el entrenamiento. Con \textit{data imputation} obtenemos un entrenamiento en el que la red aprende de manera m\'as constante, adem\'as obtenemos mejores valores en todas las m\'etricas.
+			
+			\subsection{Comparaci\'on de Arquitectura \ref{d-s-a1} con y sin data imputation}
+		\label{d-s-dp-2}
+			Usaremos la configuraci\'on del experimento \ref{d-s-a3-e4} y comparamos resultados:
+			\begin{table}[!h]
+				\begin{center}
+					\begin{tabular}{ c | c | c | c | c | c |}
+						\ & \textbf{Train accuracy (\%)} & \textbf{Validation accuracy (\%)} & \textbf{Bias (\%)} & \textbf{Variance (\%)} & \textbf{Training time (s)} \\ \hline
+						\textbf{Sin DI} & 80.92 & 77.03 & 14.08 & 4.07 & 258\\ \hline
+						\textbf{Con DI} & 98.86 & 87.52 & -3.86 & 11.34 & 272 \\ \hline
+					\end{tabular}
+					\caption{Comparaci\'on de resultados del Experimento 4 de la Arquitectura 3}
+					\label{tab:res-d-a1-e2}
+				\end{center}
+			\end{table}
+			\newpage
+			\begin{figure}[!h]
+				\centering
+     			\begin{subfigure}[b]{0.4\textwidth}
+         			\centering
+         			\includegraphics[scale=0.3]{d-tr-a3-e4}
+         		\caption{Entrenamiento sin \textit{data imputation}}
+         		\end{subfigure}
+         		\hfill
+     			\begin{subfigure}[b]{0.4\textwidth}
+       				\centering
+         			\includegraphics[scale=0.3]{d-tr-a3-e4-di}
+         			\caption{Entrenamiento con \textit{data imputation}}
+    		 	\end{subfigure}
+    		 	\caption{Comparaci\'on del entrenamiento}
+    		 	\label{d-s-tr-dp-2}
+			\end{figure}
+			La figura \ref{d-s-tr-dp-2} nos muestra la diferencia entre usar distintos datos en el entrenamiento. Con \textit{data imputation} obtenemos \textit{overfitting}, a\'un as\'i, el porcentaje de \textit{accuracy} en validaci\'on es el mayor obtenido hasta el momento y podemos asegurar que el procesamiento de los datos tiene un gran peso a la hora de mejorar resultados.
 \end{document}
